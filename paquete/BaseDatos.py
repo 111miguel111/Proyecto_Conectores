@@ -59,12 +59,13 @@ def iniciar():
     cur.execute('''CREATE TABLE IF NOT EXISTS alumnos
             (
             id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            nombre VARCHAR(25) UNIQUE NOT NULL,
+            nombre VARCHAR(25) NOT NULL,
             apellidos VARCHAR(25) NOT NULL,
             telefono VARCHAR(25) NOT NULL,
             direccion VARCHAR(25) NOT NULL,
             f_nacimiento VARCHAR(25) NOT NULL,
             id_alumno_curso int,
+            UNIQUE (nombre,apellidos)
             FOREIGN KEY (id_alumno_curso) REFERENCES alumno_curso(id_alumno)
                 ON DELETE CASCADE
                 ON UPDATE CASCADE
