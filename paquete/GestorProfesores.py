@@ -5,52 +5,62 @@ Created on 1 dic 2023
 '''
 
 from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
-    escanerDni
+    escanerDni, confirmacion
 
 def altaProfesor():
     checkValido = True
+
+    print('Introduzca el DNI del profesor')
+    dni = escanerDni()
+    if(dni==None):
+        checkValido = False
+        
     if(checkValido):
-        print('Introduzca el DNI del alumno')
-        dni = escanerDni()
-        if(dni==None):
-            checkValido = False
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
+        print('Introduzca el nombre del profesor')
         nombre = escanerAlfanumerico()
         if(nombre==None):
             checkValido = False
     
     if(checkValido):
-        print('Introduzca el telefono del alumno')
+        print('Introduzca el telefono del profesor')
         telefono = escanerTelefono()
         if(telefono==None):
             checkValido = False
+            
     if(checkValido):
-        print('Introduzca la direccion del alumno')
+        print('Introduzca la direccion del profesor')
         direccion = escanerTexto()
         if(direccion==None):
             checkValido = False
+            
     if(checkValido):
         print()
-        #Llamada a la base de datos para crear alumno
+        #Llamada a la base de datos para crear profesor
 
 def bajaProfesor():
     checkValido = True
+    print('Introduzca el DNI del profesor')
+    dni = escanerDni()
+    if(dni==None):
+        checkValido = False
+        
     if(checkValido):
-        print('Introduzca el DNI del alumno')
-        dni = escanerDni()
-        if(dni==None):
-            checkValido = False
+        print("¿Desea confirmar la baja del Profesor?(Si o no)")
+        if(confirmacion()):
+            #Llamada a la base de datos para borrar profesor
+            print("Profesor eliminado")
+        else:
+            print("Profesor no eliminado")
             
 def modifProfesor():
     checkValido = True
     if(checkValido):
-        print('Introduzca el nombre del curso')
+        print('Introduzca el nombre del profesor')
         nombre = escanerAlfanumerico()
         if(nombre==None):
             checkValido = False
     if(checkValido):
-        #Metodo para checkear alumno
+        #Metodo para checkear profesor
         checkOpcion=True
         while (checkOpcion):
             opcion = input("Seleccione un campo a modificar:\n1.DNI\n2.Nombre\n3.Direccion\n4.Telefono\n0.Salir")
@@ -59,24 +69,36 @@ def modifProfesor():
             if(opcion=='1'):
                 print('Introduzca el DNI del profesor')
                 dni = escanerDni()
-                #Metodo modificar telefono
+                if(dni != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo modificar dni
                     
             #Opcion para modificar la descripcion
             elif (opcion == '2'):
-                print('Introduzca el nombre del curso')
+                print('Introduzca el nombre del profesor')
                 nombre = escanerAlfanumerico()
-                #Metodo modificar nombre
+                if(dni != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo modificar nombre
                 
             #Opcion para modificar telefono
             elif(opcion=='3'):
-                print('Introduzca la direccion del alumno')
+                print('Introduzca la direccion del profesor')
                 direccion = escanerTexto()
-                #Metodo para cambiar la direccion
+                if(dni != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo para cambiar la direccion
             
             elif(opcion == '4'):
-                print('Introduzca el telefono del alumno')
+                print('Introduzca el telefono del profesor')
                 telefono = escanerTelefono()
-                #Metodo modificar telefono
+                if(dni != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo modificar telefono
                 
             #Opcion para salir del bucle        
             elif(opcion == '0'):
@@ -86,26 +108,24 @@ def modifProfesor():
                 print("Valor no valido")
 
 def buscarProfesor():
-    checkValido = True
-    if(checkValido):
-        print('Introduzca el DNI del alumno')
-        dni = escanerDni()
-        if(dni==None):
-            checkValido = False
-    #Metodo para buscar curso
+    print('Introduzca el DNI del profesor')
+    dni = escanerDni()
+    if(dni==None):
+        checkValido = False
+    #Metodo para buscar profesor
     
 def mostrarTodosProfesor():
-    #Metodo para buscar todos los alumnos
+    #Metodo para buscar todos los profesors
     print()
 
 def asignarProfesor():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
-    checkValido = True
+
+    print('Introduzca el nombre del curso')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+
     if(checkValido):
         print('Introduzca el DNI del profesor')
         dni = escanerDni()

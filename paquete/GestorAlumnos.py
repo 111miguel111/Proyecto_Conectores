@@ -3,67 +3,81 @@ Created on 1 dic 2023
 
 @author: DAM2B-07
 '''
-from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono
+from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono, confirmacion
 
 def altaAlumno():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
+            
     if(checkValido):
         print('Introduzca el telefono del alumno')
         telefono = escanerTelefono()
         if(telefono==None):
             checkValido = False
+            
     if(checkValido):
         print('Introduzca la direccion del alumno')
         direccion = escanerTexto()
         if(direccion==None):
             checkValido = False
+            
     if(checkValido):
         print('Introduzca la fecha de nacimiento del alumno')
         fNacimiento = escanerTexto()
         if(fNacimiento==None):
             checkValido = False
+            
     if(checkValido):
         print()
         #Llamada a la base de datos para crear alumno
         
 def bajaAlumno():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
+            
     if(checkValido):
-        print()
-        #Llamada a la base de datos para borrar alumno
+        print("¿Desea confirmar la baja del alumno?(Si o no)")
+        if(confirmacion()):
+            #Llamada a la base de datos para borrar alumno
+            print("Alumno eliminado")
+        else:
+            print("Alumno no eliminado")
+        
         
 def modifAlumno():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
+            
     if(checkValido):
         #Metodo para checkear alumno
         checkOpcion=True
@@ -74,31 +88,47 @@ def modifAlumno():
             if(opcion=='1'):
                 print('Introduzca el nombre del alumno')
                 nombre = escanerAlfanumerico()
-                #Metodo modificar nombre
+                if(nombre != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo modificar nombre
+                
                     
             #Opcion para modificar apellidos
             elif (opcion == '2'):
                 print('Introduzca los apellidos del alumno')
                 apellidos = escanerTexto()
-                #Metodo modificar apellidos
+                if(apellidos != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo modificar apellidos
                 
             #Opcion para modificar telefono
             elif(opcion=='3'):
                 print('Introduzca el telefono del alumno')
                 telefono = escanerTelefono()
-                #Metodo modificar telefono
+                if(telefono != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo modificar telefono
             
             #Opcion para modificar direccion
             elif(opcion=='4'):
                 print('Introduzca la direccion del alumno')
                 direccion = escanerTexto()
-                #Metodo para cambiar la direccion
+                if(direccion != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo para cambiar la direccion
                         
             #Opcion para modificar la fecha de nacimiento
             elif(opcion == '5'):
                 print('Introduzca la fecha de nacimiento del alumno')
                 fNacimiento = escanerTexto()
-                #Metodo para cambiar fecha de nacimiento
+                if(fNacimiento != None):
+                    print("¿Desea confirmar la modificacion?(Si o no)")
+                    if(confirmacion()):
+                        #Metodo para cambiar fecha de nacimiento
             
             #Opcion para salir del bucle        
             elif(opcion == '0'):
@@ -109,11 +139,13 @@ def modifAlumno():
             
 def buscarAlum():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    
+    if(nombre==None):
+        checkValido = False
+        
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
@@ -127,42 +159,48 @@ def mostrarTodosAlum():
     
 def matricularAlum():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
+            
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         curso = escanerTexto()
         if(curso==None):
             checkValido = False
+            
     if(checkValido):
         print()
         #Metodo matriculacion
         
 def desmatricularAlum():
     checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del alumno')
-        nombre = escanerAlfanumerico()
-        if(nombre==None):
-            checkValido = False
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
+            
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         curso = escanerTexto()
         if(curso==None):
             checkValido = False
+            
     if(checkValido):
         print()
         #Metodo desmatriculacion

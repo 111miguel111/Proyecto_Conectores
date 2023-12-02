@@ -207,3 +207,17 @@ def escanerFecha():
         print('Porfavor introduce una fecha correcta (Dia 1-31 mes 1-12 anno 2000-3000)')
     print("Has superado el numero de intentos")
     return None
+
+def confirmacion():
+    '''
+    Metodo para confirmar si se quiere confirmar una operacion
+    :return Devuelve un un boolean. El valor sera True si escribe 'si' y False si escribe 'no'
+    '''
+    while(True):
+        inputConfirmacion = input()
+        if(inputConfirmacion.lower() == 'si'):
+            return True
+        elif(inputConfirmacion.lower() == 'no'):
+            return False
+        else:
+            print("Valor incorrecto, pruebe otra vez")
