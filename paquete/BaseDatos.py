@@ -1,7 +1,5 @@
 import pymysql
 
-
-
 '''
 Created on 1 dic 2023
 
