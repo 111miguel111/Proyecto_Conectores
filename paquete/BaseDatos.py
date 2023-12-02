@@ -76,6 +76,7 @@ def iniciar():
             ;
             ''')
     conn.commit()
+    conn.close()
     return 0
 
 conn =mysqlconnect()
