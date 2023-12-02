@@ -5,6 +5,7 @@ Created on 1 dic 2023
 
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
+
 def conectarse():
     conn =mysqlconnect()
     cur = conn.cursor()
@@ -12,8 +13,9 @@ def conectarse():
     
     return cur
 def deconectarse(conn):
+    conn.commit()
     conn.close()
-    
+
     return 0
 def mysqlconnect():
     conn=pymysql.connect(
@@ -29,7 +31,7 @@ def iniciar():
     conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('select @@version')
-    cur.execute('''CREATE DATABASE IF NOT EXISTS Miguel_Roberto ;''')
+    cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
     cur.execute('USE Miguel_Roberto')
     
     cur.execute('''CREATE TABLE IF NOT EXISTS profesores
@@ -80,7 +82,7 @@ def iniciar():
             ''')
     
     conn.commit()
-    conn.close()
+    cur.close()
     return 0
 def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     cur=conectarse()
@@ -99,6 +101,8 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
         cur.execute('''INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)
             VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''' ',' '''+str(campo4)+''' ',' '''+str(campo5)+''' '
             );''')
+    conn.commit()
+    cur.close()
     return 0
 def baja(tabla,campo1,campo2):
     cur=conectarse()
@@ -114,22 +118,25 @@ def baja(tabla,campo1,campo2):
         print('Se supone que esto es un alumno')
         cur.execute('''DELETE FROM alumnos
             WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
-    
+    conn.commit()
+    cur.close()
     return 0
 def modifcar(tabla,id,campoMod,valorNew):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
-        cur.execute('''ALTER TABLE cursos WHERE id= ' '''+str(id)+''' ' 
+        cur.execute('''ALTER TABLE cursos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(id)+''' ' 
         ;''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
-        cur.execute('''ALTER TABLE profesores WHERE id= ' '''+str(id)+''' ' 
+        cur.execute('''ALTER TABLE profesores SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(id)+''' ' 
         ;''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
-        cur.execute('''ALTER TABLE alumnos WHERE id= ' '''+str(id)+''' ' 
+        cur.execute('''ALTER TABLE alumnos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(id)+''' ' 
         ;''')
+    conn.commit()
+    cur.close()
     return 0
 def buscar(tabla,campo1,campo2):
     cur=conectarse()
@@ -154,7 +161,8 @@ def buscar(tabla,campo1,campo2):
             print(x)
         lista=list(out)
         return lista
-    
+    conn.commit()
+    cur.close()
     return None
 def mostrarTodos(tabla,campo1,campo2):
     cur=conectarse()
@@ -173,5 +181,14 @@ def mostrarTodos(tabla,campo1,campo2):
     else:
         for x in out:
             print(x)
-    
+    conn.commit()
+    cur.close()
     return 0
+
+conn =mysqlconnect()
+cur = conn.cursor()
+
+
+
+
+
