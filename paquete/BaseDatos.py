@@ -30,6 +30,7 @@ def iniciar():
     cur = conn.cursor()
     cur.execute('select @@version')
     cur.execute('''CREATE DATABASE IF NOT EXISTS Miguel_Roberto ;''')
+    cur.execute('USE Miguel_Roberto')
     
     cur.execute('''CREATE TABLE IF NOT EXISTS profesores
             (
@@ -77,10 +78,7 @@ def iniciar():
                 ON UPDATE CASCADE
             );
             ''')
-    cur.execute('''ALTER TABLE alumno_curso 
-            ADD 
-            ;
-            ''')
+    
     conn.commit()
     conn.close()
     return 0
@@ -93,8 +91,8 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
             );''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
-        cur.execute('''INSERT INTO profesores(dni,nombre,direccion)
-            VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''' '
+        cur.execute('''INSERT INTO profesores(dni,nombre,direccion,telefono)
+            VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''',' '''+str(campo4)+''' '
             );''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
@@ -118,7 +116,22 @@ def baja(tabla,campo1,campo2):
             WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
     
     return 0
-def buscarTF(tabla,campo1,campo2):
+def modifcar(tabla,id,campoMod,valorNew):
+    cur=conectarse()
+    if(tabla=='cursos'):
+        print('Se supone que esto es un curso')
+        cur.execute('''ALTER TABLE cursos WHERE id= ' '''+str(id)+''' ' 
+        ;''')
+    elif(tabla=='profesores'):
+        print('Se supone que esto es un profesor')
+        cur.execute('''ALTER TABLE profesores WHERE id= ' '''+str(id)+''' ' 
+        ;''')
+    elif(tabla=='alumnos'):
+        print('Se supone que esto es un alumno')
+        cur.execute('''ALTER TABLE alumnos WHERE id= ' '''+str(id)+''' ' 
+        ;''')
+    return 0
+def buscar(tabla,campo1,campo2):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
@@ -133,11 +146,32 @@ def buscarTF(tabla,campo1,campo2):
         cur.execute('''SELECT * FROM alumnos
             WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
     out=cur.fetchall();
-    if(out.isspace()):
-        print('El '+tabla+' '+campo1+' '+campo2+' no ha sido encontrado')
-        return False
+    if(out.size() == 0 or out.isEmpty()):
+        print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
+        return None
     else:
-        print(out)
-        return True
+        for x in out:
+            print(x)
+        lista=list(out)
+        return lista
+    
+    return None
+def mostrarTodos(tabla,campo1,campo2):
+    cur=conectarse()
+    if(tabla=='cursos'):
+        print('Se supone que esto es un curso')
+        cur.execute('''SELECT * FROM cursos ;''')
+    elif(tabla=='profesores'):
+        print('Se supone que esto es un profesor')
+        cur.execute('''SELECT * FROM profesores ;''')
+    elif(tabla=='alumnos'):
+        print('Se supone que esto es un alumno')
+        cur.execute('''SELECT * FROM alumnos ;''')
+    out=cur.fetchall();
+    if(out.size() == 0 or out.isEmpty()):
+        print('La tabla '+tabla+' esta vacia')
+    else:
+        for x in out:
+            print(x)
     
     return 0
