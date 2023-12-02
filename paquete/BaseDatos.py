@@ -5,8 +5,16 @@ Created on 1 dic 2023
 
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
-
-
+def conectarse():
+    conn =mysqlconnect()
+    cur = conn.cursor()
+    cur.execute('USE Miguel_Roberto')
+    
+    return cur
+def deconectarse(conn):
+    conn.close()
+    
+    return 0
 def mysqlconnect():
     conn=pymysql.connect(
         host='localhost',
@@ -76,12 +84,60 @@ def iniciar():
     conn.commit()
     conn.close()
     return 0
-
-conn =mysqlconnect()
-cur = conn.cursor()
-cur.execute('USE Miguel_Roberto')
-
-
-
-
-
+def alta(tabla,campo1,campo2,campo3,campo4,campo5):
+    cur=conectarse()
+    if(tabla=='cursos'):
+        print('Se supone que esto es un curso')
+        cur.execute('''INSERT INTO cursos(nombre,descripcion)
+            VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' '
+            );''')
+    elif(tabla=='profesores'):
+        print('Se supone que esto es un profesor')
+        cur.execute('''INSERT INTO profesores(dni,nombre,direccion)
+            VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''' '
+            );''')
+    elif(tabla=='alumnos'):
+        print('Se supone que esto es un alumno')
+        cur.execute('''INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)
+            VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''' ',' '''+str(campo4)+''' ',' '''+str(campo5)+''' '
+            );''')
+    return 0
+def baja(tabla,campo1,campo2):
+    cur=conectarse()
+    if(tabla=='cursos'):
+        print('Se supone que esto es un curso')
+        cur.execute('''DELETE FROM cursos
+            WHERE nombre = ' '''+str(campo1)+''' ';''')
+    elif(tabla=='profesores'):
+        print('Se supone que esto es un profesor')
+        cur.execute('''DELETE FROM profesores
+            WHERE dni = ' '''+str(campo1)+''' ';''')
+    elif(tabla=='alumnos'):
+        print('Se supone que esto es un alumno')
+        cur.execute('''DELETE FROM alumnos
+            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
+    
+    return 0
+def buscarTF(tabla,campo1,campo2):
+    cur=conectarse()
+    if(tabla=='cursos'):
+        print('Se supone que esto es un curso')
+        cur.execute('''SELECT * FROM cursos
+            WHERE nombre = ' '''+str(campo1)+''' ';''')
+    elif(tabla=='profesores'):
+        print('Se supone que esto es un profesor')
+        cur.execute('''SELECT * FROM profesores
+            WHERE dni = ' '''+str(campo1)+''' ';''')
+    elif(tabla=='alumnos'):
+        print('Se supone que esto es un alumno')
+        cur.execute('''SELECT * FROM alumnos
+            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
+    out=cur.fetchall();
+    if(out.isspace()):
+        print('El '+tabla+' '+campo1+' '+campo2+' no ha sido encontrado')
+        return False
+    else:
+        print(out)
+        return True
+    
+    return 0
