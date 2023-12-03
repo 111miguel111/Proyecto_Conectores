@@ -1,5 +1,10 @@
 import pymysql
+from configparser import ConfigParser
 
+archivo = 'config.ini'
+
+config = ConfigParser()
+config.read(archivo)
 '''
 Created on 1 dic 2023
 
@@ -163,7 +168,7 @@ def buscar(tabla,campo1,campo2):
             ;''')
     out=cur.fetchall();
     lista=list(out)
-    if(lista.size() == 0 or lista.isEmpty()):
+    if( lista.isEmpty()):
         print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
         return None
     else:
@@ -186,7 +191,7 @@ def mostrarTodos(tabla):
         cur.execute('''SELECT * FROM alumnos ;''')
     out=cur.fetchall();
     lista=list(out)
-    if(lista.size() == 0 or lista.isEmpty()):
+    if( lista.isEmpty()):
         print('La tabla '+tabla+' esta vacia')
     else:
         for x in lista:
