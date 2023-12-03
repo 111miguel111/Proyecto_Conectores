@@ -4,6 +4,7 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 import paquete.GestorAlumnos,paquete.GestorCursos,paquete.GestorProfesores
+from paquete.BaseDatos import iniciar, conectarse
 
 def submenuAlumnos():
     #Variable que controla el bucle que ofrece las opciones
@@ -130,6 +131,8 @@ def submenuCursos():
 print('Inicio del programa')
 
 #Bucle de opciones del menu principal
+iniciar()
+conectarse()
 check = True
 while (check):
     opcion = input("Seleccione una opcion:\n1.Alumnos\n2.Profesores\n3.Cursos\n0.Salir")

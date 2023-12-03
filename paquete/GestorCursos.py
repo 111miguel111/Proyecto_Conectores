@@ -5,6 +5,7 @@ Created on 1 dic 2023
 '''
 from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
     escanerDni, confirmacion
+from paquete.BaseDatos import alta
 
 def altaCurso():
     checkValido = True
@@ -21,8 +22,7 @@ def altaCurso():
             checkValido = False
             
     if(checkValido):
-        print()
-        #Llamada a la base de datos para crear curso
+        alta('curso',nombre,descripcion)
 
 def bajaCurso():
     checkValido = True
@@ -63,6 +63,7 @@ def modifCurso():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar nombre
+                        print()
                     
             #Opcion para modificar la descripcion
             elif (opcion == '2'):
@@ -72,6 +73,7 @@ def modifCurso():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar descripcion
+                        print()
                 
             #Opcion para modificar telefono
             elif(opcion=='3'):
@@ -82,6 +84,7 @@ def modifCurso():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar dni
+                        print()
                         
             #Opcion para salir del bucle        
             elif(opcion == '0'):

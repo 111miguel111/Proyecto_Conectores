@@ -3,7 +3,9 @@ Created on 1 dic 2023
 
 @author: DAM2B-07
 '''
-from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono, confirmacion
+from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono, confirmacion,\
+    escanerFecha
+from paquete.BaseDatos import alta, baja
 
 def altaAlumno():
     checkValido = True
@@ -33,13 +35,12 @@ def altaAlumno():
             
     if(checkValido):
         print('Introduzca la fecha de nacimiento del alumno')
-        fNacimiento = escanerTexto()
+        fNacimiento = escanerFecha()
         if(fNacimiento==None):
             checkValido = False
             
     if(checkValido):
-        print()
-        #Llamada a la base de datos para crear alumno
+        alta('alumno',nombre,apellidos,telefono,direccion,fNacimiento)
         
 def bajaAlumno():
     checkValido = True
@@ -58,7 +59,7 @@ def bajaAlumno():
     if(checkValido):
         print("¿Desea confirmar la baja del alumno?(Si o no)")
         if(confirmacion()):
-            #Llamada a la base de datos para borrar alumno
+            baja('alumno', nombre, apellidos)
             print("Alumno eliminado")
         else:
             print("Alumno no eliminado")
@@ -92,7 +93,7 @@ def modifAlumno():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar nombre
-                
+                        print()
                     
             #Opcion para modificar apellidos
             elif (opcion == '2'):
@@ -102,6 +103,7 @@ def modifAlumno():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar apellidos
+                        print()
                 
             #Opcion para modificar telefono
             elif(opcion=='3'):
@@ -111,6 +113,7 @@ def modifAlumno():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar telefono
+                        print()
             
             #Opcion para modificar direccion
             elif(opcion=='4'):
@@ -120,6 +123,7 @@ def modifAlumno():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo para cambiar la direccion
+                        print()
                         
             #Opcion para modificar la fecha de nacimiento
             elif(opcion == '5'):
@@ -129,6 +133,7 @@ def modifAlumno():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo para cambiar fecha de nacimiento
+                        print()
             
             #Opcion para salir del bucle        
             elif(opcion == '0'):

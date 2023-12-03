@@ -6,6 +6,7 @@ Created on 1 dic 2023
 
 from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
     escanerDni, confirmacion
+from paquete.BaseDatos import alta
 
 def altaProfesor():
     checkValido = True
@@ -34,8 +35,7 @@ def altaProfesor():
             checkValido = False
             
     if(checkValido):
-        print()
-        #Llamada a la base de datos para crear profesor
+        alta('profesor',dni,nombre,direccion,telefono)
 
 def bajaProfesor():
     checkValido = True
@@ -73,6 +73,7 @@ def modifProfesor():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar dni
+                        print()
                     
             #Opcion para modificar la descripcion
             elif (opcion == '2'):
@@ -82,23 +83,26 @@ def modifProfesor():
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar nombre
+                        print()
                 
             #Opcion para modificar telefono
             elif(opcion=='3'):
                 print('Introduzca la direccion del profesor')
                 direccion = escanerTexto()
-                if(dni != None):
+                if(direccion != None):
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo para cambiar la direccion
+                        print()
             
             elif(opcion == '4'):
                 print('Introduzca el telefono del profesor')
                 telefono = escanerTelefono()
-                if(dni != None):
+                if(telefono != None):
                     print("¿Desea confirmar la modificacion?(Si o no)")
                     if(confirmacion()):
                         #Metodo modificar telefono
+                        print()
                 
             #Opcion para salir del bucle        
             elif(opcion == '0'):

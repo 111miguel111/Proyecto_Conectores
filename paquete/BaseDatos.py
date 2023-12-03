@@ -21,9 +21,9 @@ def mysqlconnect():
     conn=pymysql.connect(
         host='localhost',
         user='root',
-        password='1234',
+        password='my-secret-pw',
         #db=' Database',
-        port=3307
+        port=3306
         )
     
     return conn
