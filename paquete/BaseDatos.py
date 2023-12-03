@@ -109,15 +109,18 @@ def baja(tabla,campo1,campo2):
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
         cur.execute('''DELETE FROM cursos
-            WHERE nombre = ' '''+str(campo1)+''' ';''')
+            WHERE nombre = ' '''+str(campo1)+''' '
+            ;''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
         cur.execute('''DELETE FROM profesores
-            WHERE dni = ' '''+str(campo1)+''' ';''')
+            WHERE dni = ' '''+str(campo1)+''' '
+            ;''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
         cur.execute('''DELETE FROM alumnos
-            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
+            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
+            ;''')
     conn.commit()
     cur.close()
     return 0
@@ -143,15 +146,18 @@ def buscar(tabla,campo1,campo2):
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
         cur.execute('''SELECT * FROM cursos
-            WHERE nombre = ' '''+str(campo1)+''' ';''')
+            WHERE nombre = ' '''+str(campo1)+''' '
+            ;''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
         cur.execute('''SELECT * FROM profesores
-            WHERE dni = ' '''+str(campo1)+''' ';''')
+            WHERE dni = ' '''+str(campo1)+''' '
+            ;''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
         cur.execute('''SELECT * FROM alumnos
-            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' ;''')
+            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
+            ;''')
     out=cur.fetchall();
     if(out.size() == 0 or out.isEmpty()):
         print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
@@ -184,7 +190,22 @@ def mostrarTodos(tabla,campo1,campo2):
     conn.commit()
     cur.close()
     return 0
-
+def matricularAlumno(idAlumno,idCurso):
+    cur=conectarse()
+    cur.execute('''INSERT INTO alumno_curso(id_curso,id_alumno)
+            VALUES(' '''+str(idCurso)+''' ',' '''+str(idAlumno)+''' '
+            );''')
+    conn.commit()
+    cur.close()
+    return 0
+def desmatricularAlumno(idAlumno,idCurso):
+    cur=conectarse()
+    cur.execute('''DELETE FROM alumno_curso
+            WHERE id_alumno = ' '''+str(idAlumno)+''' ' AND id_curso= ' '''+str(idCurso)+''' ' 
+            ;''')
+    conn.commit()
+    cur.close()
+    return 0
 conn =mysqlconnect()
 cur = conn.cursor()
 
