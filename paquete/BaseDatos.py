@@ -127,7 +127,7 @@ def baja(tabla,campo1,campo2):
     conn.commit()
     cur.close()
     return 0
-def modifcar(tabla,idValor,campoMod,valorNew):
+def modificar(tabla,idValor,campoMod,valorNew):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
