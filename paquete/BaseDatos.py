@@ -1,16 +1,22 @@
 import pymysql
 from configparser import ConfigParser
 
-archivo = 'config.ini'
 
-config = ConfigParser()
-config.read(archivo)
+
 '''
 Created on 1 dic 2023
 
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
-
+def iniciarFicheroConfiguracion():
+    config = ConfigParser()
+    config['SERVER'] = {'host': 'localhost',
+                         'user': 'root',
+                         'password': 'my-secret-pw',
+                         'port':'3306'}
+    with open('config.ini', 'w') as configfile:
+        config.write(configfile)
+    return 0
 def conectarse():
     conn =mysqlconnect()
     cur = conn.cursor()
@@ -24,15 +30,15 @@ def deconectarse(conn):
     return 0
 def mysqlconnect():
     conn=pymysql.connect(
-        host='localhost',
-        user='root',
-        password='my-secret-pw',
-        #db=' Database',
-        port=3306
+        host=host_variable,
+        user=user_variable,
+        password=password_variable,
+        port=port_variable
         )
     
     return conn
 def iniciar():
+    iniciarFicheroConfiguracion()
     conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('select @@version')
@@ -168,7 +174,7 @@ def buscar(tabla,campo1,campo2):
             ;''')
     out=cur.fetchall();
     lista=list(out)
-    if( lista.isEmpty()):
+    if( len(lista)==0):
         print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
         return None
     else:
@@ -182,16 +188,16 @@ def mostrarTodos(tabla):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
-        cur.execute('''SELECT * FROM cursos ;''')
+        cur.execute('''SELECT cursos.* FROM cursos ;''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
-        cur.execute('''SELECT * FROM profesores ;''')
+        cur.execute('''SELECT profesores.* FROM profesores ;''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
-        cur.execute('''SELECT * FROM alumnos ;''')
+        cur.execute('''SELECT alumnos.* FROM alumnos ;''')
     out=cur.fetchall();
     lista=list(out)
-    if( lista.isEmpty()):
+    if(len(lista)==0):
         print('La tabla '+tabla+' esta vacia')
     else:
         for x in lista:
@@ -218,6 +224,12 @@ def desmatricularAlumno(idAlumno,idCurso):
 conn =mysqlconnect()
 cur = conn.cursor()
 
+config = ConfigParser()
+config.read('config.ini')
+host_variable=str(config['SERVER']['host'])
+user_variable=str(config['SERVER']['user'])
+password_variable=str(config['SERVER']['password'])
+port_variable=int(config['SERVER']['port'])
 
 
 
