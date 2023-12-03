@@ -91,17 +91,20 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
         cur.execute('''INSERT INTO cursos(nombre,descripcion)
             VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' '
             );''')
+        conn.commit()
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
         cur.execute('''INSERT INTO profesores(dni,nombre,direccion,telefono)
             VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''',' '''+str(campo4)+''' '
             );''')
+        conn.commit()
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
         cur.execute('''INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)
             VALUES(' '''+str(campo1)+''' ',' '''+str(campo2)+''' ',' '''+str(campo3)+''' ',' '''+str(campo4)+''' ',' '''+str(campo5)+''' '
             );''')
-    conn.commit()
+        conn.commit()
+    
     cur.close()
     return 0
 def baja(tabla,campo1,campo2):
@@ -124,19 +127,19 @@ def baja(tabla,campo1,campo2):
     conn.commit()
     cur.close()
     return 0
-def modifcar(tabla,id,campoMod,valorNew):
+def modifcar(tabla,idValor,campoMod,valorNew):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
-        cur.execute('''ALTER TABLE cursos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(id)+''' ' 
+        cur.execute('''ALTER TABLE cursos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(idValor)+''' ' 
         ;''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
-        cur.execute('''ALTER TABLE profesores SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(id)+''' ' 
+        cur.execute('''ALTER TABLE profesores SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(idValor)+''' ' 
         ;''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
-        cur.execute('''ALTER TABLE alumnos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(id)+''' ' 
+        cur.execute('''ALTER TABLE alumnos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id= ' '''+str(idValor)+''' ' 
         ;''')
     conn.commit()
     cur.close()
