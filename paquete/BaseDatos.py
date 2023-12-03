@@ -162,13 +162,13 @@ def buscar(tabla,campo1,campo2):
             WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
             ;''')
     out=cur.fetchall();
-    if(out.size() == 0 or out.isEmpty()):
+    lista=list(out)
+    if(lista.size() == 0 or lista.isEmpty()):
         print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
         return None
     else:
-        for x in out:
+        for x in lista:
             print(x)
-        lista=list(out)
         return lista
     conn.commit()
     cur.close()
@@ -185,10 +185,11 @@ def mostrarTodos(tabla):
         print('Se supone que esto es un alumno')
         cur.execute('''SELECT * FROM alumnos ;''')
     out=cur.fetchall();
-    if(out.size() == 0 or out.isEmpty()):
+    lista=list(out)
+    if(lista.size() == 0 or lista.isEmpty()):
         print('La tabla '+tabla+' esta vacia')
     else:
-        for x in out:
+        for x in lista:
             print(x)
     conn.commit()
     cur.close()
