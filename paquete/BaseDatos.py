@@ -173,7 +173,7 @@ def buscar(tabla,campo1,campo2):
     conn.commit()
     cur.close()
     return None
-def mostrarTodos(tabla,campo1,campo2):
+def mostrarTodos(tabla):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
