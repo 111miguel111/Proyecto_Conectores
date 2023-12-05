@@ -84,7 +84,7 @@ def modifAlumno():
         if(alumno!=None):
             checkOpcion=True
             while (checkOpcion):
-                opcion = input("Seleccione un campo a modificar:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Matricular en Curso\n0.Salir")
+                opcion = input("Seleccione un campo a modificar:\n1.Nombre\n2.Apellidos\n3.Telefono\n4.Direccion\n5.Fecha nacimiento\n0.Salir")
                 
                 #Opcion para modificar nombre
                 if(opcion=='1'):
@@ -93,7 +93,8 @@ def modifAlumno():
                     if(nombre != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('alumnos',alumno[0],'nombre',nombre)
+                            print(alumno[0][0])
+                            modificar('alumnos',alumno[0][0],'nombre',nombre)
                         
                 #Opcion para modificar apellidos
                 elif (opcion == '2'):
@@ -102,7 +103,7 @@ def modifAlumno():
                     if(apellidos != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('alumnos',alumno[0],'apellidos',apellidos)
+                            modificar('alumnos',alumno[0][0],'apellidos',apellidos)
                     
                 #Opcion para modificar telefono
                 elif(opcion=='3'):
@@ -111,7 +112,7 @@ def modifAlumno():
                     if(telefono != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('alumnos',alumno[0],'telefono',telefono)
+                            modificar('alumnos',alumno[0][0],'telefono',telefono)
                 
                 #Opcion para modificar direccion
                 elif(opcion=='4'):
@@ -120,7 +121,7 @@ def modifAlumno():
                     if(direccion != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('alumnos',alumno[0],'direccion',direccion)
+                            modificar('alumnos',alumno[0][0],'direccion',direccion)
                             
                 #Opcion para modificar la fecha de nacimiento
                 elif(opcion == '5'):
@@ -129,7 +130,7 @@ def modifAlumno():
                     if(fNacimiento != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('alumnos',alumno[0],'f_nacimiento',fNacimiento)
+                            modificar('alumnos',alumno[0][0],'f_nacimiento',fNacimiento)
                 
                 #Opcion para salir del bucle        
                 elif(opcion == '0'):
@@ -187,7 +188,7 @@ def matricularAlum():
         checkValido=False
             
     if(checkValido):
-        matricularAlumno(alumno[0],curso[0])
+        matricularAlumno(alumno[0][0],curso[0][0])
         
 def desmatricularAlum():
     checkValido = True
@@ -218,6 +219,6 @@ def desmatricularAlum():
         checkValido=False
     
     if(checkValido):
-        desmatricularAlumno(alumno[0],curso[0])
+        desmatricularAlumno(alumno[0][0],curso[0][0])
         
     

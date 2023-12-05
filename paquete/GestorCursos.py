@@ -64,7 +64,7 @@ def modifCurso():
                     if(nombre != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0],'nombre',nombre)
+                            modificar('cursos',curso[0][0],'nombre',nombre)
                         
                 # Opcion para modificar la descripcion
                 elif (opcion == '2'):
@@ -73,7 +73,7 @@ def modifCurso():
                     if(descripcion != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0],'descripcion',descripcion)
+                            modificar('cursos',curso[0][0],'descripcion',descripcion)
                     
                 # Opcion para modificar telefono
                 elif(opcion == '3'):
@@ -83,7 +83,7 @@ def modifCurso():
                     if(dni != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0],'dni',dni)
+                            modificar('cursos',curso[0][0],'dni',dni)
                             
                 # Opcion para salir del bucle        
                 elif(opcion == '0'):
@@ -137,7 +137,7 @@ def matricularAlum():
         checkValido=False
             
     if(checkValido):
-        matricularAlumno(alumno[0],curso[0])
+        matricularAlumno(alumno[0][0],curso[0][0])
         
 def desmatricularAlum():
     checkValido = True
@@ -168,7 +168,7 @@ def desmatricularAlum():
         checkValido=False
     
     if(checkValido):
-        desmatricularAlumno(alumno[0],curso[0])
+        desmatricularAlumno(alumno[0][0],curso[0][0])
 
         
 def asignarProfesor():
@@ -190,5 +190,5 @@ def asignarProfesor():
         if(dni != None):
             print("¿Desea confirmar la modificacion?(Si o no)")
             if(confirmacion()):
-                modificar('cursos',curso[0],'dni',dni)
+                modificar('cursos',curso[0][0],'dni',dni)
                 
