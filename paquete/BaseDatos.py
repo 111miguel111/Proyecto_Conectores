@@ -1,5 +1,5 @@
 import pymysql
-from configparser import ConfigParser
+import configparser 
 
 
 
@@ -9,7 +9,7 @@ Created on 1 dic 2023
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
 def iniciarFicheroConfiguracion():
-    config = ConfigParser()
+    config = configparser.ConfigParser()
     config['SERVER'] = {'host': 'localhost',
                          'user': 'root',
                          'password': 'my-secret-pw',
@@ -17,6 +17,16 @@ def iniciarFicheroConfiguracion():
     with open('config.ini', 'w') as configfile:
         config.write(configfile)
     return 0
+
+def checkFileExistance(filePath):
+    try:
+        with open(filePath, "r") as f:
+            return True
+    except FileNotFoundError as e:
+        return False
+    except IOError as e:
+        return False
+
 def conectarse():
     conn =mysqlconnect()
     cur = conn.cursor()
@@ -29,6 +39,12 @@ def deconectarse(conn):
 
     return 0
 def mysqlconnect():
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    host_variable=str(config['SERVER']['host'])
+    user_variable=str(config['SERVER']['user'])
+    password_variable=str(config['SERVER']['password'])
+    port_variable=int(config['SERVER']['port'])
     conn=pymysql.connect(
         host=host_variable,
         user=user_variable,
@@ -38,7 +54,8 @@ def mysqlconnect():
     
     return conn
 def iniciar():
-    iniciarFicheroConfiguracion()
+    if(checkFileExistance("config.ini")==False):
+        iniciarFicheroConfiguracion()
     conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('select @@version')
@@ -221,15 +238,6 @@ def desmatricularAlumno(idAlumno,idCurso):
     conn.commit()
     cur.close()
     return 0
-conn =mysqlconnect()
-cur = conn.cursor()
-
-config = ConfigParser()
-config.read('config.ini')
-host_variable=str(config['SERVER']['host'])
-user_variable=str(config['SERVER']['user'])
-password_variable=str(config['SERVER']['password'])
-port_variable=int(config['SERVER']['port'])
 
 
 
