@@ -26,6 +26,37 @@ def checkFileExistance(filePath):
         return False
     except IOError as e:
         return False
+def checkConfigBien(filePath):
+    campo=''
+    try:
+        config = configparser.ConfigParser()
+        config.read(filePath)
+        campo='host'
+        host_variable=str(config['SERVER']['host'])
+        if(host_variable.isspace()):
+            print("El campo "+campo+" no puede estar vacio")
+            return False
+        campo='user'
+        user_variable=str(config['SERVER']['user'])
+        if(user_variable.isspace()):
+            print("El campo "+campo+" no puede estar vacio")
+            return False
+        campo='password'
+        password_variable=str(config['SERVER']['password'])
+        if(password_variable.isspace()):
+            print("El campo "+campo+" no puede estar vacio")
+            return False
+        campo='port'
+        port_variable=int(config['SERVER']['port'])
+        if(port_variable.isspace()):
+            print("El campo "+campo+" no puede estar vacio")
+            return False
+        return True
+    except FileNotFoundError as e:
+        print("El campo "+campo+" falta o esta mal")
+        return False
+    except IOError as e:
+        return False
 
 def conectarse():
     cur = conn.cursor()
@@ -34,7 +65,6 @@ def conectarse():
 def deconectarse(conn):
     conn.commit()
     conn.close()
-
     return 0
 def mysqlconnect():
     config = configparser.ConfigParser()
@@ -53,7 +83,11 @@ def mysqlconnect():
     return conn
 def iniciar():
     if(checkFileExistance("config.ini")==False):
-        iniciarFicheroConfiguracion()
+        if(checkConfigBien("config.ini")==False):
+            print("fichero de cnfiguracion mal algo tiene que pasar aqui ")
+            print("de momento voy a rehacerlo bien")
+            iniciarFicheroConfiguracion()
+        
     conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('select @@version')
@@ -177,25 +211,45 @@ def buscar(tabla,campo1,campo2):
         cur.execute('''SELECT * FROM cursos
             WHERE nombre = ' '''+str(campo1)+''' '
             ;''')
+        out1=cur.fetchall();
+        cur.execute('''SELECT * FROM alumno_curso
+            WHERE nombre = ' '''+str(campo1)+''' '
+            ;''')
+        out2=cur.fetchall();
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
         cur.execute('''SELECT * FROM profesores
             WHERE dni = ' '''+str(campo1)+''' '
             ;''')
+        out1=cur.fetchall();
+        cur.execute('''SELECT * FROM profesores
+            WHERE dni = ' '''+str(campo1)+''' '
+            ;''')
+        out2=cur.fetchall();
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
         cur.execute('''SELECT * FROM alumnos
             WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
             ;''')
-    out=cur.fetchall();
-    lista=list(out)
-    if( len(lista)==0):
+        out1=cur.fetchall();
+        cur.execute('''SELECT * FROM alumno_curso
+            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
+            ;''')
+        out2=cur.fetchall();
+    lista1=list(out1)
+    lista2=list(out2)
+    if( len(lista1)==0):
         print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
         return None
     else:
-        for x in lista:
+        for x in lista1:
             print(x)
-        return lista
+            
+        for x in lista2:
+            print(x)
+            
+        return lista1
+    
     conn.commit()
     cur.close()
     return None
