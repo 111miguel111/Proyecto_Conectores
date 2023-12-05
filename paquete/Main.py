@@ -5,12 +5,13 @@ Created on 1 dic 2023
 '''
 import paquete.GestorAlumnos,paquete.GestorCursos,paquete.GestorProfesores
 from paquete.BaseDatos import iniciar, conectarse
+from _winapi import TerminateProcess
 
 def submenuAlumnos():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Alumnos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Matricular en Curso\n6.Desatricular de Curso\n0.Salir")
+        opcion = input("Seleccione una opcion para Alumnos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Matricular en Curso\n7.Desmatricular de Curso\n0.Salir")
         
         #Opcion para crear un nuevo alumno
         if(opcion=='1'):
@@ -87,7 +88,7 @@ def submenuCursos():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Cursos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n0.Salir")
+        opcion = input("Seleccione una opcion para Cursos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Matricular alumno\n7.Desatricular alumno\n8.Asignar profesor\n0.Salir")
         
         #Opcion para crear un nuevo curso
         if(opcion=='1'):
@@ -101,11 +102,11 @@ def submenuCursos():
         elif(opcion=='3'):
             paquete.GestorCursos.modifCurso()
         
-        #Opcion para mostrar todos los cursos
+        #Opcion para mostrar un cursos
         elif(opcion=='4'):
             paquete.GestorCursos.buscarCurso()
                     
-        #Opcion para finalizar un curso
+        #Opcion para mostrar todos los cursos
         elif(opcion == '5'):
             paquete.GestorCursos.mostrarTodosCurso()
         
@@ -131,9 +132,8 @@ def submenuCursos():
 print('Inicio del programa')
 
 #Bucle de opciones del menu principal
-iniciar()
-conectarse()
 check = True
+
 while (check):
     opcion = input("Seleccione una opcion:\n1.Alumnos\n2.Profesores\n3.Cursos\n0.Salir")
     

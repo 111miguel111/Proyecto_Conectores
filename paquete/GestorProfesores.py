@@ -74,7 +74,7 @@ def modifProfesor():
                     if(dni != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('profesores',profesor[0],'dni',dni)
+                            modificar('profesores',profesor[0][0],'dni',dni)
                         
                 #Opcion para modificar la descripcion
                 elif (opcion == '2'):
@@ -83,7 +83,7 @@ def modifProfesor():
                     if(dni != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('profesores',profesor[0],'nombre',nombre)
+                            modificar('profesores',profesor[0][0],'nombre',nombre)
                     
                 #Opcion para modificar telefono
                 elif(opcion=='3'):
@@ -92,7 +92,7 @@ def modifProfesor():
                     if(direccion != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('profesores',profesor[0],'direccion',direccion)
+                            modificar('profesores',profesor[0][0],'direccion',direccion)
                 
                 elif(opcion == '4'):
                     print('Introduzca el telefono del profesor')
@@ -100,7 +100,7 @@ def modifProfesor():
                     if(telefono != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('profesores',profesor[0],'telefono',telefono)
+                            modificar('profesores',profesor[0][0],'telefono',telefono)
                     
                 #Opcion para salir del bucle        
                 elif(opcion == '0'):
@@ -139,4 +139,4 @@ def asignarProfesor():
         if(dni != None):
             print("¿Desea confirmar la modificacion?(Si o no)")
             if(confirmacion()):
-                modificar('cursos',curso[0],'dni',dni)
+                modificar('cursos',curso[0][0],'dni',dni)
