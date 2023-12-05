@@ -28,10 +28,8 @@ def checkFileExistance(filePath):
         return False
 
 def conectarse():
-    conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('USE Miguel_Roberto')
-    
     return cur
 def deconectarse(conn):
     conn.commit()
@@ -238,7 +236,7 @@ def desmatricularAlumno(idAlumno,idCurso):
     conn.commit()
     cur.close()
     return 0
-
+conn='';
 
 
 
