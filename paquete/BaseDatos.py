@@ -236,7 +236,8 @@ def desmatricularAlumno(idAlumno,idCurso):
     conn.commit()
     cur.close()
     return 0
-conn='';
+iniciar()
+conn = mysqlconnect()
 
 
 
