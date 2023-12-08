@@ -120,23 +120,3 @@ def buscarProfesor():
 def mostrarTodosProfesor():
     mostrarTodos('profesores')
 
-def asignarProfesor():
-    checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del curso')
-        nombre = escanerAlfanumerico()
-        if(nombre == None):
-            checkValido = False
-            
-    if(checkValido):
-        curso = buscar('alumnos', nombre, None)
-        if(curso == None):
-            checkValido = False
-            
-    if(checkValido):
-        print('Introduzca el DNI del profesor')
-        dni = escanerDni()
-        if(dni != None):
-            print("¿Desea confirmar la modificacion?(Si o no)")
-            if(confirmacion()):
-                modificar('cursos',curso[0][0],'dni',dni)

@@ -12,7 +12,8 @@ def altaCurso():
     
     print('Introduzca el nombre del curso')
     nombre = escanerAlfanumerico()
-    if(nombre == None):
+    curso = buscar('cursos', nombre, None)
+    if(curso == None):
         checkValido = False
         
     if(checkValido):
@@ -30,7 +31,8 @@ def bajaCurso():
     
     print('Introduzca el nombre del curso')
     nombre = escanerAlfanumerico()
-    if(nombre == None):
+    curso = buscar('cursos', nombre, None)
+    if(curso == None):
         checkValido = False
         
     if(checkValido):
@@ -47,11 +49,12 @@ def modifCurso():
     if(checkValido):
         print('Introduzca el nombre del curso')
         nombre = escanerAlfanumerico()
-        if(nombre == None):
+        curso = buscar('cursos', nombre, None)
+        if(curso == None):
             checkValido = False
             
     if(checkValido):
-        curso = buscar('alumnos', nombre, None)
+        curso = buscar('cursos', nombre, None)
         if(curso != None):
             checkOpcion = True
             while (checkOpcion):
@@ -98,7 +101,8 @@ def buscarCurso():
     if(checkValido):
         print('Introduzca el nombre del curso')
         nombre = escanerAlfanumerico()
-        if(nombre == None):
+        curso = buscar('cursos', nombre, None)
+        if(curso == None):
             checkValido = False
     if(checkValido):
         buscar('cursos', nombre, None)
@@ -106,89 +110,3 @@ def buscarCurso():
 
 def mostrarTodosCurso():
     mostrarTodos('cursos')
-
-    
-def matricularAlum():
-    checkValido = True
-    
-    print('Introduzca el nombre del alumno')
-    nombre = escanerAlfanumerico()
-    if(nombre==None):
-        checkValido = False
-        
-    if(checkValido):
-        print('Introduzca los apellidos del alumno')
-        apellidos = escanerTexto()
-        if(apellidos==None):
-            checkValido = False
-            
-    alumno=buscar('alumnos', nombre, apellidos)
-    if(alumno==None):
-        checkValido=False
-        
-    if(checkValido):
-        print('Introduzca los apellidos del curso')
-        curso = escanerTexto()
-        if(curso==None):
-            checkValido = False
-    
-    curso = buscar('cursos', nombre, None)
-    if(curso==None):
-        checkValido=False
-            
-    if(checkValido):
-        matricularAlumno(alumno[0][0],curso[0][0])
-        
-def desmatricularAlum():
-    checkValido = True
-    
-    print('Introduzca el nombre del alumno')
-    nombre = escanerAlfanumerico()
-    if(nombre==None):
-        checkValido = False
-        
-    if(checkValido):
-        print('Introduzca los apellidos del alumno')
-        apellidos = escanerTexto()
-        if(apellidos==None):
-            checkValido = False
-            
-    alumno=buscar('alumnos', nombre, apellidos)
-    if(alumno==None):
-        checkValido=False
-        
-    if(checkValido):
-        print('Introduzca los apellidos del curso')
-        curso = escanerTexto()
-        if(curso==None):
-            checkValido = False
-    
-    curso = buscar('cursos', nombre, None)
-    if(curso==None):
-        checkValido=False
-    
-    if(checkValido):
-        desmatricularAlumno(alumno[0][0],curso[0][0])
-
-        
-def asignarProfesor():
-    checkValido = True
-    if(checkValido):
-        print('Introduzca el nombre del curso')
-        nombre = escanerAlfanumerico()
-        if(nombre == None):
-            checkValido = False
-            
-    if(checkValido):
-        curso = buscar('alumnos', nombre, None)
-        if(curso == None):
-            checkValido = False
-            
-    if(checkValido):
-        print('Introduzca el DNI del profesor')
-        dni = escanerDni()
-        if(dni != None):
-            print("¿Desea confirmar la modificacion?(Si o no)")
-            if(confirmacion()):
-                modificar('cursos',curso[0][0],'dni',dni)
-                

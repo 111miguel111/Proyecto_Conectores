@@ -4,29 +4,96 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 import datetime
-def escanerID(root):
-    '''
-    Metodo para escanear una nueva ID de vehiculo
-    :param root: Elemento raiz del documento XML
-    :return Si la ID es valida devuelve una ID si no devuelve None
-    '''
-    #Se crea un contador de intentos para el bucle que solo iterara hasta 5 intentos
-    intentos=0
-    while(intentos<5):
-        #Se suma el contador de intentos al iniciar la iteracion
-        intentos+=1
-        #Se comprueba si el texto introducido consiste solo en numeros
-        scan=input()
-        if(scan.isspace()==False and scan.isnumeric()):
-            #Se comprueba que la ID introducida no exista ya y si no lo hace se devuelve
-            if(comprobarIDVehiculo(scan,root)):
-                return scan
-            else:
-                print("El ID introducido ya esta asigando a otro vehiculo o se encuentra en el registro de alquileres")
-        else:
-            print('Porfavor introduce numeros no decimales')
-    print("Has superado el numero de intentos")
-    return None
+from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, matricularAlumno, desmatricularAlumno
+
+def matricularAlum():
+    checkValido = True
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
+    if(checkValido):
+        print('Introduzca los apellidos del alumno')
+        apellidos = escanerTexto()
+        if(apellidos==None):
+            checkValido = False
+    
+    if(checkValido):        
+        alumno=buscar('alumnos', nombre, apellidos)
+        if(alumno==None):
+            checkValido=False
+        
+    if(checkValido):
+        print('Introduzca el nombre del curso')
+        nomCurso = escanerTexto()
+        if(nomCurso==None):
+            checkValido = False
+    
+    if(checkValido):
+        curso = buscar('cursos', nomCurso, None)
+        if(curso==None):
+            checkValido=False
+            
+    if(checkValido):
+        matricularAlumno(alumno[0][0],curso[0][0])
+        
+def desmatricularAlum():
+    checkValido = True
+    
+    print('Introduzca el nombre del alumno')
+    nombre = escanerAlfanumerico()
+    if(nombre==None):
+        checkValido = False
+        
+    if(checkValido):
+        print('Introduzca los apellidos del alumno')
+        apellidos = escanerTexto()
+        if(apellidos==None):
+            checkValido = False
+    if(checkValido):        
+        alumno=buscar('alumnos', nombre, apellidos)
+        if(alumno==None):
+            checkValido=False
+        
+    if(checkValido):
+        print('Introduzca el nombre del curso')
+        nomCurso = escanerTexto()
+        if(nomCurso==None):
+            checkValido = False
+    
+    if(checkValido):
+        curso = buscar('cursos', nomCurso, None)
+        if(curso==None):
+            checkValido=False
+    
+    if(checkValido):
+        desmatricularAlumno(alumno[0][0],curso[0][0])
+        
+def asignarProfesor():
+    checkValido = True
+    if(checkValido):
+        print('Introduzca el nombre del curso')
+        nombre = escanerAlfanumerico()
+        if(nombre == None):
+            checkValido = False
+            
+    if(checkValido):
+        curso = buscar('cursos', nombre, None)
+        if(curso == None):
+            checkValido = False
+            
+    if(checkValido):
+        print('Introduzca el DNI del profesor')
+        dni = escanerDni()
+        profesor = buscar('profesores',dni,None)
+        if(profesor != None):
+            print("¿Desea confirmar la modificacion?(Si o no)")
+            if(confirmacion()):
+                modificar('cursos',curso[0][0],'dni',dni)
+
+
 
 def escanerTexto():
     '''
@@ -38,7 +105,7 @@ def escanerTexto():
     while(intentos<5):
         #Se introduce el texto y si hay algo escrito se devuelve
         scan=input()
-        if(scan.isspace()==False):
+        if(scan.isspace()==False and len(scan)<=25):
             return scan
         intentos+=1
         print('Porfavor introduce algun caracter')
@@ -55,7 +122,7 @@ def escanerAlfanumerico():
     while(intentos<5):
         #Se introduce la cadena y si no hay espacios se devuelve
         scan=input()
-        if(scan.isspace()==False and scan.isalnum() ):
+        if(scan.isspace()==False and scan.isalnum() and len(scan)<=25):
             return scan
         intentos+=1
         print('Porfavor introduce alfanumericos')
@@ -72,7 +139,7 @@ def escanerAlfabetico():
     while(intentos<5):
         #Se introduce la cadena y si solo hay letras se devuelve
         scan=input()
-        if(scan.isspace()==False and scan.isalpha() ):
+        if(scan.isspace()==False and scan.isalpha() and len(scan)<=25):
             return scan
         intentos+=1
         print('Porfavor introduce alfabeticos')
