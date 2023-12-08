@@ -151,6 +151,10 @@ def iniciar():
     conn.commit()
     cur.close()
     return 0
+def dropDataBase():
+    cur=conectarse()
+    cur.execute("DROP DATABASE IF EXISTS miguel_roberto ;");
+    return 0
 def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     cur=conectarse()
     if(tabla=='cursos'):
