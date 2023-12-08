@@ -86,10 +86,6 @@ def mysqlconnect():
     
     return conn
 def iniciar():
-    
-    
-    
-    
     if(checkFileExistance("config.ini")==False):
         print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
         opcion=Utiles.confirmacion()
