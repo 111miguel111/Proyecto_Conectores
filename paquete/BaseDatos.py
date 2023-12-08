@@ -124,11 +124,11 @@ def mysqlconnect():
         while(salir):
             print("Hay un error en el fichero de configuracion que impiede conectarse \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa ")
             opcion=escanerNumerico()
-            if (opcion==1):
+            if (opcion=='1'):
                 salir=False
                 print("El fichero de configuracion sera restablecido")
                 iniciarFicheroConfiguracion()
-            elif(opcion==2):
+            elif(opcion=='2'):
                 salir=False
                 print("El programa se cerrara")
                 sys.exit()
@@ -146,11 +146,11 @@ def iniciar():
             while(salir):
                 print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
                 opcion=escanerNumerico()
-                if (opcion==1):
+                if (opcion=='1'):
                     salir=False
                     print("El fichero de configuracion sera restablecido")
                     iniciarFicheroConfiguracion()
-                elif(opcion==2):
+                elif(opcion=='2'):
                     salir=False
                     print("El programa se cerrara")
                     sys.exit()
