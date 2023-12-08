@@ -236,10 +236,10 @@ def buscar(tabla,campo1,campo2):
             print("Curso: "+campo1+" {")
             for x in lista1:
                 print(x)
-            print("Profesor que imparte: "+campo1)
+            print("Profesor que imparte "+campo1+" :")
             for x in lista3:
                 print(x)
-            print("Alumnos en el curso: "+campo1)
+            print("Alumnos en el curso "+campo1+" :")
             for x in lista2:
                 print(x)
             print("}")
@@ -264,7 +264,7 @@ def buscar(tabla,campo1,campo2):
             print("Profesor: "+campo1+" {")
             for x in lista1:
                 print(x)
-            print("Cursos que imparte el profesor: "+campo1)
+            print("Cursos que imparte el profesor "+campo1+" :")
             for x in lista2:
                 print(x)
             print("}")
@@ -289,7 +289,7 @@ def buscar(tabla,campo1,campo2):
             print("Alumno: "+campo1+" "+campo2+" {")
             for x in lista1:
                 print(x)
-            print("Cursos en los que esta matriculado: "+campo1+" "+campo2)
+            print("Cursos en los que esta matriculado "+campo1+" "+campo2+" :")
             for x in lista2:
                 print(x)
             print("}")
