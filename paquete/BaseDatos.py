@@ -1,9 +1,6 @@
 import pymysql
 import configparser 
-from paquete import Utiles
 import sys
-from rx.core.observable import catch
-from rx.core.operators.catch import _catch
 
 
 '''
@@ -12,7 +9,20 @@ Created on 1 dic 2023
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
 
-
+def confirmacion():
+    '''
+    Metodo para confirmar si se quiere confirmar una operacion
+    :return Devuelve un un boolean. El valor sera True si escribe 'si' y False si escribe 'no'
+    '''
+    while(True):
+        inputConfirmacion = input()
+        if(inputConfirmacion.lower() == 'si'):
+            return True
+        elif(inputConfirmacion.lower() == 'no'):
+            return False
+        else:
+            print("Valor incorrecto, pruebe otra vez")
+            
 def iniciarFicheroConfiguracion():
     '''
     Funcion que se encarga de crear el fichero de configuracion con valores predeterminados
@@ -109,14 +119,14 @@ def mysqlconnect():
             )
     except :
         print("Hay un error en el fichero de configuracion que impiede conectarse \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-        opcion=Utiles.confirmacion()
-            if (opcion):
-                print("El fichero de configuracion sera restablecido")
-                iniciarFicheroConfiguracion()
-                mysqlconnect()
-            else:
-                print("El programa se cerrara")
-                sys.exit()
+        opcion=confirmacion()
+        if (opcion):
+            print("El fichero de configuracion sera restablecido")
+            iniciarFicheroConfiguracion()
+            mysqlconnect()
+        else:
+            print("El programa se cerrara")
+            sys.exit()
     return conn
 def iniciar():
     '''
@@ -125,7 +135,7 @@ def iniciar():
     if(checkFileExistance("config.ini")==True):
         if(checkConfigBien("config.ini")==False):
             print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-            opcion=Utiles.confirmacion()
+            opcion=confirmacion()
             if (opcion):
                 print("El fichero de configuracion sera restablecido")
                 iniciarFicheroConfiguracion()
