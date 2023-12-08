@@ -19,7 +19,7 @@ def escanerNumerico():
     while(intentos<5):
         scan=input()
         #Se introduce la cadena y si solo hay letras se devuelve
-        if(scan.isspace()==False and scan.isnumeric() ):
+        if(scan.isspace()==False and scan.isnumeric() and scan>0 and scan<3 ):
             return scan
         intentos+=1
         print('Porfavor introduce numeros no decimales')
@@ -120,14 +120,21 @@ def mysqlconnect():
             port=port_variable
             )
     except :
-        print("Hay un error en el fichero de configuracion que impiede conectarse \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-        opcion=escanerNumerico()
-        if (opcion):
-            print("El fichero de configuracion sera restablecido")
-            iniciarFicheroConfiguracion()
-        else:
-            print("El programa se cerrara")
-            sys.exit()
+        salir=True
+        while(salir):
+            print("Hay un error en el fichero de configuracion que impiede conectarse \n Quieres restablecer el fichero con los valores por defecto - 1 \n Quieres cerrar el programa - 2 ")
+            opcion=escanerNumerico()
+            if (opcion==1):
+                salir=False
+                print("El fichero de configuracion sera restablecido")
+                iniciarFicheroConfiguracion()
+            elif(opcion==2):
+                salir=False
+                print("El programa se cerrara")
+                sys.exit()
+            else:
+                salir=True
+                print("Valor no valido")
     return conn
 def iniciar():
     '''
@@ -135,14 +142,21 @@ def iniciar():
     '''
     if(checkFileExistance("config.ini")==True):
         if(checkConfigBien("config.ini")==False):
-            print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-            opcion=escanerNumerico()
-            if (opcion):
-                print("El fichero de configuracion sera restablecido")
-                iniciarFicheroConfiguracion()
-            else:
-                print("El programa se cerrara")
-                sys.exit()
+            salir=True
+            while(salir):
+                print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - 1 \n Quieres cerrar el programa - 2 ")
+                opcion=escanerNumerico()
+                if (opcion==1):
+                    salir=False
+                    print("El fichero de configuracion sera restablecido")
+                    iniciarFicheroConfiguracion()
+                elif(opcion==2):
+                    salir=False
+                    print("El programa se cerrara")
+                    sys.exit()
+                else:
+                    salir=True
+                    print("Valor no valido")
     else:
         print("Se ha creado el fichero de configuracion")
         iniciarFicheroConfiguracion()
