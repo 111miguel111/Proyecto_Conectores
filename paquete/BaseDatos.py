@@ -195,15 +195,15 @@ def modificar(tabla,idValor,campoMod,valorNew):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
-        cur.execute('''ALTER TABLE cursos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id=  '''+str(idValor)+''' 
+        cur.execute('''UPDATE cursos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id=  '''+str(idValor)+''' 
         ;''')
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
-        cur.execute('''ALTER TABLE profesores SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id=  '''+str(idValor)+''' 
+        cur.execute('''UPDATE profesores SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id=  '''+str(idValor)+''' 
         ;''')
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
-        cur.execute('''ALTER TABLE alumnos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id=  '''+str(idValor)+'''  
+        cur.execute('''UPDATE alumnos SET '''+str(campoMod)+''' = ' '''+str(valorNew)+''' ' WHERE id=  '''+str(idValor)+'''  
         ;''')
     conn.commit()
     cur.close()
