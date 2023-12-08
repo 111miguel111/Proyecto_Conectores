@@ -9,7 +9,10 @@ Created on 1 dic 2023
 
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
+
+
 def iniciarFicheroConfiguracion():
+    
     config = configparser.ConfigParser()
     config['SERVER'] = {'host': 'localhost',
                          'user': 'root',
@@ -103,7 +106,8 @@ def iniciar():
             id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
             dni VARCHAR(9) UNIQUE NOT NULL,
             nombre VARCHAR(25) NOT NULL,
-            direccion VARCHAR(25) NOT NULL
+            direccion VARCHAR(25) NOT NULL,
+            telefono VARCHAR(9) NOT NULL
             );
             ''')
     cur.execute('''CREATE TABLE IF NOT EXISTS cursos
@@ -112,7 +116,6 @@ def iniciar():
             nombre VARCHAR(25) UNIQUE NOT NULL,
             descripcion VARCHAR(25) NOT NULL,
             id_profesor integer ,
-            id_alumno_curso integer,
             FOREIGN KEY (id_profesor) REFERENCES profesores (id)
                 ON DELETE CASCADE
                 ON UPDATE CASCADE
@@ -326,6 +329,7 @@ def matricularAlumno(idAlumno,idCurso):
             );''')
     conn.commit()
     cur.close()
+    print("Alumno matriculado exitosamente")
     return 0
 def desmatricularAlumno(idAlumno,idCurso):
     cur=conectarse()
@@ -334,6 +338,7 @@ def desmatricularAlumno(idAlumno,idCurso):
             ;''')
     conn.commit()
     cur.close()
+    print("Alumno desmatriculado exitosamente")
     return 0
 iniciar()
 conn = mysqlconnect()
