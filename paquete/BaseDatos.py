@@ -19,7 +19,7 @@ def escanerNumerico():
     while(intentos<5):
         scan=input()
         #Se introduce la cadena y si solo hay letras se devuelve
-        if(scan.isspace()==False and scan.isnumeric() and int(scan)>0 and int(scan)<3 ):
+        if(scan.isspace()==False and scan.isnumeric() and (scan=='1' or scan=='2') ):
             return scan
         intentos+=1
         print('Porfavor introduce numeros no decimales')
