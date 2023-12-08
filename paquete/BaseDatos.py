@@ -12,7 +12,9 @@ Created on 1 dic 2023
 
 
 def iniciarFicheroConfiguracion():
-    
+    '''
+    Funcion que se encarga de crear el fichero de configuracion con valores predeterminados
+    '''
     config = configparser.ConfigParser()
     config['SERVER'] = {'host': 'localhost',
                          'user': 'root',
@@ -23,6 +25,11 @@ def iniciarFicheroConfiguracion():
     return 0
 
 def checkFileExistance(filePath):
+    '''
+    Comprueba que el fichero de configuracion existe
+    :param filePath: El nombre del fichero
+    '''
+    
     try:
         with open(filePath, "r") as f:
             return True
@@ -31,6 +38,10 @@ def checkFileExistance(filePath):
     except IOError as e:
         return False
 def checkConfigBien(filePath):
+    '''
+    Funcion encargada de comprobar que el fichero de configuracion esta completo y no tenga errores
+    :param filePath: El nombre del fichero
+    '''
     campo=''
     try:
         config = configparser.ConfigParser()
@@ -63,14 +74,24 @@ def checkConfigBien(filePath):
         return False
 
 def conectarse():
+    '''
+    Funcion encargada de conectarse a la base de datos y devolver un cursor
+    '''
     cur = conn.cursor()
     cur.execute('USE miguel_roberto')
     return cur
-def deconectarse(conn):
+def deconectarse():
+    '''
+    Funcion encargada de desconectarse de la la base de datos y cerrar la conexion
+    :param conn:
+    '''
     conn.commit()
     conn.close()
     return 0
 def mysqlconnect(): 
+    '''
+    Funcion encargada de realizar la conexion 
+    '''
     config = configparser.ConfigParser()
     config.read('config.ini')
     host_variable=str(config['SERVER']['host'])
@@ -86,15 +107,23 @@ def mysqlconnect():
     
     return conn
 def iniciar():
-    if(checkFileExistance("config.ini")==False):
-        print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-        opcion=Utiles.confirmacion()
-        if (opcion):
-            print("El fichero de configuracion sera restablecido")
-            iniciarFicheroConfiguracion()
-        else:
-            print("El programa se cerrara")
-            sys.exit()
+    '''
+    Funcion encargada de iniciar todo lo relacionado con la base de datos, la configuracion la conexion, crear las tablas etc
+    '''
+    if(checkFileExistance("config.ini")==True):
+        if(checkConfigBien("config.ini")==False):
+            print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
+            opcion=Utiles.confirmacion()
+            if (opcion):
+                print("El fichero de configuracion sera restablecido")
+                iniciarFicheroConfiguracion()
+            else:
+                print("El programa se cerrara")
+                sys.exit()
+    else:
+        print("Se ha creado el fichero de configuracion")
+        iniciarFicheroConfiguracion()
+        
     conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('select @@version')
@@ -153,11 +182,23 @@ def iniciar():
     cur.close()
     return 0
 def dropDataBase():
+    '''
+    Funcion que tira la base de datos ( pensado para facilitar el testear el codigo)
+    '''
     cur=conectarse()
     cur.execute("DROP DATABASE miguel_roberto ;");
     conn.commit()
     return 0
 def alta(tabla,campo1,campo2,campo3,campo4,campo5):
+    '''
+    Funcion encargada de la alta de cursos, profesores, alumnos
+    :param tabla: En que tabla se van a insertar los datos
+    :param campo1: El primer campo de cada tabla
+    :param campo2: El segundo campo de cada tabla
+    :param campo3: Si la tabla tiene un tercer campo, se pondra aqui(alumno, profesor)
+    :param campo4: Si la tabla tiene un cuarto campo, se pondra aqui(alumno, profesor)
+    :param campo5: Si la tabla tiene un quinto campo, se pondra aqui(alumno)
+    '''
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
@@ -181,6 +222,12 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     cur.close()
     return 0
 def baja(tabla,campo1,campo2):
+    '''
+    Funcion encargada de eliminar una fila de una tabla
+    :param tabla: La tabla en la que se quiere eliminar una fila
+    :param campo1: El primer campo de cada tabla
+    :param campo2: El segundo campo de la tabla alumnos
+    '''
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
@@ -201,6 +248,13 @@ def baja(tabla,campo1,campo2):
     cur.close()
     return 0
 def modificar(tabla,idValor,campoMod,valorNew):
+    '''
+    Funcion que se encarga de modificar un campo de una tabla
+    :param tabla: La tabla en la que se quiere hacer una modificacion
+    :param idValor: La id de la fila que se quiere cambiar
+    :param campoMod: El campo que se quiere modificar
+    :param valorNew: El valor que se quiere poner en el campo
+    '''
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
@@ -218,6 +272,12 @@ def modificar(tabla,idValor,campoMod,valorNew):
     cur.close()
     return 0
 def buscar(tabla,campo1,campo2):
+    '''
+    Funcion encargada de buscar un curso, profesor o alumno y devolver una lista con los datos de este
+    :param tabla: La tabla en la que se quiere buscar
+    :param campo1: El primer campo de cada tabla
+    :param campo2: El segundo campo de la tabla alumnos
+    '''
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
@@ -308,6 +368,10 @@ def buscar(tabla,campo1,campo2):
     cur.close()
     return None
 def mostrarTodos(tabla):
+    '''
+    Funcion encargada de mostrar todas las fias de una tabla
+    :param tabla: La tabla que se quiere mostrar
+    '''
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
@@ -329,6 +393,11 @@ def mostrarTodos(tabla):
     cur.close()
     return 0
 def matricularAlumno(idAlumno,idCurso):
+    '''
+    Funcion encargada de aniadir un alumno y un curso a la tabla que conecta alumnos y cursos(la tabla que tiene las matriculaciones de los alumnos)
+    :param idAlumno: El id del alumno que se va a matriular
+    :param idCurso: El id del curso en el que se va a matricular un alumno
+    '''
     cur=conectarse()
     cur.execute('''INSERT INTO alumno_curso(id_curso,id_alumno)
             VALUES( '''+str(idCurso)+''' , '''+str(idAlumno)+''' 
@@ -338,6 +407,11 @@ def matricularAlumno(idAlumno,idCurso):
     print("Alumno matriculado exitosamente")
     return 0
 def desmatricularAlumno(idAlumno,idCurso):
+    '''
+    Funcion encargada de eliminar una matriculacion de la tabla que contiene las matriculaciones
+    :param idAlumno: El alumno que se va a desmatricular
+    :param idCurso: El curso del cual el alumno se va a desmatricular
+    '''
     cur=conectarse()
     cur.execute('''DELETE FROM alumno_curso
             WHERE id_alumno =  '''+str(idAlumno)+'''  AND id_curso=  '''+str(idCurso)+''' 
