@@ -64,7 +64,7 @@ def checkConfigBien(filePath):
 
 def conectarse():
     cur = conn.cursor()
-    cur.execute('USE Miguel_Roberto')
+    cur.execute('USE miguel_roverto')
     return cur
 def deconectarse(conn):
     conn.commit()
@@ -99,7 +99,7 @@ def iniciar():
     cur = conn.cursor()
     cur.execute('select @@version')
     cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
-    cur.execute('USE Miguel_Roberto')
+    cur.execute('USE miguel_roverto')
     
     cur.execute('''CREATE TABLE IF NOT EXISTS profesores
             (
@@ -153,7 +153,7 @@ def iniciar():
     return 0
 def dropDataBase():
     cur=conectarse()
-    cur.execute("DROP DATABASE IF EXISTS miguel_roberto ;");
+    cur.execute("DROP DATABASE miguel_roberto ;");
     conn.commit()
     return 0
 def alta(tabla,campo1,campo2,campo3,campo4,campo5):
