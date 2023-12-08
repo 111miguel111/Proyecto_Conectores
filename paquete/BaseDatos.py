@@ -2,6 +2,8 @@ import pymysql
 import configparser 
 from paquete import Utiles
 import sys
+from rx.core.observable import catch
+from rx.core.operators.catch import _catch
 
 
 '''
@@ -92,19 +94,29 @@ def mysqlconnect():
     '''
     Funcion encargada de realizar la conexion 
     '''
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    host_variable=str(config['SERVER']['host'])
-    user_variable=str(config['SERVER']['user'])
-    password_variable=str(config['SERVER']['password'])
-    port_variable=int(config['SERVER']['port'])
-    conn=pymysql.connect(
-        host=host_variable,
-        user=user_variable,
-        password=password_variable,
-        port=port_variable
-        )
-    
+    try:
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        host_variable=str(config['SERVER']['host'])
+        user_variable=str(config['SERVER']['user'])
+        password_variable=str(config['SERVER']['password'])
+        port_variable=int(config['SERVER']['port'])
+        conn=pymysql.connect(
+            host=host_variable,
+            user=user_variable,
+            password=password_variable,
+            port=port_variable
+            )
+    except :
+        print("Hay un error en el fichero de configuracion que impiede conectarse \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
+        opcion=Utiles.confirmacion()
+            if (opcion):
+                print("El fichero de configuracion sera restablecido")
+                iniciarFicheroConfiguracion()
+                mysqlconnect()
+            else:
+                print("El programa se cerrara")
+                sys.exit()
     return conn
 def iniciar():
     '''
@@ -123,8 +135,11 @@ def iniciar():
     else:
         print("Se ha creado el fichero de configuracion")
         iniciarFicheroConfiguracion()
-        
+    
     conn =mysqlconnect()
+    
+    
+    
     cur = conn.cursor()
     cur.execute('select @@version')
     cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
