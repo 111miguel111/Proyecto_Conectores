@@ -106,6 +106,7 @@ def mysqlconnect():
     '''
     Funcion encargada de realizar la conexion 
     '''
+    
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
@@ -119,6 +120,7 @@ def mysqlconnect():
             password=password_variable,
             port=port_variable
             )
+        return conn
     except :
         salir=True
         while(salir):
@@ -135,7 +137,7 @@ def mysqlconnect():
             else:
                 salir=True
                 print("Valor no valido")
-    return conn
+    
 def iniciar():
     '''
     Funcion encargada de iniciar todo lo relacionado con la base de datos, la configuracion la conexion, crear las tablas etc
