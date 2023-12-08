@@ -4,8 +4,6 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 import paquete.GestorAlumnos,paquete.GestorCursos,paquete.GestorProfesores
-from paquete.BaseDatos import iniciar, conectarse
-from _winapi import TerminateProcess
 
 def submenuAlumnos():
     #Variable que controla el bucle que ofrece las opciones
@@ -35,11 +33,11 @@ def submenuAlumnos():
         
         #Opcion para matricular un alumno en un curso  
         elif(opcion == '6'):
-            paquete.GestorAlumnos.matricularAlum()
+            paquete.Utiles.matricularAlum()
             
         #Opcion para desmatricular un alumno en un curso    
         elif(opcion == '7'):
-            paquete.GestorAlumnos.desmatricularAlum()
+            paquete.Utiles.desmatricularAlum()
         #Opcion para salir del bucle        
         elif(opcion == '0'):
             check = False
@@ -75,7 +73,7 @@ def submenuProfesores():
         
         #Metodo para asignar un profesor a un curso
         elif(opcion == '6'):
-            paquete.GestorProfesores.asignarProfesor()
+            paquete.Utiles.asignarProfesor()
         
         #Opcion para salir del bucle        
         elif(opcion == '0'):
@@ -112,15 +110,15 @@ def submenuCursos():
         
         #Opcion para matricular un alumno en un curso 
         elif(opcion == '6'):
-            paquete.GestorCursos.matricularAlum()
+            paquete.Utiles.matricularAlum()
         
         #Opcion para desmatricular un alumno en un curso     
         elif(opcion == '7'):
-            paquete.GestorCursos.desmatricularAlum()
+            paquete.Utiles.desmatricularAlum()
         
         #Metodo para asignar un profesor a un curso
         elif(opcion == '8'):
-            paquete.GestorCursos.asignarProfesor()
+            paquete.Utiles.asignarProfesor()
         
         #Opcion para salir del bucle        
         elif(opcion == '0'):
