@@ -19,7 +19,7 @@ def escanerNumerico():
     while(intentos<5):
         scan=input()
         #Se introduce la cadena y si solo hay letras se devuelve
-        if(scan.isspace()==False and scan.isnumeric() and scan>0 and scan<3 ):
+        if(scan.isspace()==False and scan.isnumeric() and int(scan)>0 and int(scan)<3 ):
             return scan
         intentos+=1
         print('Porfavor introduce numeros no decimales')
@@ -122,7 +122,7 @@ def mysqlconnect():
     except :
         salir=True
         while(salir):
-            print("Hay un error en el fichero de configuracion que impiede conectarse \n Quieres restablecer el fichero con los valores por defecto - 1 \n Quieres cerrar el programa - 2 ")
+            print("Hay un error en el fichero de configuracion que impiede conectarse \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa ")
             opcion=escanerNumerico()
             if (opcion==1):
                 salir=False
@@ -144,7 +144,7 @@ def iniciar():
         if(checkConfigBien("config.ini")==False):
             salir=True
             while(salir):
-                print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - 1 \n Quieres cerrar el programa - 2 ")
+                print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
                 opcion=escanerNumerico()
                 if (opcion==1):
                     salir=False
