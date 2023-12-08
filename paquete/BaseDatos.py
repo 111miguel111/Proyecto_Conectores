@@ -64,13 +64,13 @@ def checkConfigBien(filePath):
 
 def conectarse():
     cur = conn.cursor()
-    cur.execute('USE miguel_roverto')
+    cur.execute('USE miguel_roberto')
     return cur
 def deconectarse(conn):
     conn.commit()
     conn.close()
     return 0
-def mysqlconnect():
+def mysqlconnect(): 
     config = configparser.ConfigParser()
     config.read('config.ini')
     host_variable=str(config['SERVER']['host'])
@@ -86,6 +86,10 @@ def mysqlconnect():
     
     return conn
 def iniciar():
+    
+    
+    
+    
     if(checkFileExistance("config.ini")==False):
         print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
         opcion=Utiles.confirmacion()
@@ -99,7 +103,7 @@ def iniciar():
     cur = conn.cursor()
     cur.execute('select @@version')
     cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
-    cur.execute('USE miguel_roverto')
+    cur.execute('USE miguel_roberto')
     
     cur.execute('''CREATE TABLE IF NOT EXISTS profesores
             (
