@@ -9,20 +9,22 @@ Created on 1 dic 2023
 @author: Miguel_Gonzalez y Roberto_Castilla
 '''
 
-def confirmacion():
+def escanerNumerico():
     '''
-    Metodo para confirmar si se quiere confirmar una operacion
-    :return Devuelve un un boolean. El valor sera True si escribe 'si' y False si escribe 'no'
+    Metodo para escanear una cadena con solo numeros
+    :return Si la cadena es valida devuelve la cadena, si no devuelve None
     '''
-    while(True):
-        inputConfirmacion = input()
-        if(inputConfirmacion.lower() == 'si'):
-            return True
-        elif(inputConfirmacion.lower() == 'no'):
-            return False
-        else:
-            print("Valor incorrecto, pruebe otra vez")
-            
+    #Se crea un contador de intentos para el bucle que solo iterara hasta 5 intentos
+    intentos=0
+    while(intentos<5):
+        scan=input()
+        #Se introduce la cadena y si solo hay letras se devuelve
+        if(scan.isspace()==False and scan.isnumeric() ):
+            return scan
+        intentos+=1
+        print('Porfavor introduce numeros no decimales')
+    print("Has superado el numero de intentos")
+    return None
 def iniciarFicheroConfiguracion():
     '''
     Funcion que se encarga de crear el fichero de configuracion con valores predeterminados
@@ -119,11 +121,10 @@ def mysqlconnect():
             )
     except :
         print("Hay un error en el fichero de configuracion que impiede conectarse \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-        opcion=confirmacion()
+        opcion=escanerNumerico()
         if (opcion):
             print("El fichero de configuracion sera restablecido")
             iniciarFicheroConfiguracion()
-            mysqlconnect()
         else:
             print("El programa se cerrara")
             sys.exit()
@@ -135,7 +136,7 @@ def iniciar():
     if(checkFileExistance("config.ini")==True):
         if(checkConfigBien("config.ini")==False):
             print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
-            opcion=confirmacion()
+            opcion=escanerNumerico()
             if (opcion):
                 print("El fichero de configuracion sera restablecido")
                 iniciarFicheroConfiguracion()
@@ -145,6 +146,8 @@ def iniciar():
     else:
         print("Se ha creado el fichero de configuracion")
         iniciarFicheroConfiguracion()
+    
+    mysqlconnect()
     
     conn =mysqlconnect()
     
