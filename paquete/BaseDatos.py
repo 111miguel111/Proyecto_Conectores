@@ -1,6 +1,7 @@
 import pymysql
 import configparser 
-
+from paquete import Utiles
+import sys
 
 
 '''
@@ -83,11 +84,14 @@ def mysqlconnect():
     return conn
 def iniciar():
     if(checkFileExistance("config.ini")==False):
-        if(checkConfigBien("config.ini")==False):
-            print("fichero de cnfiguracion mal algo tiene que pasar aqui ")
-            print("de momento voy a rehacerlo bien")
+        print("Hay un error en el fichero de configuracion \n Quieres restablecer el fichero con los valores por defecto - Si \n Quieres cerrar el programa - No ")
+        opcion=Utiles.confirmacion()
+        if (opcion):
+            print("El fichero de configuracion sera restablecido")
             iniciarFicheroConfiguracion()
-        
+        else:
+            print("El programa se cerrara")
+            sys.exit()
     conn =mysqlconnect()
     cur = conn.cursor()
     cur.execute('select @@version')
@@ -119,9 +123,9 @@ def iniciar():
             id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
             nombre VARCHAR(25) NOT NULL,
             apellidos VARCHAR(25) NOT NULL,
-            telefono VARCHAR(25) NOT NULL,
+            telefono VARCHAR(9) NOT NULL,
             direccion VARCHAR(25) NOT NULL,
-            f_nacimiento VARCHAR(25) NOT NULL,
+            f_nacimiento VARCHAR(10) NOT NULL,
             UNIQUE (nombre,apellidos)
             
             );
@@ -212,43 +216,84 @@ def buscar(tabla,campo1,campo2):
             WHERE nombre = ' '''+str(campo1)+''' '
             ;''')
         out1=cur.fetchall();
-        cur.execute('''SELECT * FROM alumno_curso
-            WHERE nombre = ' '''+str(campo1)+''' '
+        cur.execute('''SELECT alumnos.nombre , alumnos.apellidos FROM alumnos , alumno_curso  
+            WHERE alumnos.id=alumno_curso.id_alumno 
+            AND alumno_curso.id_curso=((SELECT cursos.id FROM cursos WHERE cursos.nombre=' '''+str(campo1)+''' '))
             ;''')
         out2=cur.fetchall();
+        cur.execute('''SELECT profesores.nombre FROM profesores  
+        WHERE profesores.dni=(SELECT profesores.dni FROM profesores , cursos WHERE profesores.id=cursos.id_profesor AND cursos.nombre=' '''+str(campo1)+''' ')
+            ;''')
+        out3=cur.fetchall();
+        
+        lista1=list(out1)
+        lista2=list(out2)
+        lista3=list(out3)
+        if( len(lista1)==0):
+            print(tabla+' : '+campo1+' no ha sido encontrado')
+            return None
+        else:
+            print("Curso: "+campo1+" {")
+            for x in lista1:
+                print(x)
+            print("Profesor que imparte: "+campo1)
+            for x in lista3:
+                print(x)
+            print("Alumnos en el curso: "+campo1)
+            for x in lista2:
+                print(x)
+            print("}")
+            return lista1
+        
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
         cur.execute('''SELECT * FROM profesores
             WHERE dni = ' '''+str(campo1)+''' '
             ;''')
         out1=cur.fetchall();
-        cur.execute('''SELECT * FROM profesores
-            WHERE dni = ' '''+str(campo1)+''' '
+        cur.execute('''SELECT cursos.nombre FROM cursos 
+            WHERE cursos.id_profesor=(SELECT profesores.id FROM  profesores WHERE profesores.dni=' '''+str(campo1)+''' ')
             ;''')
         out2=cur.fetchall();
+        lista1=list(out1)
+        lista2=list(out2)
+        if( len(lista1)==0):
+            print(tabla+' : '+campo1+'  no ha sido encontrado')
+            return None
+        else:
+            print("Profesor: "+campo1+" {")
+            for x in lista1:
+                print(x)
+            print("Cursos que imparte el profesor: "+campo1)
+            for x in lista2:
+                print(x)
+            print("}")
+            return lista1
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
         cur.execute('''SELECT * FROM alumnos
             WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
             ;''')
         out1=cur.fetchall();
-        cur.execute('''SELECT * FROM alumno_curso
-            WHERE nombre = ' '''+str(campo1)+''' ' AND apellidos= ' '''+str(campo2)+''' ' 
+        cur.execute('''SELECT cursos.nombre  FROM cursos , alumno_curso  
+            WHERE cursos.id=alumno_curso.id_curso 
+            AND alumno_curso.id_alumno=((SELECT alumnos.id FROM alumnos WHERE alumnos.nombre=' '''+str(campo1)+''' ' AND alumnos.apellidos=' '''+str(campo2)+''' '))
             ;''')
         out2=cur.fetchall();
-    lista1=list(out1)
-    lista2=list(out2)
-    if( len(lista1)==0):
-        print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
-        return None
-    else:
-        for x in lista1:
-            print(x)
-            
-        for x in lista2:
-            print(x)
-            
-        return lista1
+        lista1=list(out1)
+        lista2=list(out2)
+        if( len(lista1)==0):
+            print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
+            return None
+        else:
+            print("Alumno: "+campo1+" "+campo2+" {")
+            for x in lista1:
+                print(x)
+            print("Cursos en los que esta matriculado: "+campo1+" "+campo2)
+            for x in lista2:
+                print(x)
+            print("}")
+            return lista1
     
     conn.commit()
     cur.close()
