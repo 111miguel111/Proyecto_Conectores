@@ -63,7 +63,7 @@ def checkConfigBien(filePath):
             return False
         campo='port'
         port_variable=int(config['SERVER']['port'])
-        if(port_variable.isspace()):
+        if(str(port_variable).isspace()):
             print("El campo "+campo+" no puede estar vacio")
             return False
         return True
