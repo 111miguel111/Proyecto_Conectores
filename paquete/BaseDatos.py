@@ -116,11 +116,12 @@ def iniciar():
             nombre VARCHAR(25) UNIQUE NOT NULL,
             descripcion VARCHAR(25) NOT NULL,
             id_profesor integer ,
-            FOREIGN KEY (id_profesor) REFERENCES profesores (id)
+            CONSTRAINT FK_curso_profesor FOREIGN KEY (id_profesor) REFERENCES profesores(id)
                 ON DELETE CASCADE
                 ON UPDATE CASCADE
             );
             ''')
+    
     cur.execute('''CREATE TABLE IF NOT EXISTS alumnos
             (
             id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -139,10 +140,10 @@ def iniciar():
             id_curso integer NOT NULL ,
             id_alumno integer NOT NULL ,
             PRIMARY KEY(id_curso,id_alumno),
-            FOREIGN KEY (id_alumno) REFERENCES alumnos (id)
+            CONSTRAINT FK_alumno_curso_alumno FOREIGN KEY (id_alumno) REFERENCES alumnos (id)
                 ON DELETE CASCADE
                 ON UPDATE CASCADE,
-            FOREIGN KEY (id_curso) REFERENCES cursos (id)
+            CONSTRAINT FK_alumno_curso_curso FOREIGN KEY (id_curso) REFERENCES cursos (id)
                 ON DELETE CASCADE
                 ON UPDATE CASCADE
             );
