@@ -109,7 +109,7 @@ def deconectarse():
     return 0
 def mysqlconnect(): 
     '''
-    Funcion encargada de realizar la conexion si hay algun problema en la conexion informara al usuario .
+    Funcion encargada de realizar la conexion si hay algun problema en la conexion informara al usuario.
     :return Devulve una conexion si todo ha ido bien
     '''
     
@@ -129,8 +129,9 @@ def mysqlconnect():
         
         return conn
     
-    except OperatinalError as e:
-        print("No estas conectado boludo")
+    except pymysql.err.OperationalError as e:
+        print("Se ha producido un error, compruebe que la base de datos a la que se quiere conectar esta operativa.\nEl programa se cerrara")
+        sys.exit()
     except :
         salir=True
         while(salir):
