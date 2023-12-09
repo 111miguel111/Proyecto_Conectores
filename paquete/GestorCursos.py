@@ -14,10 +14,11 @@ def altaCurso():
     nombre = escanerAlfanumerico()
     curso = buscarSinprint('cursos', nombre, None)
     if(nombre == None):
-        print("Error al introducir el nombre")
+        print("Error al introducir el nombre, pruebe solo letras y menos de 25 caracteres")
         checkValido = False
     elif(curso != None):
         print("Ya existe un curso con ese nombre")
+        checkValido = False
         
     if(checkValido):
         print('Introduzca los descripcion del curso')
@@ -67,15 +68,15 @@ def modifCurso():
                 if(opcion == '1'):
                     print('Introduzca el nombre del curso')
                     nombre = escanerAlfanumerico()
-                    curso = buscarSinprint('cursos', nombre, None)
+                    cursoAux = buscarSinprint('cursos', nombre, None)
                     if(nombre == None):
-                        print("Nombre no valido")
-                    elif(curso!=None):
+                        print("Nombre no valido, pruebe solo letras y menos de 25 caracteres")
+                    elif(cursoAux != None):
                         print("Ya existe un curso con ese nombre")
                     else:
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0][0],'nombre',nombre)
+                            modificar('cursos', curso[0][0], 'nombre', nombre)
                         
                 # Opcion para modificar la descripcion
                 elif (opcion == '2'):
@@ -84,7 +85,7 @@ def modifCurso():
                     if(descripcion != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0][0],'descripcion',descripcion)
+                            modificar('cursos', curso[0][0], 'descripcion', descripcion)
                     
                 # Opcion para modificar telefono
                 elif(opcion == '3'):
@@ -95,7 +96,7 @@ def modifCurso():
                     if(profesor != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0][0],'id',profesor[0][0])
+                            modificar('cursos', curso[0][0], 'id', profesor[0][0])
                             
                 # Opcion para salir del bucle        
                 elif(opcion == '0'):

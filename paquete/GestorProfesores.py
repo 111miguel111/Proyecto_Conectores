@@ -15,7 +15,7 @@ def altaProfesor():
     dni = escanerDni()
     prof = buscarSinprint("profesores", dni, None)
     if(dni==None):
-        print("Valor de DNI no valido")
+        print("Valor de DNI no valido, pruebe a introducir 8 numeros y una letra")
         checkValido = False
     elif(prof !=None):
         print("El profesor introducido ya existe")
@@ -78,7 +78,7 @@ def modifProfesor():
                     dni = escanerDni()
                     prof = buscarSinprint("profesores", dni, None)
                     if(dni==None):
-                        print("Valor de DNI no valido")
+                        print("Valor de DNI no valido, pruebe a introducir 8 numeros y una letra")
                     elif(prof !=None):
                         print("El profesor introducido ya existe")
                     else:
