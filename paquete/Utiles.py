@@ -234,7 +234,7 @@ def escanerTelefono():
                 if(len(scan)==9):
                     return scan
                 else:
-                    print("No puedes introducir mas de 9 caracteres")
+                    print("Solo puedes introducir 9 caracteres")
             else:
                 print("No puedes introducir caracteres que no sean numeros")
         else:
@@ -305,7 +305,7 @@ def escanerDni():
                 else:
                     print("Solo puedes introducir numeros en los 8 primeros caracteres")
             else:
-                print("No puedes introducir mas de 9 caracteres")
+                print("Solo puedes introducir 9 caracteres")
         else:
             print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
