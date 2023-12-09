@@ -262,16 +262,13 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
         cur.execute("INSERT INTO cursos(nombre,descripcion)VALUES('"+str(campo1)+"','"+str(campo2)+"');")
-        conn.commit()
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
         cur.execute("INSERT INTO profesores(dni,nombre,direccion,telefono)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"');")
-        conn.commit()
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
         cur.execute("INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"','"+str(campo5)+"');")
-        conn.commit()
-    
+    conn.commit()
     cur.close()
     return 0
 def baja(tabla,campo1,campo2):
@@ -392,8 +389,6 @@ def buscar(tabla,campo1,campo2):
                 print(x)
             print("}")
             return lista1
-    
-    conn.commit()
     cur.close()
     return None
 def buscarSinprint(tabla,campo1,campo2):
@@ -432,8 +427,6 @@ def buscarSinprint(tabla,campo1,campo2):
             return None
         else:
             return lista1
-    
-    conn.commit()
     cur.close()
     return None
 def mostrarTodos(tabla):
@@ -458,7 +451,6 @@ def mostrarTodos(tabla):
     else:
         for x in lista:
             print(x)
-    conn.commit()
     cur.close()
     return 0
 def matricularAlumno(idAlumno,idCurso):
