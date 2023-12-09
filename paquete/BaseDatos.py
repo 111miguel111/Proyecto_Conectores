@@ -307,7 +307,7 @@ def modificar(tabla,idValor,campoMod,valorNew):
     return 0
 def buscar(tabla,campo1,campo2):
     '''
-    Funcion encargada de buscar un curso, profesor o alumno y devolver una lista con los datos de este
+    Funcion encargada de buscar un curso, profesor o alumno mostrarlo y devolver una lista con los datos de este
     :param tabla: La tabla en la que se quiere buscar
     :param campo1: El primer campo de cada tabla
     :param campo2: El segundo campo de la tabla alumnos
@@ -380,6 +380,45 @@ def buscar(tabla,campo1,campo2):
             for x in lista2:
                 print(x)
             print("}")
+            return lista1
+    
+    conn.commit()
+    cur.close()
+    return None
+def buscarSinprint(tabla,campo1,campo2):
+    '''
+    Funcion encargada de buscar un curso, profesor o alumno y devolver una lista con los datos de este
+    :param tabla: La tabla en la que se quiere buscar
+    :param campo1: El primer campo de cada tabla
+    :param campo2: El segundo campo de la tabla alumnos
+    '''
+    cur=conectarse()
+    if(tabla=='cursos'):
+        print('Se supone que esto es un curso')
+        cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
+        out1=cur.fetchall();
+        lista1=list(out1)
+        if( len(lista1)==0):
+            return None
+        else:
+            return lista1
+    elif(tabla=='profesores'):
+        print('Se supone que esto es un profesor')
+        cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
+        out1=cur.fetchall();
+        lista1=list(out1)
+        if( len(lista1)==0):
+            return None
+        else:
+            return lista1
+    elif(tabla=='alumnos'):
+        print('Se supone que esto es un alumno')
+        cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
+        out1=cur.fetchall();
+        lista1=list(out1)
+        if( len(lista1)==0):
+            return None
+        else:
             return lista1
     
     conn.commit()
