@@ -79,7 +79,7 @@ def checkConfigBien(filePath):
             return False
         campo='port'
         port_variable=int(config['SERVER']['port'])
-        if(str(port_variable).isspace() or str(port_variable).isalpha() or str(port_variable).isalnum()):
+        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False):
             print("El campo "+campo+" tiene que ser numeros")
             return False
         return True
@@ -128,6 +128,9 @@ def mysqlconnect():
             )
         
         return conn
+    
+    except OperatinalError as e:
+        print("No estas conectado boludo")
     except :
         salir=True
         while(salir):
