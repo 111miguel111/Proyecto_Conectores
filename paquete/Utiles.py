@@ -146,7 +146,6 @@ def escanerTexto():
         else:
             print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-        print('Porfavor introduce algun caracter')
     print("Has superado el numero de intentos")
     return None
 
@@ -172,7 +171,6 @@ def escanerAlfanumerico():
             print("No puedes introducir solos espacios o dejarlo en blanco")
             
         intentos+=1
-        print('Porfavor introduce alfanumericos')
     print("Has superado el numero de intentos")
     return None
 
@@ -197,7 +195,6 @@ def escanerAlfabetico():
         else:
             print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-        print('Porfavor introduce alfabeticos')
     print("Has superado el numero de intentos")
     return None
 
@@ -219,7 +216,6 @@ def escanerNumerico():
         else:
             print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-        print('Porfavor introduce numeros no decimales')
     print("Has superado el numero de intentos")
     return None
 
@@ -244,7 +240,6 @@ def escanerTelefono():
         else:
             print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-        print('Porfavor introduce numeros no decimales')
     print("Has superado el numero de intentos")
     return None
 
