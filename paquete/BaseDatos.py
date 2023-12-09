@@ -434,14 +434,14 @@ def desmatricularAlumno(idAlumno,idCurso):
     cur.close()
     print("Alumno desmatriculado exitosamente")
     return 0
-def desasignarProfesro(idProfesor,idCurso):
+def desasignarProfesor(idProfesor,idCurso):
     '''
     Funcion encargada de eliminar un profesor de un curso
     :param idProfesor: El profesor que se va a desasignar
     :param idCurso: El curso del cual el profesor se va a desasignar
     '''
     cur=conectarse()
-    cur.execute("UPDATE cursos SET id_profesor = NULL WHERE id="+str(idCurso)+" AND id_profesor="+idProfesor+";")
+    cur.execute("UPDATE cursos SET id_profesor = NULL WHERE id="+str(idCurso)+" AND id_profesor="+str(idProfesor)+";")
     conn.commit()
     cur.close()
     print("Profesor desasignado exitosamente")
