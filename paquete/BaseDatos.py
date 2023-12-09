@@ -42,6 +42,7 @@ def checkFileExistance(filePath):
     '''
     Comprueba que el fichero de configuracion existe
     :param filePath: El nombre del fichero
+    :return Devuelve True si el fichero existe y False si no existe
     '''
     
     try:
@@ -55,6 +56,7 @@ def checkConfigBien(filePath):
     '''
     Funcion encargada de comprobar que el fichero de configuracion esta completo y no tenga errores
     :param filePath: El nombre del fichero
+    :return Devuelve False si hay algun problema al leer el fichero de configuracion y si todos los campos estan bien devuelve True
     '''
     campo=''
     try:
@@ -90,6 +92,7 @@ def checkConfigBien(filePath):
 def conectarse():
     '''
     Funcion encargada de conectarse a la base de datos y devolver un cursor
+    :return Devuelve un cursor conectado a la base de datos 
     '''
     cur = conn.cursor()
     cur.execute('USE miguel_roberto')
@@ -104,7 +107,8 @@ def deconectarse():
     return 0
 def mysqlconnect(): 
     '''
-    Funcion encargada de realizar la conexion 
+    Funcion encargada de realizar la conexion si hay algun problema en la conexion informara al usuario .
+    :return Devulve una conexion si todo ha ido bien
     '''
     
     try:
@@ -311,6 +315,7 @@ def buscar(tabla,campo1,campo2):
     :param tabla: La tabla en la que se quiere buscar
     :param campo1: El primer campo de cada tabla
     :param campo2: El segundo campo de la tabla alumnos
+    :return Devuelve la lista con la linea que se busca o None si no encuentra nada
     '''
     cur=conectarse()
     if(tabla=='cursos'):
@@ -391,6 +396,7 @@ def buscarSinprint(tabla,campo1,campo2):
     :param tabla: La tabla en la que se quiere buscar
     :param campo1: El primer campo de cada tabla
     :param campo2: El segundo campo de la tabla alumnos
+    :return Devuelve la lista con la linea que se busca o None si no encuentra nada
     '''
     cur=conectarse()
     if(tabla=='cursos'):

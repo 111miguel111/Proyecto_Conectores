@@ -8,6 +8,9 @@ from paquete.BaseDatos import buscar, modificar, matricularAlumno, desmatricular
 from paquete import BaseDatos
 
 def matricularAlum():
+    '''
+    Funcien encargada de pedir los datos necesarios, verificarlos y matricular un alumno
+    '''
     checkValido = True
     
     print('Introduzca el nombre del alumno')
@@ -41,6 +44,9 @@ def matricularAlum():
         matricularAlumno(alumno[0][0],curso[0][0])
         
 def desmatricularAlum():
+    '''
+    Funcien encargada de pedir los datos necesarios, verificarlos y desmatricular un alumno
+    '''
     checkValido = True
     
     print('Introduzca el nombre del alumno')
@@ -73,6 +79,9 @@ def desmatricularAlum():
         desmatricularAlumno(alumno[0][0],curso[0][0])
         
 def asignarProfesor():
+    '''
+    Funcion que se encarga de pedir los datos necesarios, verificarlos y asignar un profesor
+    '''
     checkValido = True
     if(checkValido):
         print('Introduzca el nombre del curso')
@@ -95,6 +104,9 @@ def asignarProfesor():
                 modificar('cursos',curso[0][0],'id_profesor',profesor[0][0])
 
 def desasignarProfesor():
+    '''
+    Funcion que se encarga de pedir los datos necesarios, verificarlos y desasignar un profesor
+    '''
     checkValido = True
     if(checkValido):
         print('Introduzca el nombre del curso')
@@ -114,7 +126,7 @@ def desasignarProfesor():
         if(profesor != None):
             print("¿Desea confirmar la modificacion?(Si o no)")
             if(confirmacion()):
-                BaseDatos.desasignarProfesor(curso[0][0],profesor[0][0])
+                BaseDatos.desasignarProfesor(profesor[0][0], curso[0][0])
 
 def escanerTexto():
     '''
