@@ -4,6 +4,7 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 import paquete.GestorAlumnos,paquete.GestorCursos,paquete.GestorProfesores
+from paquete import BaseDatos
 
 def submenuAlumnos():
     #Variable que controla el bucle que ofrece las opciones
@@ -161,5 +162,5 @@ while (check):
         
     else:
         print("Valor no valido")
-        
+    BaseDatos.deconectarse()
 print('Fin del programa')
