@@ -79,14 +79,16 @@ def checkConfigBien(filePath):
             return False
         campo='port'
         port_variable=int(config['SERVER']['port'])
-        if(str(port_variable).isspace()):
-            print("El campo "+campo+" no puede estar vacio")
+        if(str(port_variable).isspace() or str(port_variable).isalpha() or str(port_variable).isalnum()):
+            print("El campo "+campo+" tiene que ser numeros")
             return False
         return True
     except FileNotFoundError as e:
         print("El campo "+campo+" falta o esta mal")
         return False
     except IOError as e:
+        return False
+    except :
         return False
 
 def conectarse():
