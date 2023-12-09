@@ -41,7 +41,9 @@ def matricularAlum():
             checkValido=False
             
     if(checkValido):
-        matricularAlumno(alumno[0][0],curso[0][0])
+        print("¿Desea confirmar la modificacion?(Si o no)")
+        if(confirmacion()):
+            matricularAlumno(alumno[0][0],curso[0][0])
         
 def desmatricularAlum():
     '''
@@ -76,7 +78,9 @@ def desmatricularAlum():
             checkValido=False
     
     if(checkValido):
-        desmatricularAlumno(alumno[0][0],curso[0][0])
+        print("¿Desea confirmar la modificacion?(Si o no)")
+        if(confirmacion()):
+            desmatricularAlumno(alumno[0][0],curso[0][0])
         
 def asignarProfesor():
     '''

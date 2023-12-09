@@ -162,5 +162,5 @@ while (check):
         
     else:
         print("Valor no valido")
-    BaseDatos.deconectarse()
+BaseDatos.deconectarse()
 print('Fin del programa')
