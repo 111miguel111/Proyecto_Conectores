@@ -4,7 +4,8 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 import datetime
-from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, matricularAlumno, desmatricularAlumno
+from paquete.BaseDatos import buscar, modificar, matricularAlumno, desmatricularAlumno
+from paquete import BaseDatos
 
 def matricularAlum():
     checkValido = True
@@ -91,9 +92,29 @@ def asignarProfesor():
         if(profesor != None):
             print("¿Desea confirmar la modificacion?(Si o no)")
             if(confirmacion()):
-                modificar('cursos',curso[0][0],'dni',dni)
+                modificar('cursos',curso[0][0],'id_profesor',profesor[0][0])
 
-
+def desasignarProfesor():
+    checkValido = True
+    if(checkValido):
+        print('Introduzca el nombre del curso')
+        nombre = escanerAlfanumerico()
+        if(nombre == None):
+            checkValido = False
+            
+    if(checkValido):
+        curso = buscar('cursos', nombre, None)
+        if(curso == None):
+            checkValido = False
+            
+    if(checkValido):
+        print('Introduzca el DNI del profesor')
+        dni = escanerDni()
+        profesor = buscar('profesores',dni,None)
+        if(profesor != None):
+            print("¿Desea confirmar la modificacion?(Si o no)")
+            if(confirmacion()):
+                BaseDatos.desasignarProfesor(curso[0][0],profesor[0][0])
 
 def escanerTexto():
     '''

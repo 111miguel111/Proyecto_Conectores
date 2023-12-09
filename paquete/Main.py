@@ -9,7 +9,8 @@ def submenuAlumnos():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Alumnos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Matricular en Curso\n7.Desmatricular de Curso\n0.Salir")
+        opcion = input("Seleccione una opcion para Alumnos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar"+
+"\n5.Mostrar Todos\n6.Matricular en Curso\n7.Desmatricular de Curso\n0.Salir")
         
         #Opcion para crear un nuevo alumno
         if(opcion=='1'):
@@ -49,7 +50,8 @@ def submenuProfesores():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Profesores:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Asignar a Curso\n0.Salir")
+        opcion = input("Seleccione una opcion para Profesores:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n"+
+"5.Mostrar Todos\n6.Asignar a Curso\n7.Desasignar de curso\n0.Salir")
         
         #Opcion para crear un nuevo profesor
         if(opcion=='1'):
@@ -61,7 +63,7 @@ def submenuProfesores():
             
         #Opcion para modificar un profesor
         elif(opcion=='3'):
-            paquete.GestorProfesores.modifProfesor()()
+            paquete.GestorProfesores.modifProfesor()
         
         #Opcion para mostrar todos los profesores
         elif(opcion=='4'):
@@ -74,6 +76,10 @@ def submenuProfesores():
         #Metodo para asignar un profesor a un curso
         elif(opcion == '6'):
             paquete.Utiles.asignarProfesor()
+            
+        #Metodo para desasignar un profesor a un curso    
+        elif(opcion == '7'):
+            paquete.Utiles.desasignarProfesor()
         
         #Opcion para salir del bucle        
         elif(opcion == '0'):
@@ -86,7 +92,8 @@ def submenuCursos():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Cursos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n5.Mostrar Todos\n6.Matricular alumno\n7.Desatricular alumno\n8.Asignar profesor\n0.Salir")
+        opcion = input("Seleccione una opcion para Cursos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n"+
+"5.Mostrar Todos\n6.Matricular alumno\n7.Desatricular alumno\n8.Asignar profesor\n9.Desasignar profesor\n0.Salir")
         
         #Opcion para crear un nuevo curso
         if(opcion=='1'):
@@ -120,6 +127,10 @@ def submenuCursos():
         elif(opcion == '8'):
             paquete.Utiles.asignarProfesor()
         
+        #Metodo para desasignar un profesor a un curso    
+        elif(opcion == '9'):
+            paquete.Utiles.desasignarProfesor()
+        
         #Opcion para salir del bucle        
         elif(opcion == '0'):
             check = False
@@ -128,10 +139,10 @@ def submenuCursos():
             print("Valor no valido")
 
 print('Inicio del programa')
-
+#BaseDatos.dropDataBase()
+#BaseDatos.iniciar()
 #Bucle de opciones del menu principal
 check = True
-
 while (check):
     opcion = input("Seleccione una opcion:\n1.Alumnos\n2.Profesores\n3.Cursos\n0.Salir")
     

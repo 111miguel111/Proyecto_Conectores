@@ -6,14 +6,19 @@ Created on 1 dic 2023
 
 from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
     escanerDni, confirmacion
-from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos
+from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, buscarSinprint
 
 def altaProfesor():
     checkValido = True
 
     print('Introduzca el DNI del profesor')
     dni = escanerDni()
+    prof = buscarSinprint("profesores", dni, None)
     if(dni==None):
+        print("Valor de DNI no valido")
+        checkValido = False
+    elif(prof !=None):
+        print("El profesor introducido ya existe")
         checkValido = False
         
     if(checkValido):
@@ -71,7 +76,12 @@ def modifProfesor():
                 if(opcion=='1'):
                     print('Introduzca el DNI del profesor')
                     dni = escanerDni()
-                    if(dni != None):
+                    prof = buscarSinprint("profesores", dni, None)
+                    if(dni==None):
+                        print("Valor de DNI no valido")
+                    elif(prof !=None):
+                        print("El profesor introducido ya existe")
+                    else:
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('profesores',profesor[0][0],'dni',dni)
@@ -111,6 +121,7 @@ def modifProfesor():
 
 def buscarProfesor():
     print('Introduzca el DNI del profesor')
+    checkValido = True
     dni = escanerDni()
     if(dni==None):
         checkValido = False

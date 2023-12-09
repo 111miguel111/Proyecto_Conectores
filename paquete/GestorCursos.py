@@ -4,7 +4,7 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerDni, confirmacion
-from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, matricularAlumno, desmatricularAlumno
+from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, buscarSinprint
 
 
 def altaCurso():
@@ -12,14 +12,18 @@ def altaCurso():
     
     print('Introduzca el nombre del curso')
     nombre = escanerAlfanumerico()
-    curso = buscar('cursos', nombre, None)
-    if(curso == None):
+    curso = buscarSinprint('cursos', nombre, None)
+    if(nombre == None):
+        print("Error al introducir el nombre")
         checkValido = False
+    elif(curso != None):
+        print("Ya existe un curso con ese nombre")
         
     if(checkValido):
         print('Introduzca los descripcion del curso')
         descripcion = escanerTexto()
         if(descripcion == None):
+            print("Error al introducir la descripcion")
             checkValido = False
             
     if(checkValido):
@@ -49,8 +53,7 @@ def modifCurso():
     if(checkValido):
         print('Introduzca el nombre del curso')
         nombre = escanerAlfanumerico()
-        curso = buscar('cursos', nombre, None)
-        if(curso == None):
+        if(nombre == None):
             checkValido = False
             
     if(checkValido):
@@ -58,13 +61,18 @@ def modifCurso():
         if(curso != None):
             checkOpcion = True
             while (checkOpcion):
-                opcion = input("Seleccione un campo a modificar:\n1.Nombre\n2.Descripcion\n3.DNI\n0.Salir")
+                opcion = input("Seleccione un campo a modificar:\n1.Nombre\n2.Descripcion\n3.Profesor\n0.Salir")
                 
                 # Opcion para modificar nombre
                 if(opcion == '1'):
                     print('Introduzca el nombre del curso')
                     nombre = escanerAlfanumerico()
-                    if(nombre != None):
+                    curso = buscarSinprint('cursos', nombre, None)
+                    if(nombre == None):
+                        print("Nombre no valido")
+                    elif(curso!=None):
+                        print("Ya existe un curso con ese nombre")
+                    else:
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('cursos',curso[0][0],'nombre',nombre)
@@ -82,11 +90,12 @@ def modifCurso():
                 elif(opcion == '3'):
                     print('Introduzca el DNI del profesor')
                     dni = escanerDni()
+                    profesor = buscar('profesores', dni, None)
                     # Metodo modificar telefono
-                    if(dni != None):
+                    if(profesor != None):
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
-                            modificar('cursos',curso[0][0],'dni',dni)
+                            modificar('cursos',curso[0][0],'id',profesor[0][0])
                             
                 # Opcion para salir del bucle        
                 elif(opcion == '0'):
@@ -101,7 +110,7 @@ def buscarCurso():
     if(checkValido):
         print('Introduzca el nombre del curso')
         nombre = escanerAlfanumerico()
-        curso = buscar('cursos', nombre, None)
+        curso = buscarSinprint('cursos', nombre, None)
         if(curso == None):
             checkValido = False
     if(checkValido):

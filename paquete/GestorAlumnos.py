@@ -5,7 +5,7 @@ Created on 1 dic 2023
 '''
 from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono, confirmacion,\
     escanerFecha
-from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, matricularAlumno, desmatricularAlumno
+from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, buscarSinprint
 
 def altaAlumno():
     checkValido = True
@@ -13,14 +13,20 @@ def altaAlumno():
     print('Introduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
+        print("Error al introducir nombre, pruebe solo letras y menos de 25 caracteres")
         checkValido = False
         
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
+        alum = buscarSinprint("alumnos", nombre, apellidos)
         if(apellidos==None):
+            print("Error al introducir apellidos, pruebe solo letras y menos de 25 caracteres")
             checkValido = False
-            
+        elif(alum!=None):
+            print("El alumno introducido ya existe")
+            checkValido = False
+        
     if(checkValido):
         print('Introduzca el telefono del alumno')
         telefono = escanerTelefono()
@@ -95,7 +101,12 @@ def modifAlumno():
                 if(opcion=='1'):
                     print('Introduzca el nombre del alumno')
                     nombre = escanerAlfanumerico()
-                    if(nombre != None):
+                    alum = buscarSinprint("alumnos", nombre, alumno[0][2])
+                    if(nombre==None):
+                        print("Error al introducir nombre, pruebe solo letras y menos de 25 caracteres")
+                    elif(alum!=None):
+                        print("El alumno introducido ya existe")
+                    else:
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'nombre',nombre)
@@ -104,7 +115,12 @@ def modifAlumno():
                 elif (opcion == '2'):
                     print('Introduzca los apellidos del alumno')
                     apellidos = escanerTexto()
-                    if(apellidos != None):
+                    alum = buscarSinprint("alumnos", alumno[0][1], apellidos)
+                    if(apellidos==None):
+                        print("Error al introducir nombre, pruebe solo letras y menos de 25 caracteres")
+                    elif(alum!=None):
+                        print("El alumno introducido ya existe")
+                    else:
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'apellidos',apellidos)
