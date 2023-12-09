@@ -36,8 +36,11 @@ def bajaCurso():
     
     print('Introduzca el nombre del curso')
     nombre = escanerAlfanumerico()
-    curso = buscar('cursos', nombre, None)
-    if(curso == None):
+    if(nombre!=None):
+        curso = buscar('cursos', nombre, None)
+        if(curso == None):
+            checkValido = False
+    else:
         checkValido = False
         
     if(checkValido):
@@ -91,12 +94,13 @@ def modifCurso():
                 elif(opcion == '3'):
                     print('Introduzca el DNI del profesor')
                     dni = escanerDni()
-                    profesor = buscar('profesores', dni, None)
-                    # Metodo modificar telefono
-                    if(profesor != None):
-                        print("¿Desea confirmar la modificacion?(Si o no)")
-                        if(confirmacion()):
-                            modificar('cursos', curso[0][0], 'id', profesor[0][0])
+                    if(dni!=None):
+                        profesor = buscar('profesores', dni, None)
+                        # Metodo modificar telefono
+                        if(profesor != None):
+                            print("¿Desea confirmar la modificacion?(Si o no)")
+                            if(confirmacion()):
+                                modificar('cursos', curso[0][0], 'id', profesor[0][0])
                             
                 # Opcion para salir del bucle        
                 elif(opcion == '0'):

@@ -97,11 +97,12 @@ def asignarProfesor():
     if(checkValido):
         print('Introduzca el DNI del profesor')
         dni = escanerDni()
-        profesor = buscar('profesores',dni,None)
-        if(profesor != None):
-            print("¿Desea confirmar la modificacion?(Si o no)")
-            if(confirmacion()):
-                modificar('cursos',curso[0][0],'id_profesor',profesor[0][0])
+        if(dni!=None):
+            profesor = buscar('profesores',dni,None)
+            if(profesor != None):
+                print("¿Desea confirmar la modificacion?(Si o no)")
+                if(confirmacion()):
+                    modificar('cursos',curso[0][0],'id_profesor',profesor[0][0])
 
 def desasignarProfesor():
     '''
@@ -122,11 +123,12 @@ def desasignarProfesor():
     if(checkValido):
         print('Introduzca el DNI del profesor')
         dni = escanerDni()
-        profesor = buscar('profesores',dni,None)
-        if(profesor != None):
-            print("¿Desea confirmar la modificacion?(Si o no)")
-            if(confirmacion()):
-                BaseDatos.desasignarProfesor(profesor[0][0], curso[0][0])
+        if(dni!=None):
+            profesor = buscar('profesores',dni,None)
+            if(profesor != None):
+                print("¿Desea confirmar la modificacion?(Si o no)")
+                if(confirmacion()):
+                    BaseDatos.desasignarProfesor(profesor[0][0], curso[0][0])
 
 def escanerTexto():
     '''
@@ -138,7 +140,7 @@ def escanerTexto():
     while(intentos<5):
         #Se introduce el texto y si hay algo escrito se devuelve
         scan=input()
-        if(scan.isspace()==False):
+        if(scan.isspace()==False and scan!=""):
             if(len(scan)<=25):
                 return scan
             else:
