@@ -138,8 +138,13 @@ def escanerTexto():
     while(intentos<5):
         #Se introduce el texto y si hay algo escrito se devuelve
         scan=input()
-        if(scan.isspace()==False and len(scan)<=25):
-            return scan
+        if(scan.isspace()==False):
+            if(len(scan)<=25):
+                return scan
+            else:
+                print("No puedes introducir mas de 25 caracteres")
+        else:
+            print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
         print('Porfavor introduce algun caracter')
     print("Has superado el numero de intentos")
@@ -155,8 +160,17 @@ def escanerAlfanumerico():
     while(intentos<5):
         #Se introduce la cadena y si no hay espacios se devuelve
         scan=input()
-        if(scan.isspace()==False and scan.isalnum() and len(scan)<=25):
-            return scan
+        if(scan.isspace()==False):
+            if(scan.isalnum()):
+                if(len(scan)<=25):
+                    return scan
+                else:
+                    print("No puedes introducir mas de 25 caracteres")
+            else:
+                print("No puedes introducir caracteres que no sean alfanumericos")
+        else:
+            print("No puedes introducir solos espacios o dejarlo en blanco")
+            
         intentos+=1
         print('Porfavor introduce alfanumericos')
     print("Has superado el numero de intentos")
@@ -172,8 +186,16 @@ def escanerAlfabetico():
     while(intentos<5):
         #Se introduce la cadena y si solo hay letras se devuelve
         scan=input()
-        if(scan.isspace()==False and scan.isalpha() and len(scan)<=25):
-            return scan
+        if(scan.isspace()==False):
+            if(scan.isalpha()):
+                if(len(scan)<=25):
+                    return scan
+                else:
+                    print("No puedes introducir mas de 25 caracteres")
+            else:
+                print("No puedes introducir caracteres que no sean alfabeticos")
+        else:
+            print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
         print('Porfavor introduce alfabeticos')
     print("Has superado el numero de intentos")
@@ -189,8 +211,13 @@ def escanerNumerico():
     while(intentos<5):
         scan=input()
         #Se introduce la cadena y si solo hay letras se devuelve
-        if(scan.isspace()==False and scan.isnumeric() ):
-            return scan
+        if(scan.isspace()==False):
+            if(scan.isnumeric()):
+                return scan
+            else:
+                print("No puedes introducir caracteres que no sean numeros")
+        else:
+            print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
         print('Porfavor introduce numeros no decimales')
     print("Has superado el numero de intentos")
@@ -206,8 +233,16 @@ def escanerTelefono():
     while(intentos<5):
         scan=input()
         #Se introduce la cadena y si solo hay letras se devuelve
-        if(scan.isspace()==False and scan.isnumeric() and len(scan)==9):
-            return scan
+        if(scan.isspace()==False):
+            if(scan.isnumeric()):
+                if(len(scan)==9):
+                    return scan
+                else:
+                    print("No puedes introducir mas de 9 caracteres")
+            else:
+                print("No puedes introducir caracteres que no sean numeros")
+        else:
+            print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
         print('Porfavor introduce numeros no decimales')
     print("Has superado el numero de intentos")
@@ -264,10 +299,20 @@ def escanerDni():
     while(intentos<5):
         #Se introduce el DNI y se comprueba el formato, si cumple se devuelve
         scan=input()
-        if(scan.isspace()==False and len(scan)==9):
-            if(scan[0:7].isnumeric() and scan[8].isalpha()):
-                return scan.upper()
+        if(scan.isspace()==False):
+            if(len(scan)==9):
+                if(scan[0:7].isnumeric()):
+                    if(scan[8].isalpha()):
+                        return scan.upper()
             
+                    else:
+                        print("Solo puedes introducir letras en caracter 9")
+                else:
+                    print("Solo puedes introducir numeros en los 8 primeros caracteres")
+            else:
+                print("No puedes introducir mas de 9 caracteres")
+        else:
+            print("No puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
         print('Porfavor introduce un DNI (Ocho numeros y una letra)')
     print("Has superado el numero de intentos")
