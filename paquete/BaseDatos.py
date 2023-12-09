@@ -135,7 +135,7 @@ def mysqlconnect():
             opcion=escanerNumerico()
             if (opcion=='1'):
                 salir=False
-                print("El fichero de configuracion sera restablecido")
+                print("El fichero de configuracion sera restablecido y el programa se cerrara")
                 iniciarFicheroConfiguracion()
                 print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
                 sys.exit()
@@ -159,7 +159,7 @@ def iniciar():
                 opcion=escanerNumerico()
                 if (opcion=='1'):
                     salir=False
-                    print("El fichero de configuracion sera restablecido")
+                    print("El fichero de configuracion sera restablecido y el programa se cerrara")
                     iniciarFicheroConfiguracion()
                     print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
                     sys.exit()
