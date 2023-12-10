@@ -140,8 +140,6 @@ def submenuCursos():
             print("Valor no valido")
 
 print('Inicio del programa')
-#BaseDatos.dropDataBase()
-#BaseDatos.iniciar()
 #Bucle de opciones del menu principal
 check = True
 while (check):

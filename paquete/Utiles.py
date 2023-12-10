@@ -11,24 +11,25 @@ def matricularAlum():
     '''
     Funcien encargada de pedir los datos necesarios, verificarlos y matricular un alumno
     '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
-    
+    #Se comprueba que el nombre del alumno introducido es adecuado
     print('Introduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
-        
+    #Se comprueba que el apellido del alumno introducido es adecuado 
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
-    
+    #Se comprueba que el alumno exista
     if(checkValido):        
         alumno=buscar('alumnos', nombre, apellidos)
         if(alumno==None):
             checkValido=False
-        
+    #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
         print('Introduzca el nombre del curso')
         nomCurso = escanerTexto()
@@ -39,7 +40,7 @@ def matricularAlum():
         curso = buscar('cursos', nomCurso, None)
         if(curso==None):
             checkValido=False
-            
+    #Si no ha habido errores se matricula el alumno en el curso    
     if(checkValido):
         print("¿Desea confirmar la modificacion?(Si o no)")
         if(confirmacion()):
@@ -49,23 +50,25 @@ def desmatricularAlum():
     '''
     Funcien encargada de pedir los datos necesarios, verificarlos y desmatricular un alumno
     '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
-    
+    #Se comprueba que el nombre del alumno introducido es adecuado
     print('Introduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
-        
+    #Se comprueba que el apellido del alumno introducido es adecuado y se busca en la base de datos para comprobar que existe  
     if(checkValido):
         print('Introduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
+    
     if(checkValido):        
         alumno=buscar('alumnos', nombre, apellidos)
         if(alumno==None):
             checkValido=False
-        
+    #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
         print('Introduzca el nombre del curso')
         nomCurso = escanerTexto()
@@ -76,7 +79,7 @@ def desmatricularAlum():
         curso = buscar('cursos', nomCurso, None)
         if(curso==None):
             checkValido=False
-    
+    #Si no ha habido errores se desmatricula el alumno en el curso
     if(checkValido):
         print("¿Desea confirmar la modificacion?(Si o no)")
         if(confirmacion()):
@@ -86,7 +89,9 @@ def asignarProfesor():
     '''
     Funcion que se encarga de pedir los datos necesarios, verificarlos y asignar un profesor
     '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
+    #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
         print('Introduzca el nombre del curso')
         nombre = escanerAlfanumerico()
@@ -97,13 +102,14 @@ def asignarProfesor():
         curso = buscar('cursos', nombre, None)
         if(curso == None):
             checkValido = False
-            
+    #Se comprueba que el dni del profesor introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
         print('Introduzca el DNI del profesor')
         dni = escanerDni()
         if(dni!=None):
             profesor = buscar('profesores',dni,None)
             if(profesor != None):
+                #Si no ha habido errores se asigna el profesor en el curso
                 print("¿Desea confirmar la modificacion?(Si o no)")
                 if(confirmacion()):
                     modificar('cursos',curso[0][0],'id_profesor',profesor[0][0])
@@ -112,7 +118,9 @@ def desasignarProfesor():
     '''
     Funcion que se encarga de pedir los datos necesarios, verificarlos y desasignar un profesor
     '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
+    #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
         print('Introduzca el nombre del curso')
         nombre = escanerAlfanumerico()
@@ -123,13 +131,14 @@ def desasignarProfesor():
         curso = buscar('cursos', nombre, None)
         if(curso == None):
             checkValido = False
-            
+    #Se comprueba que el dni del profesor introducido es adecuado y se busca en la base de datos para comprobar que existe        
     if(checkValido):
         print('Introduzca el DNI del profesor')
         dni = escanerDni()
         if(dni!=None):
             profesor = buscar('profesores',dni,None)
             if(profesor != None):
+                #Si no ha habido errores se desasigna el profesor en el curso
                 print("¿Desea confirmar la modificacion?(Si o no)")
                 if(confirmacion()):
                     BaseDatos.desasignarProfesor(profesor[0][0], curso[0][0])

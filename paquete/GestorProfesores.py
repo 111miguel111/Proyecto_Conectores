@@ -9,46 +9,61 @@ from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
 from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, buscarSinprint
 
 def altaProfesor():
+    '''
+    Metodo para dar de alta un profesor
+    '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
-
+    #Se comprueba que el dni introducido es adecuado y se busca en la base de datos para comprobar que no existe
     print('Introduzca el DNI del profesor')
     dni = escanerDni()
-    prof = buscarSinprint("profesores", dni, None)
     if(dni==None):
         print("Valor de DNI no valido, pruebe a introducir 8 numeros y una letra")
         checkValido = False
-    elif(prof !=None):
-        print("El profesor introducido ya existe")
-        checkValido = False
-        
+    else:
+        prof = buscarSinprint("profesores", dni, None)
+        if(prof!=None):
+            print("El profesor introducido ya existe")
+            checkValido = False
+    #Se comprueba que el nombre introducido es adecuado
     if(checkValido):
         print('Introduzca el nombre del profesor')
         nombre = escanerAlfanumerico()
         if(nombre==None):
             checkValido = False
-    
+    #Se comprueba que el telefono introducido es adecuado
     if(checkValido):
         print('Introduzca el telefono del profesor')
         telefono = escanerTelefono()
         if(telefono==None):
             checkValido = False
-            
+    #Se comprueba que la direccion introducida es adecuada      
     if(checkValido):
         print('Introduzca la direccion del profesor')
         direccion = escanerTexto()
         if(direccion==None):
             checkValido = False
-            
+    #Si no ha habido errores se da de alta el profesor
     if(checkValido):
         alta('profesores',dni,nombre,direccion,telefono,None)
 
 def bajaProfesor():
+    '''
+    Metodo para dar de baja un profesor
+    '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
+    #Se comprueba que el dni introducido es adecuado y se busca en la base de datos para comprobar que no existe
     print('Introduzca el DNI del profesor')
     dni = escanerDni()
     if(dni==None):
         checkValido = False
-        
+    else:
+        prof = buscarSinprint("profesores", dni, None)
+        if(prof!=None):
+            print("El profesor introducido ya existe")
+            checkValido = False
+    #Si no ha habido errores se pide confirmacion y se da de baja el profesor
     if(checkValido):
         print("¿Desea confirmar la baja del Profesor?(Si o no)")
         if(confirmacion()):
@@ -58,7 +73,12 @@ def bajaProfesor():
             print("Profesor no eliminado")
             
 def modifProfesor():
+    '''
+    Metodo para modificar los campos de un profesor
+    '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
+    #Se comprueba que el dni introducido es adecuado y se busca en la base de datos para comprobar que no existe
     if(checkValido):
         print('Introduzca el dni del profesor')
         dni = escanerDni()
@@ -68,12 +88,14 @@ def modifProfesor():
     if(checkValido):
         profesor = buscar('profesores', dni, None)
         if(profesor != None):
+            #Boolean para comprobar si el usuario quiere salir del bucle de las opciones de modificacion
             checkOpcion=True
             while (checkOpcion):
                 opcion = input("Seleccione un campo a modificar:\n1.DNI\n2.Nombre\n3.Direccion\n4.Telefono\n0.Salir")
                 
                 #Opcion para modificar nombre
                 if(opcion=='1'):
+                    #Se comprueba que el dni introducido es adecuado y se busca en la base de datos para comprobar que no existe
                     print('Introduzca el DNI del profesor')
                     dni = escanerDni()
                     prof = buscarSinprint("profesores", dni, None)
@@ -82,32 +104,39 @@ def modifProfesor():
                     elif(prof !=None):
                         print("El profesor introducido ya existe")
                     else:
+                        #Si no ha habido errores se pide confirmacion y se modifica el campo
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('profesores',profesor[0][0],'dni',dni)
                         
                 #Opcion para modificar la descripcion
                 elif (opcion == '2'):
+                    #Se comprueba que el nombre introducido es adecuado
                     print('Introduzca el nombre del profesor')
                     nombre = escanerAlfanumerico()
-                    if(dni != None):
+                    if(nombre != None):
+                        #Si no ha habido errores se pide confirmacion y se modifica el campo
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('profesores',profesor[0][0],'nombre',nombre)
                     
                 #Opcion para modificar telefono
                 elif(opcion=='3'):
+                    #Se comprueba que la direccion introducida es adecuada
                     print('Introduzca la direccion del profesor')
                     direccion = escanerTexto()
                     if(direccion != None):
+                        #Si no ha habido errores se pide confirmacion y se modifica el campo
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('profesores',profesor[0][0],'direccion',direccion)
                 
                 elif(opcion == '4'):
+                    #Se comprueba que el telefono introducido es adecuado
                     print('Introduzca el telefono del profesor')
                     telefono = escanerTelefono()
                     if(telefono != None):
+                        #Si no ha habido errores se pide confirmacion y se modifica el campo
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('profesores',profesor[0][0],'telefono',telefono)
@@ -120,8 +149,13 @@ def modifProfesor():
                     print("Valor no valido")
 
 def buscarProfesor():
-    print('Introduzca el DNI del profesor')
+    '''
+    Metodo para buscar un profesor
+    '''
+    #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
+    print('Introduzca el DNI del profesor')
+    #Se comprueba que el dni introducido es adecuado y se busca en la base de datos
     dni = escanerDni()
     if(dni==None):
         checkValido = False
@@ -129,5 +163,8 @@ def buscarProfesor():
         buscar('profesores', dni, None)
     
 def mostrarTodosProfesor():
+    '''
+    Metodo para buscar todos los profesores
+    '''
     mostrarTodos('profesores')
 
