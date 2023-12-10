@@ -29,13 +29,17 @@ def iniciarFicheroConfiguracion():
     '''
     Funcion que se encarga de crear el fichero de configuracion con valores predeterminados
     '''
-    config = configparser.ConfigParser()
-    config['SERVER'] = {'host': 'localhost',
-                         'user': 'root',
-                         'password': 'my-secret-pw',
-                         'port':'3306'}
-    with open('config.ini', 'w') as configfile:
-        config.write(configfile)
+    try:
+        config = configparser.ConfigParser()
+        config['SERVER'] = {'host': 'localhost',
+                             'user': 'root',
+                             'password': 'my-secret-pw',
+                             'port':'3306'}
+        with open('config.ini', 'w') as configfile:
+            config.write(configfile)
+        print("Se ha creado el fichero de configuracion")
+    except:
+        print("No se ha podido crear el fichero de configuracion")
     return 0
 
 def checkFileExistance(filePath):
@@ -155,94 +159,93 @@ def iniciar():
     '''
     Funcion encargada de iniciar todo lo relacionado con la base de datos, la configuracion la conexion, crear las tablas etc
     '''
-    if(checkFileExistance("config.ini")==True):
-        if(checkConfigBien("config.ini")==False):
-            salir=True
-            while(salir):
-                print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
-                opcion=escanerNumerico()
-                if (opcion=='1'):
-                    salir=False
-                    print("El fichero de configuracion sera restablecido y el programa se cerrara")
-                    iniciarFicheroConfiguracion()
-                    print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
-                    sys.exit()
-                elif(opcion=='2'):
-                    salir=False
-                    print("El programa se cerrara")
-                    sys.exit()
-                else:
-                    salir=True
-                    print("Valor no valido")
-    else:
-        print("Se ha creado el fichero de configuracion")
-        iniciarFicheroConfiguracion()
-    
-    mysqlconnect()
-    
-    conn =mysqlconnect()
-    
-    
-    
-    cur = conn.cursor()
-    cur.execute('select @@version')
-    cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
-    cur.execute('USE miguel_roberto')
-    
-    cur.execute('''CREATE TABLE IF NOT EXISTS profesores
-            (
-            id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            dni VARCHAR(9) UNIQUE NOT NULL,
-            nombre VARCHAR(25) NOT NULL,
-            direccion VARCHAR(25) NOT NULL,
-            telefono VARCHAR(9) NOT NULL
-            );
-            ''')
-    cur.execute('''CREATE TABLE IF NOT EXISTS cursos
-            (
-            id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            nombre VARCHAR(25) UNIQUE NOT NULL,
-            descripcion VARCHAR(25) NOT NULL,
-            id_profesor integer ,
-            CONSTRAINT FK_curso_profesor FOREIGN KEY (id_profesor) REFERENCES profesores(id)
-                ON DELETE CASCADE
-                ON UPDATE CASCADE
-            );
-            ''')
-    
-    cur.execute('''CREATE TABLE IF NOT EXISTS alumnos
-            (
-            id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            nombre VARCHAR(25) NOT NULL,
-            apellidos VARCHAR(25) NOT NULL,
-            telefono VARCHAR(11) NOT NULL,
-            direccion VARCHAR(25) NOT NULL,
-            f_nacimiento VARCHAR(10) NOT NULL,
-            UNIQUE (nombre,apellidos)
+    try:
+        if(checkFileExistance("config.ini")==True):
+            if(checkConfigBien("config.ini")==False):
+                salir=True
+                while(salir):
+                    print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
+                    opcion=escanerNumerico()
+                    if (opcion=='1'):
+                        salir=False
+                        print("El fichero de configuracion sera restablecido y el programa se cerrara")
+                        iniciarFicheroConfiguracion()
+                        print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
+                        sys.exit()
+                    elif(opcion=='2'):
+                        salir=False
+                        print("El programa se cerrara")
+                        sys.exit()
+                    else:
+                        salir=True
+                        print("Valor no valido")
+        else:
             
-            );
-            ''')
-    
-    cur.execute('''CREATE TABLE IF NOT EXISTS alumno_curso
-            (
-            id_curso integer NOT NULL ,
-            id_alumno integer NOT NULL ,
-            PRIMARY KEY(id_curso,id_alumno),
-            CONSTRAINT FK_alumno_curso_alumno FOREIGN KEY (id_alumno) REFERENCES alumnos (id)
-                ON DELETE CASCADE
-                ON UPDATE CASCADE,
-            CONSTRAINT FK_alumno_curso_curso FOREIGN KEY (id_curso) REFERENCES cursos (id)
-                ON DELETE CASCADE
-                ON UPDATE CASCADE
-            );
-            ''')
-    
-    conn.commit()
-    cur.close()
+            iniciarFicheroConfiguracion()
+            
+        mysqlconnect()
+        conn =mysqlconnect()
+        cur = conn.cursor()
+        cur.execute('select @@version')
+        cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
+        cur.execute('USE miguel_roberto')
+        
+        cur.execute('''CREATE TABLE IF NOT EXISTS profesores
+                (
+                id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                dni VARCHAR(9) UNIQUE NOT NULL,
+                nombre VARCHAR(25) NOT NULL,
+                direccion VARCHAR(25) NOT NULL,
+                telefono VARCHAR(9) NOT NULL
+                );
+                ''')
+        cur.execute('''CREATE TABLE IF NOT EXISTS cursos
+                (
+                id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                nombre VARCHAR(25) UNIQUE NOT NULL,
+                descripcion VARCHAR(25) NOT NULL,
+                id_profesor integer ,
+                CONSTRAINT FK_curso_profesor FOREIGN KEY (id_profesor) REFERENCES profesores(id)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE
+                );
+                ''')
+        
+        cur.execute('''CREATE TABLE IF NOT EXISTS alumnos
+                (
+                id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                nombre VARCHAR(25) NOT NULL,
+                apellidos VARCHAR(25) NOT NULL,
+                telefono VARCHAR(11) NOT NULL,
+                direccion VARCHAR(25) NOT NULL,
+                f_nacimiento VARCHAR(10) NOT NULL,
+                UNIQUE (nombre,apellidos)
+                
+                );
+                ''')
+        
+        cur.execute('''CREATE TABLE IF NOT EXISTS alumno_curso
+                (
+                id_curso integer NOT NULL ,
+                id_alumno integer NOT NULL ,
+                PRIMARY KEY(id_curso,id_alumno),
+                CONSTRAINT FK_alumno_curso_alumno FOREIGN KEY (id_alumno) REFERENCES alumnos (id)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE,
+                CONSTRAINT FK_alumno_curso_curso FOREIGN KEY (id_curso) REFERENCES cursos (id)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE
+                );
+                ''')
+        
+        conn.commit()
+        cur.close()
+    except:
+        print("No se ha podido realizar la iniciacion de la base de datos")
     return 0
 def dropDataBase():
     '''
-    Funcion que tira la base de datos ( pensado para facilitar el testear el codigo)
+    Funcion que tira la base de datos ( pensado para facilitar el testear el codigo), importante que si se tira la base de datos de vuelva a iniciar desde main con la funcion iniciar()
     '''
     cur=conectarse()
     cur.execute("DROP DATABASE miguel_roberto ;");
@@ -258,18 +261,18 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     :param campo4: Si la tabla tiene un cuarto campo, se pondra aqui(alumno, profesor)
     :param campo5: Si la tabla tiene un quinto campo, se pondra aqui(alumno)
     '''
-    cur=conectarse()
-    if(tabla=='cursos'):
-        print('Se supone que esto es un curso')
-        cur.execute("INSERT INTO cursos(nombre,descripcion)VALUES('"+str(campo1)+"','"+str(campo2)+"');")
-    elif(tabla=='profesores'):
-        print('Se supone que esto es un profesor')
-        cur.execute("INSERT INTO profesores(dni,nombre,direccion,telefono)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"');")
-    elif(tabla=='alumnos'):
-        print('Se supone que esto es un alumno')
-        cur.execute("INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"','"+str(campo5)+"');")
-    conn.commit()
-    cur.close()
+    try:
+        cur=conectarse()
+        if(tabla=='cursos'):
+            cur.execute("INSERT INTO cursos(nombre,descripcion)VALUES('"+str(campo1)+"','"+str(campo2)+"');")
+        elif(tabla=='profesores'):
+            cur.execute("INSERT INTO profesores(dni,nombre,direccion,telefono)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"');")
+        elif(tabla=='alumnos'):
+            cur.execute("INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"','"+str(campo5)+"');")
+        conn.commit()
+        cur.close()
+    except:
+        print("No se ha podido realizar el alta")
     return 0
 def baja(tabla,campo1,campo2):
     '''
@@ -278,18 +281,18 @@ def baja(tabla,campo1,campo2):
     :param campo1: El primer campo de cada tabla
     :param campo2: El segundo campo de la tabla alumnos
     '''
-    cur=conectarse()
-    if(tabla=='cursos'):
-        print('Se supone que esto es un curso')
-        cur.execute("DELETE FROM cursos WHERE nombre = '"+str(campo1)+"';")
-    elif(tabla=='profesores'):
-        print('Se supone que esto es un profesor')
-        cur.execute("DELETE FROM profesores WHERE dni = '"+str(campo1)+"';")
-    elif(tabla=='alumnos'):
-        print('Se supone que esto es un alumno')
-        cur.execute("DELETE FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
-    conn.commit()
-    cur.close()
+    try:
+        cur=conectarse()
+        if(tabla=='cursos'):
+            cur.execute("DELETE FROM cursos WHERE nombre = '"+str(campo1)+"';")
+        elif(tabla=='profesores'):
+            cur.execute("DELETE FROM profesores WHERE dni = '"+str(campo1)+"';")
+        elif(tabla=='alumnos'):
+            cur.execute("DELETE FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
+        conn.commit()
+        cur.close()
+    except:
+        print("No se ha podido realizar la baja")
     return 0
 def modificar(tabla,idValor,campoMod,valorNew):
     '''
@@ -299,18 +302,18 @@ def modificar(tabla,idValor,campoMod,valorNew):
     :param campoMod: El campo que se quiere modificar
     :param valorNew: El valor que se quiere poner en el campo
     '''
-    cur=conectarse()
-    if(tabla=='cursos'):
-        print('Se supone que esto es un curso')
-        cur.execute("UPDATE cursos SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+";")
-    elif(tabla=='profesores'):
-        print('Se supone que esto es un profesor')
-        cur.execute("UPDATE profesores SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+" ;")
-    elif(tabla=='alumnos'):
-        print('Se supone que esto es un alumno')
-        cur.execute("UPDATE alumnos SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+"  ;")
-    conn.commit()
-    cur.close()
+    try:
+        cur=conectarse()
+        if(tabla=='cursos'):
+            cur.execute("UPDATE cursos SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+";")
+        elif(tabla=='profesores'):
+            cur.execute("UPDATE profesores SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+" ;")
+        elif(tabla=='alumnos'):
+            cur.execute("UPDATE alumnos SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+"  ;")
+        conn.commit()
+        cur.close()
+    except:
+        print("No se ha podido realizar la modificacion")
     return 0
 def buscar(tabla,campo1,campo2):
     '''
@@ -320,76 +323,76 @@ def buscar(tabla,campo1,campo2):
     :param campo2: El segundo campo de la tabla alumnos
     :return Devuelve la lista con la linea que se busca o None si no encuentra nada
     '''
-    cur=conectarse()
-    if(tabla=='cursos'):
-        print('Se supone que esto es un curso')
-        cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
-        out1=cur.fetchall();
-        cur.execute("SELECT alumnos.nombre , alumnos.apellidos FROM alumnos , alumno_curso WHERE alumnos.id=alumno_curso.id_alumno AND alumno_curso.id_curso=((SELECT cursos.id FROM cursos WHERE cursos.nombre='"+str(campo1)+"'));")
-        out2=cur.fetchall();
-        cur.execute("SELECT profesores.nombre FROM profesores WHERE profesores.dni=(SELECT profesores.dni FROM profesores , cursos WHERE profesores.id=cursos.id_profesor AND cursos.nombre='"+str(campo1)+"') ;")
-        out3=cur.fetchall();
-        
-        lista1=list(out1)
-        lista2=list(out2)
-        lista3=list(out3)
-        if( len(lista1)==0):
-            print(tabla+' : '+campo1+' no ha sido encontrado')
-            return None
-        else:
-            print("Curso: "+campo1+" {")
-            for x in lista1:
-                print(x)
-            print("Profesor que imparte "+campo1+" :")
-            for x in lista3:
-                print(x)
-            print("Alumnos en el curso "+campo1+" :")
-            for x in lista2:
-                print(x)
-            print("}")
-            return lista1
-        
-    elif(tabla=='profesores'):
-        print('Se supone que esto es un profesor')
-        cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
-        out1=cur.fetchall();
-        cur.execute("SELECT cursos.nombre FROM cursos  WHERE cursos.id_profesor=(SELECT profesores.id FROM  profesores WHERE profesores.dni='"+str(campo1)+"') ;")
-        out2=cur.fetchall();
-        lista1=list(out1)
-        lista2=list(out2)
-        if( len(lista1)==0):
-            print(tabla+' : '+campo1+'  no ha sido encontrado')
-            return None
-        else:
-            print("Profesor: "+campo1+" {")
-            for x in lista1:
-                print(x)
-            print("Cursos que imparte el profesor "+campo1+" :")
-            for x in lista2:
-                print(x)
-            print("}")
-            return lista1
-    elif(tabla=='alumnos'):
-        print('Se supone que esto es un alumno')
-        cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
-        out1=cur.fetchall();
-        cur.execute("SELECT cursos.nombre  FROM cursos , alumno_curso   WHERE cursos.id=alumno_curso.id_curso   AND alumno_curso.id_alumno=((SELECT alumnos.id FROM alumnos WHERE alumnos.nombre='"+str(campo1)+"' AND alumnos.apellidos='"+str(campo2)+"')) ;")
-        out2=cur.fetchall();
-        lista1=list(out1)
-        lista2=list(out2)
-        if( len(lista1)==0):
-            print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
-            return None
-        else:
-            print("Alumno: "+campo1+" "+campo2+" {")
-            for x in lista1:
-                print(x)
-            print("Cursos en los que esta matriculado "+campo1+" "+campo2+" :")
-            for x in lista2:
-                print(x)
-            print("}")
-            return lista1
-    cur.close()
+    try:
+        cur=conectarse()
+        if(tabla=='cursos'):
+            cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
+            out1=cur.fetchall();
+            cur.execute("SELECT alumnos.nombre , alumnos.apellidos FROM alumnos , alumno_curso WHERE alumnos.id=alumno_curso.id_alumno AND alumno_curso.id_curso=((SELECT cursos.id FROM cursos WHERE cursos.nombre='"+str(campo1)+"'));")
+            out2=cur.fetchall();
+            cur.execute("SELECT profesores.nombre FROM profesores WHERE profesores.dni=(SELECT profesores.dni FROM profesores , cursos WHERE profesores.id=cursos.id_profesor AND cursos.nombre='"+str(campo1)+"') ;")
+            out3=cur.fetchall();
+            
+            lista1=list(out1)
+            lista2=list(out2)
+            lista3=list(out3)
+            if( len(lista1)==0):
+                print(tabla+' : '+campo1+' no ha sido encontrado')
+                return None
+            else:
+                print("Curso: "+campo1+" {")
+                for x in lista1:
+                    print(x)
+                print("Profesor que imparte "+campo1+" :")
+                for x in lista3:
+                    print(x)
+                print("Alumnos en el curso "+campo1+" :")
+                for x in lista2:
+                    print(x)
+                print("}")
+                return lista1
+            
+        elif(tabla=='profesores'):
+            cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
+            out1=cur.fetchall();
+            cur.execute("SELECT cursos.nombre FROM cursos  WHERE cursos.id_profesor=(SELECT profesores.id FROM  profesores WHERE profesores.dni='"+str(campo1)+"') ;")
+            out2=cur.fetchall();
+            lista1=list(out1)
+            lista2=list(out2)
+            if( len(lista1)==0):
+                print(tabla+' : '+campo1+'  no ha sido encontrado')
+                return None
+            else:
+                print("Profesor: "+campo1+" {")
+                for x in lista1:
+                    print(x)
+                print("Cursos que imparte el profesor "+campo1+" :")
+                for x in lista2:
+                    print(x)
+                print("}")
+                return lista1
+        elif(tabla=='alumnos'):
+            cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
+            out1=cur.fetchall();
+            cur.execute("SELECT cursos.nombre  FROM cursos , alumno_curso   WHERE cursos.id=alumno_curso.id_curso   AND alumno_curso.id_alumno=((SELECT alumnos.id FROM alumnos WHERE alumnos.nombre='"+str(campo1)+"' AND alumnos.apellidos='"+str(campo2)+"')) ;")
+            out2=cur.fetchall();
+            lista1=list(out1)
+            lista2=list(out2)
+            if( len(lista1)==0):
+                print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
+                return None
+            else:
+                print("Alumno: "+campo1+" "+campo2+" {")
+                for x in lista1:
+                    print(x)
+                print("Cursos en los que esta matriculado "+campo1+" "+campo2+" :")
+                for x in lista2:
+                    print(x)
+                print("}")
+                return lista1
+        cur.close()
+    except:
+        print("No se ha podido encontrar el elemento de la tabla")
     return None
 def buscarSinprint(tabla,campo1,campo2):
     '''
@@ -399,59 +402,59 @@ def buscarSinprint(tabla,campo1,campo2):
     :param campo2: El segundo campo de la tabla alumnos
     :return Devuelve la lista con la linea que se busca o None si no encuentra nada
     '''
-    cur=conectarse()
-    if(tabla=='cursos'):
-        print('Se supone que esto es un curso')
-        cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
-        out1=cur.fetchall();
-        lista1=list(out1)
-        if( len(lista1)==0):
-            return None
-        else:
-            return lista1
-    elif(tabla=='profesores'):
-        print('Se supone que esto es un profesor')
-        cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
-        out1=cur.fetchall();
-        lista1=list(out1)
-        if( len(lista1)==0):
-            return None
-        else:
-            return lista1
-    elif(tabla=='alumnos'):
-        print('Se supone que esto es un alumno')
-        cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
-        out1=cur.fetchall();
-        lista1=list(out1)
-        if( len(lista1)==0):
-            return None
-        else:
-            return lista1
-    cur.close()
+    try:
+        cur=conectarse()
+        if(tabla=='cursos'):
+            cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
+            out1=cur.fetchall();
+            lista1=list(out1)
+            if( len(lista1)==0):
+                return None
+            else:
+                return lista1
+        elif(tabla=='profesores'):
+            cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
+            out1=cur.fetchall();
+            lista1=list(out1)
+            if( len(lista1)==0):
+                return None
+            else:
+                return lista1
+        elif(tabla=='alumnos'):
+            cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
+            out1=cur.fetchall();
+            lista1=list(out1)
+            if( len(lista1)==0):
+                return None
+            else:
+                return lista1
+        cur.close()
+    except:
+        print("No se ha podido encontrar el elemento de la tabla")
     return None
 def mostrarTodos(tabla):
     '''
     Funcion encargada de mostrar todas las fias de una tabla
     :param tabla: La tabla que se quiere mostrar
     '''
-    cur=conectarse()
-    if(tabla=='cursos'):
-        print('Se supone que esto es un curso')
-        cur.execute("SELECT cursos.* FROM cursos ;")
-    elif(tabla=='profesores'):
-        print('Se supone que esto es un profesor')
-        cur.execute("SELECT profesores.* FROM profesores ;")
-    elif(tabla=='alumnos'):
-        print('Se supone que esto es un alumno')
-        cur.execute("SELECT alumnos.* FROM alumnos ;")
-    out=cur.fetchall();
-    lista=list(out)
-    if(len(lista)==0):
-        print('La tabla '+tabla+' esta vacia')
-    else:
-        for x in lista:
-            print(x)
-    cur.close()
+    try:
+        cur=conectarse()
+        if(tabla=='cursos'):
+            cur.execute("SELECT cursos.* FROM cursos ;")
+        elif(tabla=='profesores'):
+            cur.execute("SELECT profesores.* FROM profesores ;")
+        elif(tabla=='alumnos'):
+            cur.execute("SELECT alumnos.* FROM alumnos ;")
+        out=cur.fetchall();
+        lista=list(out)
+        if(len(lista)==0):
+            print('La tabla '+tabla+' esta vacia')
+        else:
+            for x in lista:
+                print(x)
+        cur.close()
+    except:
+        print("No se ha podido mostrar la tabla")
     return 0
 def matricularAlumno(idAlumno,idCurso):
     '''
@@ -459,11 +462,14 @@ def matricularAlumno(idAlumno,idCurso):
     :param idAlumno: El id del alumno que se va a matriular
     :param idCurso: El id del curso en el que se va a matricular un alumno
     '''
-    cur=conectarse()
-    cur.execute("INSERT INTO alumno_curso(id_curso,id_alumno) VALUES( "+str(idCurso)+" , "+str(idAlumno)+"  );")
-    conn.commit()
-    cur.close()
-    print("Alumno matriculado exitosamente")
+    try:
+        cur=conectarse()
+        cur.execute("INSERT INTO alumno_curso(id_curso,id_alumno) VALUES( "+str(idCurso)+" , "+str(idAlumno)+"  );")
+        conn.commit()
+        cur.close()
+        print("Alumno matriculado exitosamente")
+    except:
+        print("No se ha podido matricular al alumno")
     return 0
 def desmatricularAlumno(idAlumno,idCurso):
     '''
@@ -471,11 +477,14 @@ def desmatricularAlumno(idAlumno,idCurso):
     :param idAlumno: El alumno que se va a desmatricular
     :param idCurso: El curso del cual el alumno se va a desmatricular
     '''
-    cur=conectarse()
-    cur.execute("DELETE FROM alumno_curso  WHERE id_alumno =  "+str(idAlumno)+"  AND id_curso=  "+str(idCurso)+"   ;")
-    conn.commit()
-    cur.close()
-    print("Alumno desmatriculado exitosamente")
+    try:
+        cur=conectarse()
+        cur.execute("DELETE FROM alumno_curso  WHERE id_alumno =  "+str(idAlumno)+"  AND id_curso=  "+str(idCurso)+"   ;")
+        conn.commit()
+        cur.close()
+        print("Alumno desmatriculado exitosamente")
+    except:
+        print("No se ha podido desmatricular al alumno")
     return 0
 def desasignarProfesor(idProfesor,idCurso):
     '''
@@ -483,11 +492,14 @@ def desasignarProfesor(idProfesor,idCurso):
     :param idProfesor: El profesor que se va a desasignar
     :param idCurso: El curso del cual el profesor se va a desasignar
     '''
-    cur=conectarse()
-    cur.execute("UPDATE cursos SET id_profesor = NULL WHERE id="+str(idCurso)+" AND id_profesor="+str(idProfesor)+";")
-    conn.commit()
-    cur.close()
-    print("Profesor desasignado exitosamente")
+    try:
+        cur=conectarse()
+        cur.execute("UPDATE cursos SET id_profesor = NULL WHERE id="+str(idCurso)+" AND id_profesor="+str(idProfesor)+";")
+        conn.commit()
+        cur.close()
+        print("Profesor desasignado exitosamente")
+    except:
+        print("No se ha podido desasignar al profesor")
     return 0
 iniciar()
 conn = mysqlconnect()
