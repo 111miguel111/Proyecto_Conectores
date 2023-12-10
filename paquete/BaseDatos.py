@@ -245,7 +245,7 @@ def iniciar():
     return 0
 def dropDataBase():
     '''
-    Funcion que tira la base de datos ( pensado para facilitar el testear el codigo), importante que si se tira la base de datos de vuelva a iniciar desde main con la funcion iniciar()
+    Funcion que tira la base de datos ( pensado para facilitar el testear el codigo), importante que si se tira la base de datos se vuelva a iniciar desde main con la funcion iniciar()
     '''
     cur=conectarse()
     cur.execute("DROP DATABASE miguel_roberto ;");
