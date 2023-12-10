@@ -100,7 +100,7 @@ def modifCurso():
                         if(profesor != None):
                             print("¿Desea confirmar la modificacion?(Si o no)")
                             if(confirmacion()):
-                                modificar('cursos', curso[0][0], 'id', profesor[0][0])
+                                modificar('cursos', curso[0][0], 'id_profesor', profesor[0][0])
                             
                 # Opcion para salir del bucle        
                 elif(opcion == '0'):

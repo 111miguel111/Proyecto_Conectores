@@ -109,7 +109,9 @@ def modifAlumno():
                     else:
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
+                            print()
                             modificar('alumnos',alumno[0][0],'nombre',nombre)
+                            alumno = buscarSinprint('alumnos',nombre,alumno[0][2])
                         
                 #Opcion para modificar apellidos
                 elif (opcion == '2'):
@@ -124,6 +126,7 @@ def modifAlumno():
                         print("¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'apellidos',apellidos)
+                            alumno = buscarSinprint('alumnos',alumno[0][1],apellidos)
                     
                 #Opcion para modificar telefono
                 elif(opcion=='3'):

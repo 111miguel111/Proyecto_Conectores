@@ -281,13 +281,13 @@ def baja(tabla,campo1,campo2):
     cur=conectarse()
     if(tabla=='cursos'):
         print('Se supone que esto es un curso')
-        cur.execute("DELETE FROM cursosWHERE nombre = '"+str(campo1)+"';")
+        cur.execute("DELETE FROM cursos WHERE nombre = '"+str(campo1)+"';")
     elif(tabla=='profesores'):
         print('Se supone que esto es un profesor')
-        cur.execute("DELETE FROM profesoresWHERE dni = '"+str(campo1)+"';")
+        cur.execute("DELETE FROM profesores WHERE dni = '"+str(campo1)+"';")
     elif(tabla=='alumnos'):
         print('Se supone que esto es un alumno')
-        cur.execute("DELETE FROM alumnosWHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
+        cur.execute("DELETE FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
     conn.commit()
     cur.close()
     return 0
