@@ -378,6 +378,8 @@ def confirmacion():
         elif(inputConfirmacion.lower() == 'no'):
             return False
         else:
-            print("\nValor incorrecto, pruebe otra vez(Si o no)")
-            cont=+1
+            if(cont<4):
+                print("\nValor incorrecto, pruebe otra vez(Si o no)")
+            cont+=1
+    print("\nHas superado el numero de intentos")
     return False
