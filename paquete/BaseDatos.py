@@ -101,8 +101,10 @@ def checkConfigBien(filePath):
         print("El campo "+campo+" falta o esta mal")
         return False
     except IOError as e:
+        print("El campo "+campo+" falta o esta mal")
         return False
     except :
+        print("El campo "+campo+" falta o esta mal")
         return False
 
 def conectarse():
