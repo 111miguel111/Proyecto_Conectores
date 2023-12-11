@@ -18,7 +18,7 @@ def escanerNumerico():
     intentos=0
     while(intentos<5):
         scan=input()
-        #Se introduce la cadena y si solo hay letras se devuelve
+        #Se introduce la cadena y comprueba que no este vacio y que ponga 1 o 2 si no te vuelve a preguntar y si fallas 5 veces devulve none
         if(scan.isspace()==False and scan.isnumeric() and (scan=='1' or scan=='2') ):
             return scan
         intentos+=1
@@ -30,12 +30,13 @@ def iniciarFicheroConfiguracion():
     Funcion que se encarga de crear el fichero de configuracion con valores predeterminados
     '''
     try:
-        config = configparser.ConfigParser()
+        #Creamos un fichero .ini en el cual se guardan datos para la configuracion del programa 
+        config = configparser.ConfigParser()#Creamos la variable
         config['SERVER'] = {'host': 'localhost',
                              'user': 'root',
                              'password': 'my-secret-pw',
                              'port':'3306'}
-        with open('config.ini', 'w') as configfile:
+        with open('config.ini', 'w') as configfile:#Escribimos el fichero de configuracion
             config.write(configfile)
         print("Se ha creado el fichero de configuracion")
     except:
@@ -48,12 +49,14 @@ def checkFileExistance(filePath):
     :param filePath: El nombre del fichero
     :return Devuelve True si el fichero existe y False si no existe
     '''
-    
+    #Comprobamos que el fichero exista si no es el caso devolvemos false
     try:
         with open(filePath, "r") as f:
             return True
+        print("El fichero de configuracion existe")
     except FileNotFoundError as e:
         return False
+        print("El fichero de configuracion no existe")
     except IOError as e:
         return False
 def checkConfigBien(filePath):
@@ -63,29 +66,36 @@ def checkConfigBien(filePath):
     :return Devuelve False si hay algun problema al leer el fichero de configuracion y si todos los campos estan bien devuelve True
     '''
     campo=''
+    #Comprobamos que el fichero tiene todas sus secciones y categorias en orden
     try:
+        print("Comprobando estado del fichero de configuracion")
         config = configparser.ConfigParser()
         config.read(filePath)
         campo='host'
+        #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         host_variable=str(config['SERVER']['host'])
-        if(host_variable.isspace()):
+        if(host_variable.isspace()):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='user'
+        #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         user_variable=str(config['SERVER']['user'])
-        if(user_variable.isspace()):
+        if(user_variable.isspace())::#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='password'
+        #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         password_variable=str(config['SERVER']['password'])
-        if(password_variable.isspace()):
+        if(password_variable.isspace())::#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='port'
+        #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         port_variable=int(config['SERVER']['port'])
-        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False):
+        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False)::#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" tiene que ser numeros")
             return False
+        print("El fichero de configuracion esta bien")
         return True
     except FileNotFoundError as e:
         print("El campo "+campo+" falta o esta mal")
@@ -97,9 +107,10 @@ def checkConfigBien(filePath):
 
 def conectarse():
     '''
-    Funcion encargada de conectarse a la base de datos y devolver un cursor
+    Funcion encargada de usar la base de datos y devolver un cursor
     :return Devuelve un cursor conectado a la base de datos 
     '''
+    #Creamos un nuevo cursor y nos aseguramos de usar la base de datos correcta
     cur = conn.cursor()
     cur.execute('USE miguel_roberto')
     return cur
@@ -108,15 +119,17 @@ def deconectarse():
     Funcion encargada de desconectarse de la la base de datos y cerrar la conexion
     :param conn:
     '''
+    #Guardamos culaquier cambio en la conexion y la cerramos
     conn.commit()
     conn.close()
+    print("La conexion ha terminado ")
     return 0
 def mysqlconnect(): 
     '''
     Funcion encargada de realizar la conexion si hay algun problema en la conexion informara al usuario.
     :return Devulve una conexion si todo ha ido bien
     '''
-    
+    #Cogemos todos los datos de el fichero de configuracion e iniciamos una coñexion en base a los datos en el fichero de configuracion
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
@@ -130,12 +143,13 @@ def mysqlconnect():
             password=password_variable,
             port=port_variable
             )
-        
+        print("La conexion se ha realizado sin errores")
         return conn
-    
+    #Si la conexion no se puede realizar ya sea por que  el gestor de base de datos esta apagado nos informara
     except pymysql.err.OperationalError as e:
-        print("Se ha producido un error, compruebe que la base de datos a la que se quiere conectar esta operativa.\nEl programa se cerrara")
-        sys.exit()
+        print("Se ha producido un error, compruebe que el gestod de base de datos a la que se quiere conectar esta operativa.\nEl programa se cerrara")
+        sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
+    #Si la conexion no se puede realizar por que el fichero de configuracion esta mal  nos informara
     except :
         salir=True
         while(salir):
@@ -146,11 +160,11 @@ def mysqlconnect():
                 print("El fichero de configuracion sera restablecido y el programa se cerrara")
                 iniciarFicheroConfiguracion()
                 print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
-                sys.exit()
+                sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
             elif(opcion=='2'):
                 salir=False
                 print("El programa se cerrara")
-                sys.exit()
+                sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
             else:
                 salir=True
                 print("Valor no valido")
@@ -159,10 +173,12 @@ def iniciar():
     '''
     Funcion encargada de iniciar todo lo relacionado con la base de datos, la configuracion la conexion, crear las tablas etc
     '''
+    #Metodo que inicia lo relacionado con la base de datos, comprueba el fichero de datos, comprueba la conexion y si todo esta bien procede a crear una base de datos con las tablas necesarias 
     try:
-        if(checkFileExistance("config.ini")==True):
-            if(checkConfigBien("config.ini")==False):
+        if(checkFileExistance("config.ini")==True):#Comprobamos que el fichero de configuracion existe, si no es el caso lo creamos con los datos por defecto
+            if(checkConfigBien("config.ini")==False):#Comprobamos que el fichero de configuracion esta bien
                 salir=True
+                #Si hay algun error informamos al usuario
                 while(salir):
                     print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
                     opcion=escanerNumerico()
@@ -171,21 +187,21 @@ def iniciar():
                         print("El fichero de configuracion sera restablecido y el programa se cerrara")
                         iniciarFicheroConfiguracion()
                         print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
-                        sys.exit()
+                        sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
                     elif(opcion=='2'):
                         salir=False
                         print("El programa se cerrara")
-                        sys.exit()
+                        sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
                     else:
                         salir=True
                         print("Valor no valido")
         else:
             
             iniciarFicheroConfiguracion()
-            
+        #Llama a la conexion para comprobar si esta funciona
         mysqlconnect()
-        conn =mysqlconnect()
-        cur = conn.cursor()
+        conn =mysqlconnect()#Nos conectamos
+        cur = conn.cursor()#Creamos un cursor que se usara para crear la base de datos y las tablas correspondientes
         cur.execute('select @@version')
         cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
         cur.execute('USE miguel_roberto')
@@ -216,7 +232,7 @@ def iniciar():
                 id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 nombre VARCHAR(25) NOT NULL,
                 apellidos VARCHAR(25) NOT NULL,
-                telefono VARCHAR(11) NOT NULL,
+                telefono VARCHAR(9) NOT NULL,
                 direccion VARCHAR(25) NOT NULL,
                 f_nacimiento VARCHAR(10) NOT NULL,
                 UNIQUE (nombre,apellidos)
@@ -237,7 +253,7 @@ def iniciar():
                     ON UPDATE CASCADE
                 );
                 ''')
-        
+        print("La base de datos ha sido creada")
         conn.commit()
         cur.close()
     except:
@@ -263,6 +279,7 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
             cur.execute("INSERT INTO alumnos(nombre,apellidos,telefono,direccion,f_nacimiento)VALUES('"+str(campo1)+"','"+str(campo2)+"','"+str(campo3)+"','"+str(campo4)+"','"+str(campo5)+"');")
         conn.commit()
         cur.close()
+        print("Alta realizada exitosamente")
     except:
         print("No se ha podido realizar el alta")
     return 0
@@ -283,6 +300,7 @@ def baja(tabla,campo1,campo2):
             cur.execute("DELETE FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
         conn.commit()
         cur.close()
+        print("Baja realizada exitosamente")
     except:
         print("No se ha podido realizar la baja")
     return 0
@@ -304,6 +322,7 @@ def modificar(tabla,idValor,campoMod,valorNew):
             cur.execute("UPDATE alumnos SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+"  ;")
         conn.commit()
         cur.close()
+        print("Modificacion realizada exitosamente")
     except:
         print("No se ha podido realizar la modificacion")
     return 0
