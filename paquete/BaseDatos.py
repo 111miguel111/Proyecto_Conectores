@@ -75,25 +75,25 @@ def checkConfigBien(filePath):
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         host_variable=str(config['SERVER']['host'])
         if(host_variable.isspace()or len(host_variable)==0):#Si esta categoria esta mal devolveremos false y se entendera que el fichero de configuracion esta mal
-            print("El campo "+campo+" no puede estar vacio")
+            print("El campo "+campo+" no puede estar vacio\n")
             return False
         campo='user'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         user_variable=str(config['SERVER']['user'])
         if(user_variable.isspace() or len(user_variable)==0):#Si esta categoria esta mal devolveremos false y se entendera que el fichero de configuracion esta mal
-            print("El campo "+campo+" no puede estar vacio")
+            print("El campo "+campo+" no puede estar vacio\n")
             return False
         campo='password'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         password_variable=str(config['SERVER']['password'])
         if(password_variable.isspace()):#Si esta categoria esta mal devolveremos false y se entendera que el fichero de configuracion esta mal
-            print("El campo "+campo+" no puede ser un espacio")
+            print("El campo "+campo+" no puede ser un espacio\n")
             return False
         campo='port'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         port_variable=int(config['SERVER']['port'])
         if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False or len(str(port_variable))==0):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
-            print("El campo "+campo+" tiene que ser numeros")
+            print("El campo "+campo+" tiene que ser numeros\n")
             return False
         print("El fichero de configuracion esta bien")
         return True
@@ -249,7 +249,6 @@ def iniciar():
         cur.close()
         return True
     except:
-        print("No se ha podido realizar la iniciacion de la base de datos")
         return False
 def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     '''
