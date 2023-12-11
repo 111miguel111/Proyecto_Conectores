@@ -270,6 +270,7 @@ def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     :param campo5: Si la tabla tiene un quinto campo, se pondra aqui(alumno)
     '''
     try:
+        #Creamos un nuevo cursor y dependiendo de la tabla que nos mandan entramos en un if o en otro y usaremos los campos que necesitemos
         cur=conectarse()
         if(tabla=='cursos'):
             cur.execute("INSERT INTO cursos(nombre,descripcion)VALUES('"+str(campo1)+"','"+str(campo2)+"');")
@@ -291,6 +292,7 @@ def baja(tabla,campo1,campo2):
     :param campo2: El segundo campo de la tabla alumnos
     '''
     try:
+        #Creamos un nuevo cursor y dependiendo de la tabla que nos mandan entramos en un if o en otro y eliminaremos lo deseado en base al/los campos dados
         cur=conectarse()
         if(tabla=='cursos'):
             cur.execute("DELETE FROM cursos WHERE nombre = '"+str(campo1)+"';")
@@ -313,6 +315,7 @@ def modificar(tabla,idValor,campoMod,valorNew):
     :param valorNew: El valor que se quiere poner en el campo
     '''
     try:
+        #Creamos un nuevo cursor y dependiendo de la tabla que nos mandan entramos en un if o en otro y actualizamos en campo de la fila y tabla deseada
         cur=conectarse()
         if(tabla=='cursos'):
             cur.execute("UPDATE cursos SET "+str(campoMod)+" = '"+str(valorNew)+"' WHERE id=  "+str(idValor)+";")
@@ -335,28 +338,34 @@ def buscar(tabla,campo1,campo2):
     :return Devuelve la lista con la linea que se busca o None si no encuentra nada
     '''
     try:
+        #Creamos un nuevo cursor y dependiendo de la tabla que nos mandan entramos en un if o en otro y devolvemos la fila de la tabla deseada teniendo en cuenta el o los campos necesarios, tambien mostramos las relaciones entre tablas que pueda tener
         cur=conectarse()
         if(tabla=='cursos'):
             cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
-            out1=cur.fetchall();
+            out1=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
             cur.execute("SELECT alumnos.nombre , alumnos.apellidos FROM alumnos , alumno_curso WHERE alumnos.id=alumno_curso.id_alumno AND alumno_curso.id_curso=((SELECT cursos.id FROM cursos WHERE cursos.nombre='"+str(campo1)+"'));")
-            out2=cur.fetchall();
+            out2=cur.fetchall();#Recogemos la respuesta del cursor en otra variable para trabajar con ella de manera independiente
             cur.execute("SELECT profesores.nombre FROM profesores WHERE profesores.dni=(SELECT profesores.dni FROM profesores , cursos WHERE profesores.id=cursos.id_profesor AND cursos.nombre='"+str(campo1)+"') ;")
-            out3=cur.fetchall();
+            out3=cur.fetchall();#Recogemos la respuesta del cursor en otra variable para trabajar con ella de manera independiente
             
+            #Convertimos las tuplas en listas para trabajar mejor con ellas
             lista1=list(out1)
             lista2=list(out2)
             lista3=list(out3)
+            #Si la primera lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, empezamos a mostrar los datos
             if( len(lista1)==0):
                 print(tabla+' : '+campo1+' no ha sido encontrado')
                 return None
             else:
+                #Mostramos los datos de la fila
                 print("Curso: "+campo1+" {")
                 for x in lista1:
                     print(x)
+                #Mostrasmos los datos de la tabla relacionada
                 print("Profesor que imparte "+campo1+" :")
                 for x in lista3:
                     print(x)
+                #Mostrasmos los datos de la tabla relacionada
                 print("Alumnos en el curso "+campo1+" :")
                 for x in lista2:
                     print(x)
@@ -365,18 +374,23 @@ def buscar(tabla,campo1,campo2):
             
         elif(tabla=='profesores'):
             cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
-            out1=cur.fetchall();
+            out1=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
             cur.execute("SELECT cursos.nombre FROM cursos  WHERE cursos.id_profesor=(SELECT profesores.id FROM  profesores WHERE profesores.dni='"+str(campo1)+"') ;")
-            out2=cur.fetchall();
+            out2=cur.fetchall();#Recogemos la respuesta del cursor en otra variable para trabajar con ella de manera independiente
+            
+            #Convertimos las tuplas en listas para trabajar mejor con ellas
             lista1=list(out1)
             lista2=list(out2)
+            #Si la primera lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, empezamos a mostrar los datos
             if( len(lista1)==0):
                 print(tabla+' : '+campo1+'  no ha sido encontrado')
                 return None
             else:
+                #Mostramos los datos de la fila
                 print("Profesor: "+campo1+" {")
                 for x in lista1:
                     print(x)
+                #Mostrasmos los datos de la tabla relacionada
                 print("Cursos que imparte el profesor "+campo1+" :")
                 for x in lista2:
                     print(x)
@@ -384,18 +398,23 @@ def buscar(tabla,campo1,campo2):
                 return lista1
         elif(tabla=='alumnos'):
             cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
-            out1=cur.fetchall();
+            out1=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
             cur.execute("SELECT cursos.nombre  FROM cursos , alumno_curso   WHERE cursos.id=alumno_curso.id_curso   AND alumno_curso.id_alumno=((SELECT alumnos.id FROM alumnos WHERE alumnos.nombre='"+str(campo1)+"' AND alumnos.apellidos='"+str(campo2)+"')) ;")
-            out2=cur.fetchall();
+            out2=cur.fetchall();#Recogemos la respuesta del cursor en otra variable para trabajar con ella de manera independiente
+            
+            #Convertimos las tuplas en listas para trabajar mejor con ellas
             lista1=list(out1)
             lista2=list(out2)
+            #Si la primera lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, empezamos a mostrar los datos
             if( len(lista1)==0):
                 print(tabla+' : '+campo1+' '+campo2+' no ha sido encontrado')
                 return None
             else:
+                #Mostramos los datos de la fila
                 print("Alumno: "+campo1+" "+campo2+" {")
                 for x in lista1:
                     print(x)
+                #Mostrasmos los datos de la tabla relacionada
                 print("Cursos en los que esta matriculado "+campo1+" "+campo2+" :")
                 for x in lista2:
                     print(x)
@@ -413,28 +432,35 @@ def buscarSinprint(tabla,campo1,campo2):
     :param campo2: El segundo campo de la tabla alumnos
     :return Devuelve la lista con la linea que se busca o None si no encuentra nada
     '''
+    #Creamos un nuevo cursor y dependiendo de la tabla que nos mandan entramos en un if o en otro y devolvemos la fila de la tabla deseada teniendo en cuenta el o los campos necesarios
     try:
         cur=conectarse()
         if(tabla=='cursos'):
             cur.execute("SELECT * FROM cursos WHERE nombre = '"+str(campo1)+"';")
-            out1=cur.fetchall();
+            out1=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
+            #Convertimos la tupla en lista para trabajar mejor con ella
             lista1=list(out1)
+            #Si la lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, la devolvemos
             if( len(lista1)==0):
                 return None
             else:
                 return lista1
         elif(tabla=='profesores'):
             cur.execute("SELECT * FROM profesores  WHERE dni = '"+str(campo1)+"' ;")
-            out1=cur.fetchall();
+            out1=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
+            #Convertimos la tupla en lista para trabajar mejor con ella
             lista1=list(out1)
+            #Si la lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, la devolvemos
             if( len(lista1)==0):
                 return None
             else:
                 return lista1
         elif(tabla=='alumnos'):
             cur.execute("SELECT * FROM alumnos WHERE nombre = '"+str(campo1)+"' AND apellidos= '"+str(campo2)+"' ;")
-            out1=cur.fetchall();
+            out1=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
+            #Convertimos la tupla en lista para trabajar mejor con ella
             lista1=list(out1)
+            #Si la lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, la devolvemos
             if( len(lista1)==0):
                 return None
             else:
@@ -449,6 +475,7 @@ def mostrarTodos(tabla):
     :param tabla: La tabla que se quiere mostrar
     '''
     try:
+        #Creamos un nuevo cursor y dependiendo de la tabla que nos mandan entramos en un if o en otro y mostramos la tabla entera
         cur=conectarse()
         if(tabla=='cursos'):
             cur.execute("SELECT cursos.* FROM cursos ;")
@@ -456,8 +483,10 @@ def mostrarTodos(tabla):
             cur.execute("SELECT profesores.* FROM profesores ;")
         elif(tabla=='alumnos'):
             cur.execute("SELECT alumnos.* FROM alumnos ;")
-        out=cur.fetchall();
+        out=cur.fetchall();#Recogemos la respuesta del cursor para trabajar con ella de manera independiente
+        #Convertimos la tupla en lista para trabajar mejor con ella
         lista=list(out)
+        #Si la lista(que contendria la fila de la tabla objetivo)esta vacia informamos de ello si no, la devolvemos
         if(len(lista)==0):
             print('La tabla '+tabla+' esta vacia')
         else:
@@ -474,6 +503,7 @@ def matricularAlumno(idAlumno,idCurso):
     :param idCurso: El id del curso en el que se va a matricular un alumno
     '''
     try:
+        #Creamos un nuevo cursor y añadimos los ids a la tabla de matriculaciones
         cur=conectarse()
         cur.execute("INSERT INTO alumno_curso(id_curso,id_alumno) VALUES( "+str(idCurso)+" , "+str(idAlumno)+"  );")
         conn.commit()
@@ -489,6 +519,7 @@ def desmatricularAlumno(idAlumno,idCurso):
     :param idCurso: El curso del cual el alumno se va a desmatricular
     '''
     try:
+        #Creamos un nuevo cursor y quitamos los ids a la tabla de matriculaciones
         cur=conectarse()
         cur.execute("DELETE FROM alumno_curso  WHERE id_alumno =  "+str(idAlumno)+"  AND id_curso=  "+str(idCurso)+"   ;")
         conn.commit()
@@ -504,6 +535,7 @@ def desasignarProfesor(idProfesor,idCurso):
     :param idCurso: El curso del cual el profesor se va a desasignar
     '''
     try:
+        #Creamos un nuevo cursor y quitamos el id de el curso correspondiente
         cur=conectarse()
         cur.execute("UPDATE cursos SET id_profesor = NULL WHERE id="+str(idCurso)+" AND id_profesor="+str(idProfesor)+";")
         conn.commit()
@@ -512,7 +544,9 @@ def desasignarProfesor(idProfesor,idCurso):
     except:
         print("No se ha podido desasignar al profesor")
     return 0
+#Nada mas comenzar el programa iniciamos lo necesario para conectarse
 iniciar()
+#Creamos una variable general de conexion para no estar conectandonos todo el rato
 conn = mysqlconnect()
 
 
