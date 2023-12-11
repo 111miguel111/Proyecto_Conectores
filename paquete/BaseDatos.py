@@ -98,13 +98,13 @@ def checkConfigBien(filePath):
         print("El fichero de configuracion esta bien")
         return True
     except FileNotFoundError as e:
-        print("El campo "+campo+" falta o esta mal")
+        print("El campo "+campo+" falta o esta mal\n")
         return False
     except IOError as e:
-        print("El campo "+campo+" falta o esta mal")
+        print("El campo "+campo+" falta o esta mal\n")
         return False
     except :
-        print("El campo "+campo+" falta o esta mal")
+        print("El campo "+campo+" falta o esta mal\n")
         return False
 
 def conectarse():
