@@ -80,19 +80,19 @@ def checkConfigBien(filePath):
         campo='user'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         user_variable=str(config['SERVER']['user'])
-        if(user_variable.isspace())::#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
+        if(user_variable.isspace()):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='password'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         password_variable=str(config['SERVER']['password'])
-        if(password_variable.isspace())::#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
+        if(password_variable.isspace()):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='port'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         port_variable=int(config['SERVER']['port'])
-        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False)::#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
+        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" tiene que ser numeros")
             return False
         print("El fichero de configuracion esta bien")
