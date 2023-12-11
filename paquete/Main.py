@@ -10,8 +10,8 @@ def submenuAlumnos():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Alumnos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar"+
-"\n5.Mostrar Todos\n6.Matricular en Curso\n7.Desmatricular de Curso\n0.Salir")
+        opcion = input("\nSeleccione una opcion para Alumnos:\n1.Crear\t\t4.Consultar\t\t7.Desmatricular de Curso"+
+"\n2.Borrar\t5.Mostrar Todos\n3.Modificar\t6.Matricular en Curso\n0.Salir\n\n")
         
         #Opcion para crear un nuevo alumno
         if(opcion=='1'):
@@ -51,8 +51,8 @@ def submenuProfesores():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Profesores:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n"+
-"5.Mostrar Todos\n6.Asignar a Curso\n7.Desasignar de curso\n0.Salir")
+        opcion = input("\nSeleccione una opcion para Profesores:\n1.Crear\t\t4.Consultar\t\t7.Desasignar de curso"+
+"\n2.Borrar\t5.Mostrar Todos\n3.Modificar\t6.Asignar a Curso\n0.Salir\n\n")
         
         #Opcion para crear un nuevo profesor
         if(opcion=='1'):
@@ -93,8 +93,8 @@ def submenuCursos():
     #Variable que controla el bucle que ofrece las opciones
     check=True
     while (check):
-        opcion = input("Seleccione una opcion para Cursos:\n1.Crear\n2.Borrar\n3.Modificar\n4.Consultar\n"+
-"5.Mostrar Todos\n6.Matricular alumno\n7.Desatricular alumno\n8.Asignar profesor\n9.Desasignar profesor\n0.Salir")
+        opcion = input("\nSeleccione una opcion para Cursos:\n1.Crear\t\t4.Consultar\t\t7.Desatricular alumno"+
+"\n2.Borrar\t5.Mostrar Todos\t\t8.Asignar profesor\n3.Modificar\t6.Matricular alumno\t9.Desasignar profesor\n0.Salir\n\n")
         
         #Opcion para crear un nuevo curso
         if(opcion=='1'):
@@ -139,11 +139,11 @@ def submenuCursos():
         else:
             print("Valor no valido")
 
-print('Inicio del programa')
+print('Inicio del programa\n')
 #Bucle de opciones del menu principal
 check = True
 while (check):
-    opcion = input("Seleccione una opcion:\n1.Alumnos\n2.Profesores\n3.Cursos\n0.Salir")
+    opcion = input("Seleccione una opcion del menu:\n1.Alumnos\n2.Profesores\n3.Cursos\n0.Salir\n\n")
     
     #Opcion para llamar al menu de alumnos
     if(opcion=='1'):

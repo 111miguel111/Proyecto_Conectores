@@ -14,38 +14,38 @@ def altaAlumno():
     #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
     #Se comprueba que el nombre introducido es adecuado (Por tener nombre y apellidos como clave se decide permitir poner numeros)
-    print('Introduzca el nombre del alumno')
+    print('\nALTA:\nIntroduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
-        print("Error al introducir nombre, pruebe solo letras y menos de 25 caracteres")
+        print("\nError al introducir nombre, pruebe solo letras y menos de 25 caracteres")
         checkValido = False
     #Se comprueba que el apellido introducido es adecuado y se busca en la base de datos para comprobar que no existe
     #(Por tener nombre y apellidos como clave se decide permitir poner numeros)
     if(checkValido):
-        print('Introduzca los apellidos del alumno')
+        print('\nIntroduzca los apellidos del alumno')
         apellidos = escanerTexto()
         alum = buscarSinprint("alumnos", nombre, apellidos)
         if(apellidos==None):
-            print("Error al introducir apellidos, pruebe solo letras y menos de 25 caracteres")
+            print("\nError al introducir apellidos, pruebe solo letras y menos de 25 caracteres")
             checkValido = False
         elif(alum!=None):
-            print("El alumno introducido ya existe")
+            print("\nEl alumno introducido ya existe")
             checkValido = False
     #Se comprueba que el telefono introducido es un telefono   
     if(checkValido):
-        print('Introduzca el telefono del alumno')
+        print('\nIntroduzca el telefono del alumno')
         telefono = escanerTelefono()
         if(telefono==None):
             checkValido = False
     #Se comprueba que la calle es una calle       
     if(checkValido):
-        print('Introduzca la direccion del alumno')
+        print('\nIntroduzca la direccion del alumno')
         direccion = escanerTexto()
         if(direccion==None):
             checkValido = False
     #Se comprueba que la fecha de nacimiento es una fecha        
     if(checkValido):
-        print('Introduzca la fecha de nacimiento del alumno')
+        print('\nIntroduzca la fecha de nacimiento del alumno')
         fNacimiento = escanerFecha()
         if(fNacimiento==None):
             checkValido = False
@@ -60,13 +60,13 @@ def bajaAlumno():
     #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
     #Se comprueba que el nombre introducido es adecuado
-    print('Introduzca el nombre del alumno')
+    print('\nBAJA:\nIntroduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
     #Se comprueba que el apellido introducido es adecuado
     if(checkValido):
-        print('Introduzca los apellidos del alumno')
+        print('\nIntroduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
@@ -77,12 +77,12 @@ def bajaAlumno():
             checkValido = False
     #Si no ha habido errores se pide confirmacion y se da de baja el alumno   
     if(checkValido):
-        print("¿Desea confirmar la baja del alumno?(Si o no)")
+        print("\n¿Desea confirmar la baja del alumno?(Si o no)")
         if(confirmacion()):
             baja('alumnos', nombre, apellidos)
-            print("Alumno eliminado")
+            print("\nAlumno eliminado")
         else:
-            print("Alumno no eliminado")
+            print("\nAlumno no eliminado")
         
         
 def modifAlumno():
@@ -92,13 +92,13 @@ def modifAlumno():
     #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
     #Se comprueba que el nombre introducido es adecuado
-    print('Introduzca el nombre del alumno')
+    print('\nMODIFICAR:\nIntroduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
     #Se comprueba que el apellido introducido es adecuado   
     if(checkValido):
-        print('Introduzca los apellidos del alumno')
+        print('\nIntroduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
@@ -109,22 +109,22 @@ def modifAlumno():
             #Boolean para comprobar si el usuario quiere salir del bucle de las opciones de modificacion
             checkOpcion=True
             while (checkOpcion):
-                opcion = input("Seleccione un campo a modificar:\n1.Nombre\n2.Apellidos\n3.Telefono\n4.Direccion\n5.Fecha nacimiento\n0.Salir")
+                opcion = input("Seleccione un campo a modificar:\n1.Nombre\t4.Direccion\n2.Apellidos\t5.Fecha nacimiento\n3.Telefono\n0.Salir")
                 
                 #Opcion para modificar nombre
                 if(opcion=='1'):
                     #Se comprueba que el nombre introducido es adecuado y se busca en la base de datos para comprobar que no existe
                     #(Por tener nombre y apellidos como clave se decide permitir poner numeros)
-                    print('Introduzca el nombre del alumno')
+                    print('\nIntroduzca el nombre del alumno')
                     nombre = escanerAlfanumerico()
                     alum = buscarSinprint("alumnos", nombre, alumno[0][2])
                     if(nombre==None):
-                        print("Error al introducir nombre, pruebe solo letras y menos de 25 caracteres")
+                        print("\nError al introducir nombre, pruebe solo letras y menos de 25 caracteres")
                     elif(alum!=None):
-                        print("El alumno introducido ya existe")
+                        print("\nEl alumno introducido ya existe")
                     else:
                         #Si no ha habido errores se pide confirmacion y se modifica el nombre   
-                        print("¿Desea confirmar la modificacion?(Si o no)")
+                        print("\n¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             print()
                             modificar('alumnos',alumno[0][0],'nombre',nombre)
@@ -135,16 +135,16 @@ def modifAlumno():
                 elif (opcion == '2'):
                     #Se comprueba que los apellidos introducidos son adecuados y se busca en la base de datos para comprobar que no existe
                     #(Por tener nombre y apellidos como clave se decide permitir poner numeros)
-                    print('Introduzca los apellidos del alumno')
+                    print('\nIntroduzca los apellidos del alumno')
                     apellidos = escanerTexto()
                     alum = buscarSinprint("alumnos", alumno[0][1], apellidos)
                     if(apellidos==None):
-                        print("Error al introducir nombre, pruebe solo letras y menos de 25 caracteres")
+                        print("\nError al introducir nombre, pruebe solo letras y menos de 25 caracteres")
                     elif(alum!=None):
-                        print("El alumno introducido ya existe")
+                        print("\nEl alumno introducido ya existe")
                     else:
                         #Si no ha habido errores se pide confirmacion y se modifican los apellidos   
-                        print("¿Desea confirmar la modificacion?(Si o no)")
+                        print("\n¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'apellidos',apellidos)
                             #Se refresca el alumno para que queden reflejados los nuevos apellidos
@@ -153,30 +153,30 @@ def modifAlumno():
                 #Opcion para modificar telefono
                 elif(opcion=='3'):
                     #Se comprueba que el telefono introducido es un telefono y si no ha habido errores se pide confirmacion y se modifica
-                    print('Introduzca el telefono del alumno')
+                    print('\nIntroduzca el telefono del alumno')
                     telefono = escanerTelefono()
                     if(telefono != None):
-                        print("¿Desea confirmar la modificacion?(Si o no)")
+                        print("\n¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'telefono',telefono)
                 
                 #Opcion para modificar direccion
                 elif(opcion=='4'):
                     #Se comprueba que la direccion introducida es una direccion y si no ha habido errores se pide confirmacion y se modifica
-                    print('Introduzca la direccion del alumno')
+                    print('\nIntroduzca la direccion del alumno')
                     direccion = escanerTexto()
                     if(direccion != None):
-                        print("¿Desea confirmar la modificacion?(Si o no)")
+                        print("\n¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'direccion',direccion)
                             
                 #Opcion para modificar la fecha de nacimiento
                 elif(opcion == '5'):
                     #Se comprueba que la fecha introducida es una fecha y si no ha habido errores se pide confirmacion y se modifica
-                    print('Introduzca la fecha de nacimiento del alumno')
+                    print('\nIntroduzca la fecha de nacimiento del alumno')
                     fNacimiento = escanerFecha()
                     if(fNacimiento != None):
-                        print("¿Desea confirmar la modificacion?(Si o no)")
+                        print("\n¿Desea confirmar la modificacion?(Si o no)")
                         if(confirmacion()):
                             modificar('alumnos',alumno[0][0],'f_nacimiento',fNacimiento)
                 
@@ -185,7 +185,7 @@ def modifAlumno():
                     checkOpcion = False
                 
                 else:
-                    print("Valor no valido")
+                    print("\nValor no valido")
             
 def buscarAlum():
     '''
@@ -194,13 +194,13 @@ def buscarAlum():
     #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
     #Se comprueba que el nombre introducido es adecuado
-    print('Introduzca el nombre del alumno')
+    print('\nBUSCAR:\nIntroduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
     #Se comprueba que los apellidos introducidos son adecuados y se busca en la base de datos
     if(checkValido):
-        print('Introduzca los apellidos del alumno')
+        print('\nIntroduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
@@ -211,6 +211,7 @@ def mostrarTodosAlum():
     '''
     Metodo para buscar todos los alumnos
     '''
+    print("\nMOSTRAR TODOS:")
     mostrarTodos('alumnos')
         
     

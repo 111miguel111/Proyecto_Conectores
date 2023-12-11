@@ -14,13 +14,13 @@ def matricularAlum():
     #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
     #Se comprueba que el nombre del alumno introducido es adecuado
-    print('Introduzca el nombre del alumno')
+    print('\nIntroduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
     #Se comprueba que el apellido del alumno introducido es adecuado 
     if(checkValido):
-        print('Introduzca los apellidos del alumno')
+        print('\nIntroduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
@@ -31,7 +31,7 @@ def matricularAlum():
             checkValido=False
     #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
-        print('Introduzca el nombre del curso')
+        print('\nIntroduzca el nombre del curso')
         nomCurso = escanerTexto()
         if(nomCurso==None):
             checkValido = False
@@ -42,7 +42,7 @@ def matricularAlum():
             checkValido=False
     #Si no ha habido errores se matricula el alumno en el curso    
     if(checkValido):
-        print("¿Desea confirmar la modificacion?(Si o no)")
+        print("\n¿Desea confirmar la modificacion?(Si o no)")
         if(confirmacion()):
             matricularAlumno(alumno[0][0],curso[0][0])
         
@@ -53,13 +53,13 @@ def desmatricularAlum():
     #Boolean que impide que el codigo siga si uno de los valores no es valido
     checkValido = True
     #Se comprueba que el nombre del alumno introducido es adecuado
-    print('Introduzca el nombre del alumno')
+    print('\nIntroduzca el nombre del alumno')
     nombre = escanerAlfanumerico()
     if(nombre==None):
         checkValido = False
     #Se comprueba que el apellido del alumno introducido es adecuado y se busca en la base de datos para comprobar que existe  
     if(checkValido):
-        print('Introduzca los apellidos del alumno')
+        print('\nIntroduzca los apellidos del alumno')
         apellidos = escanerTexto()
         if(apellidos==None):
             checkValido = False
@@ -70,7 +70,7 @@ def desmatricularAlum():
             checkValido=False
     #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
-        print('Introduzca el nombre del curso')
+        print('\nIntroduzca el nombre del curso')
         nomCurso = escanerTexto()
         if(nomCurso==None):
             checkValido = False
@@ -81,7 +81,7 @@ def desmatricularAlum():
             checkValido=False
     #Si no ha habido errores se desmatricula el alumno en el curso
     if(checkValido):
-        print("¿Desea confirmar la modificacion?(Si o no)")
+        print("\n¿Desea confirmar la modificacion?(Si o no)")
         if(confirmacion()):
             desmatricularAlumno(alumno[0][0],curso[0][0])
         
@@ -93,7 +93,7 @@ def asignarProfesor():
     checkValido = True
     #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
-        print('Introduzca el nombre del curso')
+        print('\nIntroduzca el nombre del curso')
         nombre = escanerAlfanumerico()
         if(nombre == None):
             checkValido = False
@@ -104,13 +104,13 @@ def asignarProfesor():
             checkValido = False
     #Se comprueba que el dni del profesor introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
-        print('Introduzca el DNI del profesor')
+        print('\nIntroduzca el DNI del profesor')
         dni = escanerDni()
         if(dni!=None):
             profesor = buscar('profesores',dni,None)
             if(profesor != None):
                 #Si no ha habido errores se asigna el profesor en el curso
-                print("¿Desea confirmar la modificacion?(Si o no)")
+                print("\n¿Desea confirmar la modificacion?(Si o no)")
                 if(confirmacion()):
                     modificar('cursos',curso[0][0],'id_profesor',profesor[0][0])
 
@@ -122,7 +122,7 @@ def desasignarProfesor():
     checkValido = True
     #Se comprueba que el nombre del curso introducido es adecuado y se busca en la base de datos para comprobar que existe
     if(checkValido):
-        print('Introduzca el nombre del curso')
+        print('\nIntroduzca el nombre del curso')
         nombre = escanerAlfanumerico()
         if(nombre == None):
             checkValido = False
@@ -133,13 +133,13 @@ def desasignarProfesor():
             checkValido = False
     #Se comprueba que el dni del profesor introducido es adecuado y se busca en la base de datos para comprobar que existe        
     if(checkValido):
-        print('Introduzca el DNI del profesor')
+        print('\nIntroduzca el DNI del profesor')
         dni = escanerDni()
         if(dni!=None):
             profesor = buscar('profesores',dni,None)
             if(profesor != None):
                 #Si no ha habido errores se desasigna el profesor en el curso
-                print("¿Desea confirmar la modificacion?(Si o no)")
+                print("\n¿Desea confirmar la modificacion?(Si o no)")
                 if(confirmacion()):
                     BaseDatos.desasignarProfesor(profesor[0][0], curso[0][0])
 
@@ -157,11 +157,11 @@ def escanerTexto():
             if(len(scan)<=25):
                 return scan
             else:
-                print("No puedes introducir mas de 25 caracteres")
+                print("\nNo puedes introducir mas de 25 caracteres")
         else:
-            print("No puedes introducir solos espacios o dejarlo en blanco")
+            print("\nNo puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-    print("Has superado el numero de intentos")
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerAlfanumerico():
@@ -179,14 +179,14 @@ def escanerAlfanumerico():
                 if(len(scan)<=25):
                     return scan
                 else:
-                    print("No puedes introducir mas de 25 caracteres")
+                    print("\nNo puedes introducir mas de 25 caracteres")
             else:
-                print("No puedes introducir caracteres que no sean alfanumericos")
+                print("\nNo puedes introducir caracteres que no sean alfanumericos")
         else:
-            print("No puedes introducir solos espacios o dejarlo en blanco")
+            print("\nNo puedes introducir solos espacios o dejarlo en blanco")
             
         intentos+=1
-    print("Has superado el numero de intentos")
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerAlfabetico():
@@ -204,13 +204,13 @@ def escanerAlfabetico():
                 if(len(scan)<=25):
                     return scan
                 else:
-                    print("No puedes introducir mas de 25 caracteres")
+                    print("\nNo puedes introducir mas de 25 caracteres")
             else:
-                print("No puedes introducir caracteres que no sean alfabeticos")
+                print("\nNo puedes introducir caracteres que no sean alfabeticos")
         else:
-            print("No puedes introducir solos espacios o dejarlo en blanco")
+            print("\nNo puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-    print("Has superado el numero de intentos")
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerNumerico():
@@ -227,11 +227,11 @@ def escanerNumerico():
             if(scan.isnumeric()):
                 return scan
             else:
-                print("No puedes introducir caracteres que no sean numeros")
+                print("\nNo puedes introducir caracteres que no sean numeros")
         else:
-            print("No puedes introducir solos espacios o dejarlo en blanco")
+            print("\nNo puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-    print("Has superado el numero de intentos")
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerTelefono():
@@ -249,13 +249,13 @@ def escanerTelefono():
                 if(len(scan)==9):
                     return scan
                 else:
-                    print("Solo puedes introducir 9 caracteres")
+                    print("\nSolo puedes introducir 9 caracteres")
             else:
-                print("No puedes introducir caracteres que no sean numeros")
+                print("\nNo puedes introducir caracteres que no sean numeros")
         else:
-            print("No puedes introducir solos espacios o dejarlo en blanco")
+            print("\nNo puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-    print("Has superado el numero de intentos")
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerNumericoDecimal():
@@ -291,12 +291,12 @@ def escanerNumericoDecimal():
                 
                 #Si el segundo campo tiene mas de 2 valores se pide que se vuelva a introducir
                 else:
-                    print('Porfavor introduce solo 2 decimales')
+                    print('\nPorfavor introduce solo 2 decimales')
             else:
-                print('Formato de decimales incorrecto')
+                print('\nFormato de decimales incorrecto')
         else:
-            print('Porfavor introduce numeros y los decimales con punto')
-    print("Has superado el numero de intentos")
+            print('\nPorfavor introduce numeros y los decimales con punto')
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerDni():
@@ -316,16 +316,16 @@ def escanerDni():
                         return scan.upper()
             
                     else:
-                        print("Solo puedes introducir letras en caracter 9")
+                        print("\nSolo puedes introducir letras en caracter 9")
                 else:
-                    print("Solo puedes introducir numeros en los 8 primeros caracteres")
+                    print("\nSolo puedes introducir numeros en los 8 primeros caracteres")
             else:
-                print("Solo puedes introducir 9 caracteres")
+                print("\nSolo puedes introducir 9 caracteres")
         else:
-            print("No puedes introducir solos espacios o dejarlo en blanco")
+            print("\nNo puedes introducir solos espacios o dejarlo en blanco")
         intentos+=1
-        print('Porfavor introduce un DNI (Ocho numeros y una letra)')
-    print("Has superado el numero de intentos")
+        print('\nPorfavor introduce un DNI (Ocho numeros y una letra)')
+    print("\nHas superado el numero de intentos")
     return None
 
 def escanerFecha():
@@ -345,23 +345,24 @@ def escanerFecha():
             continuar=False
         #Se introduce un mes y se comprueba que continuar sea true y que sea un numero entre 1 y 12, si no continuar se cambia a false
         if(continuar):
-            print("Introduzca un mes")
+            print("\nIntroduzca un mes")
             mes=input()
             if(mes.isspace() or mes.isnumeric()==False or int(mes)>12 or int(mes)<=0 or continuar==False):
                 continuar=False   
-        #Se introduce un anno y se comprueba que continuar sea true y que sea un numero entre 2000 y 3000, si no continuar se cambia a false
+        #Se introduce un anno y se comprueba que continuar sea true y que sea un numero entre 1900 y el anno actual, si no continuar se cambia a false
         if(continuar):
-            print("Introduzca un anno") 
+            print("\nIntroduzca un anno") 
             anno=input()
-            if(anno.isspace() or anno.isnumeric()==False or int(anno)>3000 or int(anno)<2000 or continuar==False):
+            hoy = datetime.datetime.now()
+            if(anno.isspace() or anno.isnumeric()==False or int(anno)>int(hoy.strftime("%Y")) or int(anno)<1900 or continuar==False):
                 continuar=False 
         #Si continuar sigue siendo true se castea a datetime y se devuelve la string de la fecha
         if(continuar):
-            x = datetime.datetime(int(anno), int(mes), int(dia))
-            return x.strftime("%d-%m-%Y")
+            fNacimiento = datetime.datetime(int(anno), int(mes), int(dia))
+            return fNacimiento.strftime("%d-%m-%Y")
         intentos+=1
-        print('Porfavor introduce una fecha correcta (Dia 1-31 mes 1-12 anno 2000-3000)')
-    print("Has superado el numero de intentos")
+        print('\nPorfavor introduce una fecha correcta (Dia 1-31 mes 1-12 anno 1900-)')
+    print("\nHas superado el numero de intentos")
     return None
 
 def confirmacion():
@@ -369,11 +370,14 @@ def confirmacion():
     Metodo para confirmar si se quiere confirmar una operacion
     :return Devuelve un un boolean. El valor sera True si escribe 'si' y False si escribe 'no'
     '''
-    while(True):
+    cont = 0
+    while(cont<5):
         inputConfirmacion = input()
         if(inputConfirmacion.lower() == 'si'):
             return True
         elif(inputConfirmacion.lower() == 'no'):
             return False
         else:
-            print("Valor incorrecto, pruebe otra vez")
+            print("\nValor incorrecto, pruebe otra vez(Si o no)")
+            cont=+1
+    return False
