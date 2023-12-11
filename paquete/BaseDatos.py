@@ -74,25 +74,25 @@ def checkConfigBien(filePath):
         campo='host'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         host_variable=str(config['SERVER']['host'])
-        if(host_variable.isspace()):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
+        if(host_variable.isspace()or len(host_variable)==0):#Si esta categoria esta mal devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='user'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         user_variable=str(config['SERVER']['user'])
-        if(user_variable.isspace()):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
+        if(user_variable.isspace() or len(user_variable)==0):#Si esta categoria esta mal devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" no puede estar vacio")
             return False
         campo='password'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         password_variable=str(config['SERVER']['password'])
-        if(password_variable.isspace()):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
-            print("El campo "+campo+" no puede estar vacio")
+        if(password_variable.isspace()):#Si esta categoria esta mal devolveremos false y se entendera que el fichero de configuracion esta mal
+            print("El campo "+campo+" no puede ser un espacio")
             return False
         campo='port'
         #Comprobamos que la categoria existe solicitando el dato que hay dentro 
         port_variable=int(config['SERVER']['port'])
-        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
+        if(str(port_variable).isspace()  or str(port_variable).isnumeric()==False or len(str(port_variable))==0):#Si esta categoria esta mal o esta vacia devolveremos false y se entendera que el fichero de configuracion esta mal
             print("El campo "+campo+" tiene que ser numeros")
             return False
         print("El fichero de configuracion esta bien")
@@ -143,31 +143,26 @@ def mysqlconnect():
             password=password_variable,
             port=port_variable
             )
-        print("La conexion se ha realizado sin errores")
         return conn
     #Si la conexion no se puede realizar ya sea por que  el gestor de base de datos esta apagado nos informara
     except pymysql.err.OperationalError as e:
-        print("Se ha producido un error, compruebe que el gestod de base de datos a la que se quiere conectar esta operativa.\nEl programa se cerrara")
+        print("Se ha producido un error, compruebe que el gestor de base de datos\n a la que se quiere conectar esta operativa.\nEl programa se cerrara")
         sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
     #Si la conexion no se puede realizar por que el fichero de configuracion esta mal  nos informara
     except :
-        salir=True
-        while(salir):
-            print("Hay un error en el fichero de configuracion que impiede conectarse \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa ")
-            opcion=escanerNumerico()
-            if (opcion=='1'):
-                salir=False
-                print("El fichero de configuracion sera restablecido y el programa se cerrara")
-                iniciarFicheroConfiguracion()
-                print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
-                sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
-            elif(opcion=='2'):
-                salir=False
-                print("El programa se cerrara")
-                sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
-            else:
-                salir=True
-                print("Valor no valido")
+        print("Hay un error en el fichero de configuracion que impiede conectarse \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa ")
+        opcion=escanerNumerico()
+        if (opcion=='1'):
+            print("El fichero de configuracion sera restablecido y el programa se cerrara")
+            iniciarFicheroConfiguracion()
+            print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
+            sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
+        elif(opcion=='2'):
+            print("El programa se cerrara")
+            sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
+        else:
+            print("El programa se cerrara")
+            sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
     
 def iniciar():
     '''
@@ -177,24 +172,20 @@ def iniciar():
     try:
         if(checkFileExistance("config.ini")==True):#Comprobamos que el fichero de configuracion existe, si no es el caso lo creamos con los datos por defecto
             if(checkConfigBien("config.ini")==False):#Comprobamos que el fichero de configuracion esta bien
-                salir=True
                 #Si hay algun error informamos al usuario
-                while(salir):
-                    print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
-                    opcion=escanerNumerico()
-                    if (opcion=='1'):
-                        salir=False
-                        print("El fichero de configuracion sera restablecido y el programa se cerrara")
-                        iniciarFicheroConfiguracion()
-                        print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
-                        sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
-                    elif(opcion=='2'):
-                        salir=False
-                        print("El programa se cerrara")
-                        sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
-                    else:
-                        salir=True
-                        print("Valor no valido")
+                print("Hay un error en el fichero de configuracion \n1.Quieres restablecer el fichero con los valores por defecto \n2.Quieres cerrar el programa")
+                opcion=escanerNumerico()
+                if (opcion=='1'):
+                    print("El fichero de configuracion sera restablecido y el programa se cerrara")
+                    iniciarFicheroConfiguracion()
+                    print('Si quieres hacer cambios en la conexion mire el archivo de configuracion "config.ini" ')
+                    sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
+                elif(opcion=='2'):
+                    print("El programa se cerrara")
+                    sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
+                else:
+                    print("El programa se cerrara")
+                    sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
         else:
             
             iniciarFicheroConfiguracion()
@@ -256,9 +247,10 @@ def iniciar():
         print("La base de datos ha sido creada")
         conn.commit()
         cur.close()
+        return True
     except:
         print("No se ha podido realizar la iniciacion de la base de datos")
-    return 0
+        return False
 def alta(tabla,campo1,campo2,campo3,campo4,campo5):
     '''
     Funcion encargada de la alta de cursos, profesores, alumnos
@@ -545,9 +537,10 @@ def desasignarProfesor(idProfesor,idCurso):
         print("No se ha podido desasignar al profesor")
     return 0
 #Nada mas comenzar el programa iniciamos lo necesario para conectarse
-iniciar()
-#Creamos una variable general de conexion para no estar conectandonos todo el rato
-conn = mysqlconnect()
-
+if(iniciar()):
+    #Creamos una variable general de conexion para no estar conectandonos todo el rato
+    conn = mysqlconnect()
+else:
+    sys.exit()#Cerramos el programa ya que no deberia continuar tras llegar aqui
 
 
