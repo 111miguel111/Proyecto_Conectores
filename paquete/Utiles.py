@@ -361,7 +361,7 @@ def escanerFecha():
             fNacimiento = datetime.datetime(int(anno), int(mes), int(dia))
             return fNacimiento.strftime("%d-%m-%Y")
         intentos+=1
-        print('\nPorfavor introduce una fecha correcta (Dia 1-31 mes 1-12 anno 1900-)')
+        print('\nPorfavor introduce una fecha correcta (Dia 1-31 mes 1-12 anno 1900-hoy)')
     print("\nHas superado el numero de intentos")
     return None
 
