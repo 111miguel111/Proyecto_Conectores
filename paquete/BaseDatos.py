@@ -96,6 +96,7 @@ def checkConfigBien(filePath):
             print("El campo "+campo+" tiene que ser numeros\n")
             return False
         print("El fichero de configuracion esta bien")
+        print('Si quieres configurar los datos de conexion del sistema gestor de base de datos, modifique la informacion el fichero "config.ini"')
         return True
     except FileNotFoundError as e:
         print("El campo "+campo+" falta o esta mal\n")
@@ -148,7 +149,7 @@ def mysqlconnect():
         return conn
     #Si la conexion no se puede realizar ya sea por que  el gestor de base de datos esta apagado nos informara
     except pymysql.err.OperationalError as e:
-        print("Se ha producido un error, compruebe que el gestor de base de datos\n a la que se quiere conectar esta operativa.\nEl programa se cerrara")
+        print("Se ha producido un error, compruebe que el gestor de base de datos a la que se quiere conectar \nesta operativa y que los datos son correctos.\nEl programa se cerrara")
         sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
     #Si la conexion no se puede realizar por que el fichero de configuracion esta mal  nos informara
     except :
