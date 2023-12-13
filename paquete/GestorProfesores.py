@@ -60,8 +60,8 @@ def bajaProfesor():
         checkValido = False
     else:
         prof = buscarSinprint("profesores", dni, None)
-        if(prof!=None):
-            print("\nEl profesor introducido ya existe")
+        if(prof==None):
+            print("\nEl profesor introducido no existe")
             checkValido = False
     #Si no ha habido errores se pide confirmacion y se da de baja el profesor
     if(checkValido):
