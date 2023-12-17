@@ -149,7 +149,7 @@ def mysqlconnect():
         return conn
     #Si la conexion no se puede realizar ya sea por que  el gestor de base de datos esta apagado nos informara
     except pymysql.err.OperationalError as e:
-        print("Se ha producido un error, compruebe que el gestor de base de datos a la que se quiere conectar \nesta operativa y que los datos son correctos.\nEl programa se cerrara")
+        print("Se ha producido un error, compruebe que el sistema gestor de base de datos al que se quiere conectar \nesta operativa y que los datos son correctos.\nEl programa se cerrara")
         sys.exit()#Cerramos el programa ya que no deberia continuar tras este error
     #Si la conexion no se puede realizar por que el fichero de configuracion esta mal  nos informara
     except :
@@ -199,6 +199,7 @@ def iniciar():
         cur.execute('select @@version')
         cur.execute('''CREATE DATABASE IF NOT EXISTS miguel_roberto ;''')
         cur.execute('USE miguel_roberto')
+        cur.execute('SET FOREIGN_KEY_CHECKS = 1;')
         
         cur.execute('''CREATE TABLE IF NOT EXISTS profesores
                 (
@@ -216,7 +217,7 @@ def iniciar():
                 descripcion VARCHAR(25) NOT NULL,
                 id_profesor integer ,
                 CONSTRAINT FK_curso_profesor FOREIGN KEY (id_profesor) REFERENCES profesores(id)
-                    ON DELETE CASCADE
+                    ON DELETE SET NULL
                     ON UPDATE CASCADE
                 );
                 ''')
