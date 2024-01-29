@@ -4,9 +4,9 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 
-from paquete.Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
+from Utiles import escanerAlfanumerico, escanerTexto, escanerTelefono,\
     escanerDni, confirmacion
-from paquete.BaseDatos import alta, baja, buscar, modificar, mostrarTodos, buscarSinprint
+from BaseDatos import alta, baja, buscar, modificar, mostrarTodos, buscarSinprint
 
 def altaProfesor():
     '''

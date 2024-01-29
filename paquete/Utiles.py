@@ -4,8 +4,7 @@ Created on 1 dic 2023
 @author: DAM2B-07
 '''
 import datetime
-from paquete.BaseDatos import buscar, modificar, matricularAlumno, desmatricularAlumno
-from paquete import BaseDatos
+from BaseDatos import buscar, modificar, matricularAlumno, desmatricularAlumno
 
 def matricularAlum():
     '''
@@ -358,8 +357,11 @@ def escanerFecha():
                 continuar=False 
         #Si continuar sigue siendo true se castea a datetime y se devuelve la string de la fecha
         if(continuar):
-            fNacimiento = datetime.datetime(int(anno), int(mes), int(dia))
-            return fNacimiento.strftime("%d-%m-%Y")
+            try:
+                fNacimiento = datetime.datetime(int(anno), int(mes), int(dia))
+                return fNacimiento.strftime("%d-%m-%Y")
+            except:
+                print("\nLa fecha introducida no es una fecha real")
         intentos+=1
         print('\nPorfavor introduce una fecha correcta (Dia 1-31 mes 1-12 anno 1900-hoy)')
     print("\nHas superado el numero de intentos")
